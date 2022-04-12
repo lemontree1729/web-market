@@ -1,5 +1,5 @@
 import styles from '../styles/product.module.css'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import customAxios from '../utils/customAxios'
 import { useRouter } from 'next/router'
@@ -31,6 +31,7 @@ function Before2(props: any) {
 }
 
 
+
 const Product: NextPage = (props: any) => {
     const router = useRouter()
     const { query } = router
@@ -38,6 +39,11 @@ const Product: NextPage = (props: any) => {
     ["likelist", "cartlist"].forEach(value => params.append("required", value))
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params }, true)
     const [count, setCount] = useState(0)
+    const [index, setIndex] = useState('')
+    const myRef1 = useRef(null)
+    const myRef2 = useRef(null)
+    const myRef3 = useRef(null)
+    const myRef4 = useRef(null)
     if (isLoading || !props) return <div>로딩중...</div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
@@ -89,6 +95,24 @@ const Product: NextPage = (props: any) => {
             await customAxios.patch("/api/user/me", { cartlist })
             router.push(`/payment`)
         }
+    }
+
+    const tagSelect = (e) => {
+        switch (e.target.tabIndex) {
+            case 0:
+                myRef1.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+            case 1:
+                myRef2.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+            case 2:
+                myRef3.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+            case 3:
+                myRef4.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+        }
+
     }
     return (
         <Layout>
@@ -142,16 +166,43 @@ const Product: NextPage = (props: any) => {
 
                 <div className={styles.itemInfo}>
                     <div className={styles.itemTag}>
-                        <div className={styles.tagLayout}>
-                            <div>상세정보</div>
-                            <div>{<Before></Before>}상품후기</div>
-                            <div>{<Before></Before>}상푼문의</div>
-                            <div>{<Before></Before>}반품/교환정보</div>
+                        <div className={styles.tagLayout} role='tablist'>
+                            <li onClick={tagSelect} role='tab' tabIndex={0} id='tagInfo' className={styles.li}>
+                                <strong className={styles.strong}>상세정보</strong>
+                            </li>
+                            {<Before></Before>}
+                            <li onClick={tagSelect} role='tab' tabIndex={1} id='tagReview' className={styles.li} >
+                                <strong className={styles.strong}>상품후기</strong>
+                            </li>
+                            {<Before></Before>}
+                            <li onClick={tagSelect} role='tab' tabIndex={2} id='tagReview' className={styles.li} >
+                                <strong className={styles.strong}>상푼문의</strong>
+                            </li>{<Before></Before>}
+                            <li onClick={tagSelect} role='tab' tabIndex={3} id='tagReview' className={styles.li} >
+                                <strong className={styles.strong}>반품/교환정보</strong>
+                            </li>
+
+
                         </div>
+                        <div className={styles.tagList}>
+                            <div className={styles.tagInfo} tabIndex={0} ref={myRef1}>
+                                상세정보 컨텐츠
+                            </div>
+                            <div className={styles.tagReview} tabIndex={1} ref={myRef2}>
+                                상품후기 컨텐츠
+                            </div>
+                            <div className={styles.tagQnA} tabIndex={2} ref={myRef3}>
+                                상품문의 컨텐츠
+                            </div>
+                            <div className={styles.tagRMA} tabIndex={3} ref={myRef4}>
+                                반품문의 컨텐츠
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </Layout>
+        </Layout >
     )
 }
 export default Product
