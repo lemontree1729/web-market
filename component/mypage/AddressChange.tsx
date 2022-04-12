@@ -17,13 +17,13 @@ const Addresschange: NextPage = () => {
     const zonecodeValue = useRef(null)
     const router = useRouter()
 
-    const { data, isLoading, isError } = useCustomSWR("/api/user?info=true")
+    const { data, isLoading, isError } = useCustomSWR("/api/user/me")
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
 
     async function addressPost() {
         try {
-            const res = await axios.patch("/api/user", {
+            const res = await axios.patch("/api/user/me", {
                 "fulladdress": {
                     "zonecode": Zonecode,
                     "address": Address,

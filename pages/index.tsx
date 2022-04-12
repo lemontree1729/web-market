@@ -4,7 +4,8 @@ import Layout from '../component/Layout'
 import Carousel from '../component/carousel/Carousel'
 import ItemList from '../component/index/ItemList'
 import styles from '../styles/index.module.css'
-import PickedRank from '../component/index/PickedRank'
+import PickedRank from '../component/index/PickRank'
+import PickRank from '../component/index/PickRank'
 
 
 
@@ -48,7 +49,7 @@ const Home: NextPage = () => {
         <Carousel></Carousel>
         <div className={styles.mainList}>
           <div className={styles.rank}>
-            {randomData && <PickedRank key={randomData[0].id} data={randomData}></PickedRank>}
+            {randomData && <PickRank key={randomData[0].id} data={randomData}></PickRank>}
           </div>
           <div className={styles.recommendtitle}>
             <h3><span>카테고리별</span> <span>추천 상품!</span></h3>

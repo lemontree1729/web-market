@@ -47,55 +47,51 @@ const Category: NextPage = () => {
         }
     })
     category2Data.sort()
-
-    // console.log(categoryData, productData)
-    // console.log(productTotalNum)
-
     return (
         <Layout>
             <div className={styles.container}>
-                <div className={styles.totalContainer}>
-                    <div className={styles.category}>
-                        <div className={styles.categoryTag}>
-                            <div className={styles.categoryList}>카테고리칸</div>
-                            <div className={styles.categoryFilter}>
-                                {category1Data && category1Data.map(category1 => <div key={category1} onClick={clickCategory1} className={styles.categoryBig}>{category1}</div>)}
-                            </div>
-                        </div>
-                        <div className={styles.smallCategoryTag}>
-                            <div className={styles.smallCategory}>소분류칸</div>
-                            <div className={styles.smallCategoryFilter}>
-                                {category2Data && category2Data.map(category2 => <div key={category2} onClick={clickCategory2} className={styles.categorySmall}>{category2}</div>)}
-                            </div>
-                        </div>
-                        <div className={styles.priceRankTag}>
-                            <div className={styles.priceRank}>가격순</div>
-                            <div className={styles.priceRankFilter}>가격순 필터 칸</div>
+                <div className={styles.category}>
+                    <div className={styles.categoryTag}>
+                        <div className={styles.categoryList}>카테고리</div>
+                        <div className={styles.categoryFilter}>
+                            {category1Data && category1Data.map(category1 => <div key={category1} onClick={clickCategory1} className={styles.categoryBig}>{category1}</div>)}
                         </div>
                     </div>
-
+                    <div className={styles.smallCategoryTag}>
+                        <div className={styles.categoryList}>상세분류</div>
+                        <div className={styles.categoryFilter}>
+                            {category2Data && category2Data.map(category2 => <div key={category2} onClick={clickCategory2} className={styles.categorySmall}>{category2}</div>)}
+                        </div>
+                    </div>
+                    <div className={styles.priceRankTag}>
+                        <div className={styles.categoryList}>가격순</div>
+                        <div className={styles.categoryFilter}>가격순 필터 칸</div>
+                    </div>
                     <div>
                         <div className={styles.sort}>
                             <div className={styles.sortFilter}>조회수 순</div>
+                            <span></span>
                             <div className={styles.sortFilter}>높은 가격순</div>
                             <div className={styles.sortFilter}>낮은 가격순</div>
                         </div>
+                    </div>
 
-                        <div className={styles.price}>
-                            {/* -------------------------제품리스트---------------------- */}
-                            <div className={styles.itemList}>
-                                <div className={styles.priceList}>
-                                    {productData && productData.map(product => <CategoryList key={product.no} data={product} />)}
-                                </div>
-                            </div>
-                            {/* --------------------------랭킹?--------------------------- */}
-                            <div className={styles.Ranking}>
-                                <div className={styles.RankingList}>랭킹</div>
+
+                    <div className={styles.itemrow}>
+                        {/* -------------------------제품리스트---------------------- */}
+                        <div className={styles.itemList}>
+                            <div className={styles.priceList}>
+                                {productData && productData.map(product => <CategoryList key={product.no} data={product} />)}
                             </div>
                         </div>
+                        {/* --------------------------랭킹?--------------------------- */}
+                        {/* <div className={styles.Ranking}>
+                            <div className={styles.RankingList}>랭킹</div>
+                        </div> */}
                     </div>
                 </div>
             </div>
+
         </Layout>
     )
 }

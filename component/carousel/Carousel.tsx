@@ -38,7 +38,7 @@ const Carousel: NextPage = () => {
             </div>
             <div className={carouselStyle.btn_group}>
                 <button className={carouselStyle.prev_btn} onClick={prevCarousel}></button>
-                <span>{currentCarousel}</span>
+                <span>{currentCarousel + 1}</span>
                 <span>/</span>
                 <span>{totalCarousel}</span>
                 <button className={carouselStyle.next_btn} onClick={nextCarousel}></button>

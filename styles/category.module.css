@@ -1,140 +1,71 @@
-
-
-.container 
-{
+.container {
     width: 100%;
     margin: auto;
-    padding: 2rem 0;
-    background-color: rgb(245, 241, 241);
+    margin-top: 20px;
+
 }
 
-.totalContainer
-{
-    width: 70%;
-    margin: auto;
+.category {
+    border-top: 3px solid black;
+    border-bottom: 1px solid #dadada;
+    min-height: 450px;
 }
 
-.category
-{
-    border: 1px solid black;
-    height: 500px;
-    background-color: white;
-}
-
-.categoryTag
-{
+.categoryTag {
     display: flex;
-    height: 20%;
+    min-height: 90px;
 }
 
-.categoryList
-{
-    line-height: 30px;
-    width: 10%;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-}
-
-.categoryFilter
-{
+.smallCategoryTag {
     display: flex;
-    flex-wrap: wrap;
-    width: 90%;
-    border-bottom: 1px solid black;
+    min-height: 240px;
 }
 
-.categoryBig
-{
-    width: 200px;
-    padding: 5px;
-    padding-top: 5px;
-}
-
-.smallCategoryTag
-{
+.priceRankTag {
     display: flex;
-    height: 70%;
+    min-height: 70px;
 }
 
-.smallCategory
-{
-    line-height: 60px;
-    width: 10%;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-}
-
-.smallCategoryFilter
-{
-    width: 90%;
-    border-bottom: 1px solid black;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.categorySmall
-{
-    width: 200px;
-    padding: 10px;
-    padding-top: 20px;
-}
-
-.priceRankTag
-{
-    display: flex;
-    height: 10%;
-}
-
-.priceRank
-{
+.priceRank {
     line-height: 35px;
-    width: 10%;
+    width: 140px;
     border-right: 1px solid black;
 }
 
-.priceRankFilter
-{
-    width: 90%;
-    width: 200px;
-    padding: 5px;
+.categoryList {
+    padding: 10px;
+    line-height: 30px;
+    width: 140px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
-.sort
-{   
+.categoryFilter {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+
+.smallCategory {
+    line-height: 60px;
+    min-height: 200px;
+    width: 10%;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.sort {
     margin-top: 20px;
     width: 100%;
     display: flex;
     border: 1px solid black;
     margin-bottom: 10px;
-    background-color: rgb(223, 223, 223);
+
 }
 
-.sortFilter
-{
-    width: 130px;
+.sortFilter {
     padding: 10px;
-}
-
-.price
-{
-    display: flex;
-}
-
-.itemList
-{
-    width: 80%;
-}
-
-.Ranking
-{
-    width: 20%;
-    margin-left: 20px;
-    
-}
-
-.RankingList
-{
-    border: 1px solid black;
-    height: 700px;
-    background-color: white;
 }
