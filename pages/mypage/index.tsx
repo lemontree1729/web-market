@@ -8,7 +8,9 @@ import { NextPage } from 'next';
 
 const Mypage: NextPage = () => {
     const router = useRouter()
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
+    const params = new URLSearchParams();
+    ["id", "name", "email", "phonenumber"].forEach(value => params.append("required", value))
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params }, true)
     if (isLoading) return <div>로딩중...</div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
@@ -26,7 +28,7 @@ const Mypage: NextPage = () => {
                         <SideBar toggle="userinfo" />
                     </div>
                     <div className={mypageStyle.content}>
-                        <UserInfo />
+                        <UserInfo data={data} />
                     </div>
                 </div>
             </div>

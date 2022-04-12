@@ -1,4 +1,5 @@
 import { body, cookie, query } from "express-validator";
+import mongoose from "mongoose";
 import Inquiry, { inquiry } from "../../../models/Inquiry";
 import { Err, Ok } from "../../../utils/server/commonError";
 import { customHandler, validate } from "../../../utils/server/commonHandler";
@@ -19,9 +20,9 @@ const handler = customHandler()
             body("title").exists(),
             body("content").exists()]),
         async (req, res) => {
-            const userno = parseInt(req.cookies.userno)
+            const user_id = mongoose.Types.ObjectId(req.cookies.user_id)
             const { qacategory, title, content } = req.body
-            const saveValue: inquiry = { userno, qacategory, title, content, createdAt: new Date() }
+            const saveValue: inquiry = { user_id, qacategory, title, content, createdAt: new Date() }
             const result = await new Inquiry(saveValue).save()
             return Ok(res, result)
         }

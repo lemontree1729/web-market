@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const res = await customAxios.get(`/api/product?no=${context.query.no}`)
     await customAxios.patch("/api/product/viewcount", { no: context.query.no })
     const { data: { result } } = res
-    // console.log(result.data[0])
+    console.log(result.data[0])
     return {
         props: { ...result.data[0] }
     }
@@ -36,14 +36,15 @@ const Product: NextPage = (props: any) => {
     const { query } = router
     const params = new URLSearchParams();
     ["likelist", "cartlist"].forEach(value => params.append("required", value))
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params })
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params }, true)
     const [count, setCount] = useState(0)
     if (isLoading || !props) return <div>로딩중...</div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
         router.push("/")
     }
-    const { likelist, cartlist } = data
+    console.log(data)
+    const { likelist, cartlist } = data || {}
     const onIncrease = () => setCount(count + 1)
     const onDecrease = () => setCount(count - 1)
     const SumPrice = () => count * parseInt(props.price)
@@ -52,7 +53,6 @@ const Product: NextPage = (props: any) => {
             alert("로그인이 필요합니다")
             router.push("/login")
         } else {
-            console.log(likelist)
             if (!likelist.includes(props.no)) {
                 likelist.push(props.no)
             } else {
@@ -61,14 +61,28 @@ const Product: NextPage = (props: any) => {
             await customAxios.patch("/api/user/me", { likelist })
         }
     }
-
+    const pressCart = async () => {
+        if (isApiError) {
+            alert("로그인이 필요합니다")
+            router.push("/login")
+        } else {
+            if (!cartlist.includes(props.no)) {
+                cartlist.push(props.no)
+                await customAxios.patch("/api/user/me", { cartlist })
+                alert("장바구니에 추가되었습니다")
+            } else {
+                alert("이미 장바구니에 추가되어있습니다")
+                router.push(`/mypage/cartlist`)
+            }
+        }
+    }
 
     const pressPayment = async () => {
         if (isApiError) {
             alert("로그인이 필요합니다")
             router.push("/login")
         } else {
-
+            console.log(cartlist)
             if (!cartlist.includes(props.no)) {
                 cartlist.push(props.no)
             }
@@ -118,7 +132,7 @@ const Product: NextPage = (props: any) => {
                             </Link>
                             <div>
                                 <button className={styles.etcMenu} onClick={pressLike}>찜하기</button>
-                                <button className={styles.etcMenu}>장바구니</button>
+                                <button className={styles.etcMenu} onClick={pressCart}>장바구니</button>
                             </div>
                         </div>
                     </div>

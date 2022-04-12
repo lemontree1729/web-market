@@ -55,7 +55,7 @@ export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
         const jwt = await createJWT(aud, role, newjti, "30m")
         const cookies = [`access_token=${jwt};Max-Age=${30 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`]
         res.setHeader('Set-Cookie', cookies)
-        req.cookies = { ...req.cookies, userno: aud, role, jti: newjti }
+        req.cookies = { ...req.cookies, user_id: aud, role, jti: newjti }
     }
 }
 

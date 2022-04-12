@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import React, { EventHandler, MouseEventHandler, useState } from 'react'
+import React from 'react'
 import checktableStyle from '../../styles/admin/checktable.module.css'
 
 
