@@ -6,7 +6,7 @@ const SideBar: NextPage<{ toggle: string }> = ({ toggle }) => {
 
         <div className={sidebarStyle.content}>
             <h3>관리자페이지</h3>
-            <Link href="/admin/userlist">
+            <Link href="/admin">
                 <span className={toggle === "userlist" ? sidebarStyle.spanselect : sidebarStyle.span}>유저목록</span>
             </Link>
             <Link href="/admin/productlist">

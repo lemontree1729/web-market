@@ -21,19 +21,23 @@ type naverShopping = {
 export async function insertDataByCategory() {
     const category = ["식품", "패션의류", "디지털/가전", "출산/육아", "생활/건강", "가구/인테리어", "도서", "화장품/미용", "여가/생활편의"]
     try {
-        for (let i of category) {
-            const result: naverShopping[] = (await getNaverApi(i))["items"]
-            for (let data of result) {
-                const { title, image, lprice, mallName, productId, brand, maker, category1, category2, category3, category4 } = data
-                const product_data: product = { id: parseInt(productId), name: title, price: parseInt(lprice), category1, category2, category3, category4, imageUrl: image, mallName, brand, maker }
-                await new Product(product_data).save()
+        for (let targetCategory of category) {
+            for (let start = 1; start <= 1000; start += 100) {
+                console.log(targetCategory, start)
+                const result: naverShopping[] = (await getNaverApi(targetCategory, start))["items"]
+                for (let data of result) {
+                    const { title, image, lprice, mallName, brand, maker, category1, category2, category3, category4 } = data
+                    const name = title.replaceAll(/<b>/ig, "").replaceAll(/<\/b>/ig, "").replaceAll(/＆amp;/ig, "")
+                    const product_data: product = { name, price: parseInt(lprice), category1, category2, category3, category4, imageUrl: image, mallName, brand, maker }
+                    await new Product(product_data).save()
+                }
             }
         }
     } catch (error) { console.log(error) }
 }
 
-export default async function getNaverApi(keyword: string) {
-    return (await axios.get(`https://openapi.naver.com/v1/search/shop.json?query=${encodeURI(keyword)}&display=100`, {
+export default async function getNaverApi(keyword: string, start: number) {
+    return (await axios.get(`https://openapi.naver.com/v1/search/shop.json?query=${encodeURI(keyword)}&display=100&start=${start}`, {
         headers: {
             "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_CLIENT_ID!,
             "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET!

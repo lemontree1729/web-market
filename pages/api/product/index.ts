@@ -17,27 +17,17 @@ async function sendByCategory(maxResults: number) {
 const handler = customHandler()
     .get(
         async (req, res) => {
-            let { id, keyword, category1, category2, byCategory, sort, display, pagenum } = req.query
+            let { no, keyword, category1, category2, byCategory, sort, display, pagenum } = req.query
             const maxResults = Math.min(100, parseInt(display ? display.toString() : "10"))
             if (byCategory === "true") {
                 const totalResult = await sendByCategory(maxResults)
                 Ok(res, totalResult)
             } else {
-                const totalQuery: Array<any> = []
-                totalQuery.push(
-                    { "$match": {} },
-                )
-                if (keyword) {
-                    totalQuery.push({ "$match": { name: new RegExp(keyword?.toString(), "i") } })
-                }
-                if (id) {
-                    totalQuery.push({ "$match": { id: parseInt(id?.toString()) } })
-                }
-                if (category1) {
-                    totalQuery.push({ "$match": { category1 } })
-                }
-                if (category2) {
-                    totalQuery.push({ "$match": { category2 } })
+                const totalQuery: any = {
+                    name: keyword && new RegExp(keyword.toString(), "i"),
+                    no: no && parseInt(no?.toString()),
+                    category1: category1 || undefined,
+                    category2: category2 || undefined
                 }
                 let sortQuery: string
                 switch (sort) {
@@ -51,16 +41,16 @@ const handler = customHandler()
                         sortQuery = "-price"
                 }
                 const parsedPagenum = pagenum ? parseInt(pagenum.toString()) : 1
-                const result = await Product.aggregate(totalQuery).sort(sortQuery).limit(parsedPagenum * maxResults).skip((parsedPagenum - 1) * maxResults)
-                const totalnum = (await Product.aggregate(totalQuery)).length
+                const result = await Product.find(totalQuery).sort(sortQuery).limit(parsedPagenum * maxResults).skip((parsedPagenum - 1) * maxResults)
+                const totalnum = (await Product.find(totalQuery)).length
                 Ok(res, { data: result, metadata: { totalnum } })
             }
         }
     )
     .post(
         async (req, res) => {
-            const { id } = req.query
-            const result = await Product.findOne({ id })
+            const { no } = req.query
+            const result = await Product.findOne({ no })
             if (!result) {
                 const value = await new Product(req.body).save()
                 Ok(res, value)
@@ -71,8 +61,8 @@ const handler = customHandler()
     )
     .put(
         async (req, res) => {
-            const { id } = req.query
-            const result = await Product.findOne({ id })
+            const { no } = req.query
+            const result = await Product.findOne({ no })
             if (result) {
                 const value = await new Product(req.body).save()
                 Ok(res, value)

@@ -87,13 +87,19 @@ const SignUp: NextPage = () => {
     event.preventDefault()
     if (validationId(Id)) {
       try {
-        const res = await customAxios.get(`/api/user?id=${Id}`,)
-        if (res.status === 200) {
-          alert('사용할 수 있는 아이디 입니다.')
-          setidCheckApi(true)
+        const res = await customAxios.get(`/api/user`, { params: { id: Id } })
+        const { result } = res.data
+        console.log(res.data)
+        if (result) {
+          if (result.length === 0) {
+            alert('사용할 수 있는 아이디 입니다.')
+            setidCheckApi(true)
+          } else {
+            alert("이미 존재하는 아이디 입니다.")
+            setidCheckApi(false)
+          }
         } else {
-          alert("이미 존재하는 아이디 입니다.")
-          setidCheckApi(false)
+          alert('아이디 검색 실패')
         }
       } catch (err) {
         alert("아이디 확인 실패")

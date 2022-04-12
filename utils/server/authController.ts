@@ -1,26 +1,34 @@
-import { cookie } from "express-validator"
+import { cookie, query, ValidationChain, validationResult } from "express-validator"
 import { NextApiRequest, NextApiResponse } from "next"
 import { NextHandler } from "next-connect"
-import { serverAuth, saveLog, validateRequest, validate } from "./middleware"
+import { serverAuth, saveLog, validate } from "./middleware"
+
+// interface authCondition {
+//     path: string,
+//     detail?: (string | { method: string, query?: string[], body?: string[] })[] // GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH
+// }
 
 interface authCondition {
-    path: string,
-    detail?: (string | { method: string, query?: string[], body?: string[] })[] // GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH
+    path: string | RegExp,
+    detail?: (string | { method: string, validate?: ValidationChain[] })[] // GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH
 }
 
 const ADMINCONDITION: Array<authCondition> = [
-    { path: "/api/admin/userlist" }
+    // { path: "/api/admin/userlist" },
+    { path: "/api/user$", detail: [{ method: "GET", validate: [query("required").exists()] }, "PATCH", "DELETE"] },
+    { path: "/api/product$", detail: ["POST", "PUT", "DELETE"] },
+    { path: "/api/qaboard$" }
 ]
 const USERCONDITION: Array<authCondition> = [
-    { path: "/api/user", detail: [{ method: "GET", query: ["info"] }, "PATCH"] },
-    { path: "/api/qaboard" },
-    { path: "/api/product", detail: ["POST", "PUT", "DELETE"] }
+    { path: "/api/user/me$" },
+    { path: "/api/qaboard/me$" }
+
 ]
 
-function checkAuth(conditions: authCondition[], req: NextApiRequest) {
-    const pathname = new URL(req.url, `http://${req.headers.host}`).pathname
+async function checkAuth(conditions: authCondition[], req: NextApiRequest) {
+    const path = new URL(req.url, `http://${req.headers.host}`).pathname
     for (let condition of conditions) {
-        if (pathname === condition.path) {
+        if (path.match(condition.path)) {
             if (condition.detail) {
                 for (let detail of condition.detail) {
                     if (typeof detail === "string") {
@@ -28,18 +36,9 @@ function checkAuth(conditions: authCondition[], req: NextApiRequest) {
                             return true
                         }
                     } else {
-                        if (detail.query) {
-                            const targetQuery = Object.keys(req.query)
-                            for (let query of detail.query) {
-                                if (targetQuery.includes(query)) {
-                                    return true
-                                }
-                            }
-                        }
-                        if (detail.body) {
-                            const targetBody = Object.keys(req.body)
-                            for (let body of detail.body) {
-                                if (targetBody.includes(body)) {
+                        if (detail.validate) {
+                            for (let validation of detail.validate) {
+                                if ((await validation.run(req, { dryRun: true })).isEmpty()) {
                                     return true
                                 }
                             }
@@ -56,9 +55,9 @@ function checkAuth(conditions: authCondition[], req: NextApiRequest) {
 
 
 export default async function authController(req: NextApiRequest, res: NextApiResponse, next: NextHandler) {
-    if (checkAuth(ADMINCONDITION, req)) {
+    if (await checkAuth(ADMINCONDITION, req)) {
         await serverAuth(req, res), saveLog(req, res), validate([cookie("role").equals("admin")])(req, res)
-    } else if (checkAuth(USERCONDITION, req)) {
+    } else if (await checkAuth(USERCONDITION, req)) {
         await serverAuth(req, res), saveLog(req, res)
     } else {
         await saveLog(req, res)

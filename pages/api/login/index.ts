@@ -26,25 +26,28 @@ const handler = customHandler()
             const ip = (req.headers["x-real-ip"] || "0.0.0.0").toString()
             password = encryptPassword(password)
             const result = await User.findOne({ id, password })
-            if (result) {
-                const { role } = result
-                const access_jti = uuid4()
-                const refresh_jti = uuid4()
-                const consistDate = persistent ? 14 : 1
-                const expirationtime = consistDate.toString() + "d"
-                let expireAt = new Date()
-                expireAt.setDate(expireAt.getDate() + consistDate)
-                const loginToken: loginToken = { userid: id, jti: refresh_jti, fingerprint, ip, createdAt: new Date(), expireAt }
-                const access_token = await createJWT(id, role, access_jti, "30m")
-                const refresh_token = await createJWT(id, role, refresh_jti, expirationtime)
-                const cookies = [`access_token=${access_token};Max-Age=${30 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`,
-                `refresh_token=${refresh_token};Max-Age=${consistDate * 24 * 60 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`]
-                res.setHeader('Set-Cookie', cookies)
-                await new LoginToken(loginToken).save()
-                Ok(res, role)
-            } else {
-                Err(res, "not a valid id or password")
+            if (!result) {
+                return Err(res, "not a valid id or password")
             }
+            const { role } = result
+            const access_jti = uuid4()
+            const refresh_jti = uuid4()
+            const consistDate = persistent ? 14 : 1
+            const expirationtime = consistDate.toString() + "d"
+            let expireAt = new Date()
+            expireAt.setDate(expireAt.getDate() + consistDate)
+            const userno = (await User.findOne({ id })).no
+            if (!userno) {
+                return Err(res, "id not found")
+            }
+            const loginToken: loginToken = { userno, jti: refresh_jti, fingerprint, ip, expireAt }
+            const access_token = await createJWT(userno.toString(), role, access_jti, "30m")
+            const refresh_token = await createJWT(userno.toString(), role, refresh_jti, expirationtime)
+            const cookies = [`access_token=${access_token};Max-Age=${30 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`,
+            `refresh_token=${refresh_token};Max-Age=${consistDate * 24 * 60 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`]
+            res.setHeader('Set-Cookie', cookies)
+            await new LoginToken(loginToken).save()
+            Ok(res, role)
         }
     )
     .delete(
@@ -57,7 +60,7 @@ const handler = customHandler()
                 const { jti } = await verifyJWT(refresh_token)
                 await LoginToken.deleteOne({ jti })
             }
-            res.redirect("/")
+            Ok(res, "logout success")
         }
     )
 

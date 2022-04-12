@@ -2,16 +2,16 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import customAxios from "../../../utils/customAxios"
 import { useRouter } from "next/router"
 import Link from "next/link"
-import { qaBoard } from "../../../models/QABoard"
 import createpostStyle from "../../../styles/mypage/createpost.module.css"
+import { inquiry } from "../../../models/Inquiry"
 
 export default function CreatePost() {
     const router = useRouter()
-    const { register, handleSubmit, formState: { errors }, watch } = useForm<qaBoard>({ mode: "onSubmit" })
-    const onSubmit: SubmitHandler<qaBoard> = async data => {
+    const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
+    const onSubmit: SubmitHandler<inquiry> = async data => {
         alert(JSON.stringify(data, null, 2))
         try {
-            const res = await customAxios.post("/api/qaboard", data)
+            const res = await customAxios.post("/api/inquiry", data)
             if (res.status == 200) {
                 router.push('/mypage/qna')
                 alert('문의가 접수 되었습니다.')

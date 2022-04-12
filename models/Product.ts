@@ -1,7 +1,8 @@
 import mongoose, { model, Schema } from 'mongoose';
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 export interface product {
-    id: number,
+    no?: number,
     name: string,
     price: number,
     category1: string,
@@ -14,21 +15,26 @@ export interface product {
     maker: string,
     brand: string,
     viewcount?: number,
+    createdAt?: Date
 }
 const productSchema = new Schema<product>({
-    id: { type: Number, required: true, unique: true },
+    no: { type: Number, unique: true },
     name: { type: String, required: true, trim: true },
     price: { type: Number, required: true },
     category1: { type: String, required: true },
     category2: { type: String, required: true },
-    category3: { type: String },
-    category4: { type: String },
-    imageUrl: { type: String },
-    description: { type: String, trim: true },
-    mallName: { type: String, required: true },
-    maker: { type: String, required: true },
-    brand: { type: String, required: true },
-    viewcount: { type: Number, default: 0 }
+    category3: { type: String, default: "" },
+    category4: { type: String, default: "" },
+    imageUrl: { type: String, default: "" },
+    description: { type: String, default: "", trim: true },
+    mallName: { type: String, default: "" },
+    maker: { type: String, default: "" },
+    brand: { type: String, default: "" },
+    viewcount: { type: Number, default: 0 },
+    createdAt: { type: Date, default: new Date() }
 })
+if (!mongoose.models['product']) {
+    productSchema.plugin(AutoIncrement, { id: "productno", inc_field: "no" })
+}
 const Product = mongoose.models['product'] ? model<product>('product') : model<product>('product', productSchema, 'product')
 export default Product

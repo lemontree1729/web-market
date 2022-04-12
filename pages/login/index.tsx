@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       alert("서버 에러가 발생하였습니다")
     }
   }
-  const { data, isLoading, isServerError } = useCustomSWR("/api/user?info=false")
+  const { data, isLoading, isServerError } = useCustomSWR("/api/user/me")
   if (isLoading) return <div>로딩중...</div>
   if (isServerError) {
     alert("서버 에러가 발생하였습니다")
