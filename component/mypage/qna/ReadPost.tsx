@@ -23,7 +23,7 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
         event.preventDefault()
         if (window.confirm("삭제하시겠습니까?")) {
             try {
-                const res = await customAxios.delete(`/api/inquiry?no=${data.no}`)
+                const res = await customAxios.delete(`/api/inquiry?_id=${data._id}`)
                 if (res.status == 200) {
                     alert('글이 삭제되었습니다.')
                 } else {
@@ -39,14 +39,14 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
     return (
         <>
             <tr onClick={clickContent}>
-                <td>{data.no}</td>
+                <td>{data._id}</td>
                 <td>{data.qacategory}</td>
                 <td>{data.title}</td>
-                <td>{data.userno}</td>
+                <td>{data.user_id}</td>
                 <td>{data.createdAt.toString().replace(/-/g, ".").substring(0, 10)}</td>
                 <td>{answer}</td>
                 <td>
-                    <Link href={`/mypage/updatepost/${data.no}`} passHref>
+                    <Link href={`/mypage/updatepost/${data._id}`} passHref>
                         <button>수정하기</button>
                     </Link>
                     <button onClick={deleteApi}>삭제</button>

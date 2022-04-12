@@ -38,7 +38,7 @@ const userSchema = new Schema<user>({
     },
     registerAt: { type: Date, default: new Date() },
     likelist: { type: [Number], default: [], ref: "product" },
-    cartlist: { type: [Number], default: [], ref: "product" }
+    cartlist: { type: [Number], default: [], ref: "product" },
 })
 if (!mongoose.models['user']) {
     userSchema.plugin(AutoIncrement, { id: "user_id", inc_field: "_id" })

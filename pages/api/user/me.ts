@@ -10,7 +10,7 @@ const handler = customHandler()
         async (req, res) => {
             let { user_id } = req.cookies
             let { required } = req.query
-            const result = await User.findOne({ _id: user_id }).lean()
+            const result = await User.findOne({ _id: user_id }).populate(["likelist", "cartlist"]).lean()
             if (!result) {
                 return Err(res, "misterious error with token")
             } else {
@@ -23,8 +23,6 @@ const handler = customHandler()
                     filter = ["role", "_id", ...required]
                 }
                 const filteredResult = filterObject(flattenObject(result), filter)
-                console.log(required, filter)
-                console.log(filteredResult)
                 return Ok(res, filteredResult)
             }
         })

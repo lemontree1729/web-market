@@ -11,7 +11,7 @@ import Sidebar from '../../component/admin/Sidebar'
 
 
 const Userlist: NextPage = () => {
-    const column = { "#": "no", 가입날짜: "registerAt", 아이디: "id", 이름: "name", 이메일: "email", 주소: "address", 휴대폰번호: "phonenumber", 권한: "role" }
+    const column = { "#": "_id", 가입날짜: "registerAt", 아이디: "id", 이름: "name", 이메일: "email", 주소: "address", 휴대폰번호: "phonenumber", 권한: "role" }
     const [checkedUserList, setCheckedUserList] = useState([])
     const router = useRouter()
     const required = new URLSearchParams();
