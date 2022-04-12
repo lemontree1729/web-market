@@ -41,5 +41,14 @@
 }
 
 .logo {
-    border: 1px solid black;
+    /* all: unset; */
+    margin: 0 auto;
+    margin-top: 20px;
+
+    background-image: url("../public/icon/logo.png");
+    background-size: 120px;
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 75px;
+
 }

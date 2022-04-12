@@ -25,8 +25,6 @@ const Carousel: NextPage = () => {
         }
         setCurrentCarousel(currentCarousel + 1)
     }, [currentCarousel])
-
-
     useEffect(() => {
         carouselRef.current.style.transition = 'all 0.5s ease-in-out';
         carouselRef.current.style.transform = `translateX(${(-100 / totalCarousel) * (currentCarousel)}%)`
@@ -39,8 +37,11 @@ const Carousel: NextPage = () => {
                 </div>
             </div>
             <div className={carouselStyle.btn_group}>
-                <button className={carouselStyle.prev_btn} onClick={prevCarousel}>뒤로버튼</button>
-                <button className={carouselStyle.next_btn} onClick={nextCarousel}>앞으로버튼</button>
+                <button className={carouselStyle.prev_btn} onClick={prevCarousel}></button>
+                <span>{currentCarousel}</span>
+                <span>/</span>
+                <span>{totalCarousel}</span>
+                <button className={carouselStyle.next_btn} onClick={nextCarousel}></button>
             </div>
 
         </div>

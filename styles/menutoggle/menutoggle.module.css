@@ -2,24 +2,16 @@
     width: 60px;
     height: 60px;
     /* border: 1px solid black; */
-    padding: 4px 0 0 0;
-    background-color: black;
-    /* background-color: rgb(6, 108, 248) */
+    padding: 11px 0 0 2px;
+    background-color: white;
+    border-radius: 40px;
 }
 
 .hamburger div {
-    margin: 10px 0px 4px 8px;
-    width: 45px;
-    height: 5px;
-    background-color: white;
-}
-
-.category {
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid black;
-
+    margin: 7px 0px 4px 8px;
+    width: 35px;
+    height: 3px;
+    background-color: black;
 }
 
 .sideBar {
@@ -27,23 +19,27 @@
 }
 
 .category1 {
-    position: fixed;
+    position: absolute;
+    top: 102px;
     left: 0;
-    width: 280px;
-    border: 1px solid black;
+    width: 250px;
+    height: 1000;
+    border: 0 1px 0 0 solid #888;
     background-color: white;
     z-index: 1;
+    box-shadow: -1px 4px 5px rgb(0 0 0 / 30%)
 }
 
 
 .category2 {
     display: none;
     position: absolute;
-    left: 278px;
-    top: -2px;
-    width: 280px;
+    left: 250px;
+    top: 0px;
+    width: 250px;
+    min-height: 390px;
     background-color: white;
-    border: 1px solid black;
+    box-shadow: 1px 4px 4px rgb(0 0 0 / 30%)
 }
 
 
@@ -65,4 +61,10 @@
 .menu:hover+.category2,
 .category2:hover {
     display: block;
+}
+
+.menu:hover,
+.menu2:hover {
+    background-color: rgb(52, 106, 255);
+    color: white;
 }

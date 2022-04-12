@@ -1,6 +1,22 @@
 .container {
     width: auto;
+    min-height: 100%;
 }
+
+.logo {
+    all: unset;
+    margin: 0px auto;
+    background-image: url("../../public/icon/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 170px;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+    cursor: pointer;
+}
+
 .content {
     margin: 0 auto;
     margin-top: 40px;
@@ -16,65 +32,90 @@
     padding-right: 10px;
     margin-bottom: 70px;
 }
-.label{
+
+.label {
     font-size: 15px;
     width: 100%;
 }
-.btn_signup{
+
+.btn_signup {
     width: 100%;
 }
-.button{
-    width: 135px;
-    font-size: 13px;
-    border: none;
-    margin-left: 10px;
+
+.button {
+    min-width: 98px;
+    height: 50px;
+    border: 1px solid black;
+    background-color: white;
+
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
 }
-.signup{
-    font-size:20px;
+
+.signup {
+    font-size: 20px;
     text-align: center;
     margin-bottom: 20px;
 }
-.validation{
+
+.validation {
     font-size: 12px;
     color: red;
 }
-.idform{
+
+.validationConfirm {
+    font-size: 12px;
+    color: green;
+}
+
+.idform {
     width: 100%;
 }
-.idInput{
+
+.idInput {
     display: flex;
     height: 50px;
     width: 100%;
 }
-.phoneInput{
+
+.phoneInput {
     display: flex;
     height: 50px;
     width: 100%;
 }
-.input{
+
+.input {
     width: 100%;
     height: 50px;
     padding: 0 9px 0 9px;
     border: 1px solid #dadada;
 }
-.phoneform{
+
+.phoneform {
     margin-bottom: 10px;
 }
-.addressform{
-    margin-bottom: 20px;    
+
+.addressform {
+    margin-bottom: 20px;
 }
-.btn_signup button{
+
+.btn_signup button {
     height: 45px;
     width: 100%;
     border: none;
-    background-color: royalblue;
+    background-color: rgb(52, 106, 255);
     color: white;
-    font-size:16px;
+    font-size: 16px;
+    margin-top: 20px;
 }
-.genderform{
+
+.genderform {
     margin-bottom: 10px;
 }
-.genderform input{
+
+.genderform input {
     margin-top: 10px;
     margin-right: 10px;
 }

@@ -39,20 +39,19 @@ const PasswordChange: NextPage = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-
             <div className={passwordChangeStyle.content}>
                 <h3>비밀번호 변경</h3>
-                <div className={passwordChangeStyle.input}>
+                <div className={passwordChangeStyle.input_row}>
                     <span className={passwordChangeStyle.password}>현재 비밀번호</span>
-                    <input className={passwordChangeStyle.n_input} type="password" {...register("currentpassword",
+                    <input className={passwordChangeStyle.input} type="password" {...register("currentpassword",
                         {
                             required: "현재 비밀번호를 입력해 주세요"
                         })} />
                     {errors.currentpassword && <span className="validation">{errors.currentpassword.message}</span>}
                 </div>
-                <div className={passwordChangeStyle.input}>
+                <div className={passwordChangeStyle.input_row}>
                     <span className={passwordChangeStyle.password}>신규 비밀번호</span>
-                    <input className={passwordChangeStyle.n_input} type="password" {...register("newpassword",
+                    <input className={passwordChangeStyle.input} type="password" {...register("newpassword",
                         ({
                             required: "신규 비밀번호를 입력해주세요",
                             pattern: {
@@ -62,9 +61,9 @@ const PasswordChange: NextPage = () => {
                         }))} />
                     {errors.newpassword && <span className="validation">{errors.newpassword.message}</span>}
                 </div>
-                <div className={passwordChangeStyle.input}>
+                <div className={passwordChangeStyle.input_row}>
                     <span className={passwordChangeStyle.password}>신규 비밀번호 재입력</span>
-                    <input className={passwordChangeStyle.n_input} type="password" {...register("passwordConfirm",
+                    <input className={passwordChangeStyle.input} type="password" {...register("passwordConfirm",
                         {
                             required: true,
                             validate: (value) => value === newpassword.current

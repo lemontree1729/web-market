@@ -1,0 +1,37 @@
+.content {
+    width: 100%;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: 3px solid black;
+    padding-bottom: 15px;
+    margin: 0;
+}
+
+.content table {
+    width: 100%;
+    border-spacing: 0;
+
+}
+
+.content tr {
+    height: 50px;
+    text-align: center;
+}
+
+.content td {
+    min-width: 50px;
+    padding: 15px;
+    border-top: 1px solid #dadada;
+}
+
+.content td:nth-child(3) {
+    width: 95px;
+}
+
+.content input {
+    width: 17px;
+    height: 17px;
+}

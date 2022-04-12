@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: 30px 0px 0px 20px;
-    border: 1px solid black;
+    padding: 50px 0px 0px 40px;
+
+    /* border: 1px solid black; */
     width: 250px;
 }
 
@@ -15,13 +16,15 @@
 
 .span {
     cursor: pointer;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 40px;
 }
 
 .spanselect {
     cursor: pointer;
-    font-size: 18px;
-    line-height: 40px;
+    border-left: 5px solid black;
+    padding-left: 4px;
+    font-size: 20px;
+    line-height: 30px;
     font-weight: 700;
 }

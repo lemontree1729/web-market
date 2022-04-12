@@ -20,12 +20,14 @@ const Orderhistory: NextPage = () => {
     }
     return (
         <Layout>
-            <div className={mypageStyle.body}>
-                <div className="sidebar">
-                    <SideBar toggle="orderhistory" />
-                </div>
-                <div className={mypageStyle.content}>
-                    <OrderHistory />
+            <div className={mypageStyle.container}>
+                <div className={mypageStyle.body}>
+                    <div className="sidebar">
+                        <SideBar toggle="orderhistory" />
+                    </div>
+                    <div className={mypageStyle.content}>
+                        <OrderHistory />
+                    </div>
                 </div>
             </div>
         </Layout>

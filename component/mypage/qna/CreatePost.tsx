@@ -2,15 +2,16 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import customAxios from "../../../utils/customAxios"
 import { useRouter } from "next/router"
 import Link from "next/link"
-import { qaBoard } from "../../../models/QABoard"
+import createpostStyle from "../../../styles/mypage/createpost.module.css"
+import { inquiry } from "../../../models/Inquiry"
 
 export default function CreatePost() {
     const router = useRouter()
-    const { register, handleSubmit, formState: { errors }, watch } = useForm<qaBoard>({ mode: "onSubmit" })
-    const onSubmit: SubmitHandler<qaBoard> = async data => {
+    const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
+    const onSubmit: SubmitHandler<inquiry> = async data => {
         alert(JSON.stringify(data, null, 2))
         try {
-            const res = await customAxios.post("/api/qaboard", data)
+            const res = await customAxios.post("/api/inquiry", data)
             if (res.status == 200) {
                 router.push('/mypage/qna')
                 alert('문의가 접수 되었습니다.')
@@ -26,26 +27,26 @@ export default function CreatePost() {
     console.log(register)
     return (
         <form onSubmit={handleSubmit(onSubmit)} >
-            <div className="container">
-                <div className="content">
+            <div className={createpostStyle.container}>
+                <div className={createpostStyle.content}>
+                    <div className={createpostStyle.tilte}>문의 작성</div>
                     <table>
                         <tbody>
                             <tr>
-                                <th>문의유형</th>
+                                <th scope='col'>문의유형</th>
                                 <td>
-                                    <div className="select">
-                                        <select {...register("qacategory", { required: true })}>
-                                            <option value="">문의유형 선택</option>
-                                            <option value="교환">교환</option>
-                                            <option value="환불">환불</option>
-                                            <option value="배송">배송</option>
-                                            <option value="상품문의">상품문의</option>
-                                            <option value="주문취소">주문취소</option>
-                                            <option value="주문/결제">주문/결제</option>
-                                            <option value="이벤트">이벤트</option>
-                                        </select>
-                                        {errors.qacategory && alert("문의 유형을 선택해주세요")}
-                                    </div>
+                                    <select {...register("qacategory", { required: true })}>
+                                        <option value="">문의유형 선택</option>
+                                        <option value="교환">교환</option>
+                                        <option value="환불">환불</option>
+                                        <option value="배송">배송</option>
+                                        <option value="상품문의">상품문의</option>
+                                        <option value="주문취소">주문취소</option>
+                                        <option value="주문/결제">주문/결제</option>
+                                        <option value="이벤트">이벤트</option>
+                                    </select>
+                                    {errors.qacategory && alert("문의 유형을 선택해주세요")}
+
                                 </td>
                             </tr>
                             {/* <tr>
@@ -57,14 +58,14 @@ export default function CreatePost() {
                                 </td>
                             </tr> */}
                             <tr>
-                                <th>제목</th>
+                                <th scope='col'>제목</th>
                                 <td>
                                     <input {...register("title", { required: true })} placeholder="제목을 입력해주세요." />
                                     {errors.title && alert("제목을 입력해주세요")}
                                 </td>
                             </tr>
                             <tr>
-                                <th>문의내용</th>
+                                <th scope='col'>문의내용</th>
                                 <td>
                                     <textarea {...register("content", { required: true })} cols={50} rows={10} placeholder="내용을 입력해주세요." />
                                     {errors.content && alert("내용을 입력해주세요.")}
@@ -73,11 +74,11 @@ export default function CreatePost() {
                             </tr>
                         </tbody>
                     </table>
-                    <div>
+                    <div className={createpostStyle.btn_group}>
+                        <button type="submit">문의하기</button>
                         <Link href="/mypage/qna" passHref>
                             <button >뒤로가기</button>
                         </Link>
-                        <button type="submit">문의하기</button>
                     </div>
                 </div>
             </div>

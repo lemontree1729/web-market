@@ -1,12 +1,15 @@
 import { NextPage } from "next"
-
-import { qaBoard } from "../../../models/QABoard"
+import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
 import ReadPost from "./ReadPost"
 
+export interface extraInquiry extends inquiry {
+    reply: inquiry[]
+}
+
 const Board: NextPage = () => {
-    let postlist: Array<qaBoard> = []
-    const { data, isLoading, isError } = useCustomSWR("/api/qaboard")
+    let postlist: Array<extraInquiry> = []
+    const { data, isLoading, isError } = useCustomSWR("/api/inquiry/me")
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
     for (let post of data) {
@@ -33,7 +36,7 @@ const Board: NextPage = () => {
                             </thead>
                             <tbody>
                                 {postlist && postlist.map(post =>
-                                    <ReadPost key={post.qaid} data={post} />)}
+                                    <ReadPost key={post.no} data={post} />)}
                             </tbody>
                         </table>
                     </div>

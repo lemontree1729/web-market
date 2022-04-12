@@ -1,38 +1,64 @@
 .container {
+    position: relative;
     text-align: center;
 }
 
 .carousel_container {
-    width: 1280px;
+    width: 1240px;
     overflow: hidden;
-    border: 1px solid blue;
 }
 
 .slideimage {
-    width: 500%;
+    width: 600%;
     margin: 0 auto;
     display: flex;
 }
 
-.next_btn {
-    height: 40px;
-    width: 40px;
+.next_btn,
+.prev_btn {
     all: unset;
-    background-color: black;
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border: 1px solid #dadada;
     cursor: pointer;
+    overflow: hidden;
+    border-radius: 3px;
+    margin: 0 10px 0 10px;
+
+}
+
+.btn_group {
+    position: absolute;
+    bottom: -30px;
+    right: 47%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.btn_group span {
+    width: 10px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    color: black;
+}
+
+.next_btn {
+    background-image: url("../../public/icon/free-icon-right-arrow-271228.png");
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: center center;
+
 }
 
 .prev_btn {
-    height: 40px;
-    width: 40px;
-    all: unset;
-    background-color: black;
-    cursor: pointer;
-}
+    background-image: url("../../public/icon/free-icon-left-arrow-271228.png");
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: center center;
 
-/* .button :hover {
-    transition: all 0.3s ease-in-out;
-    background-color: red;
-    color: #fff;
-} */
-.btn_group {}
+}

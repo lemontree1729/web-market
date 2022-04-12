@@ -1,41 +1,41 @@
 .header {
     position: relative;
     margin: 0 auto;
-    border: 1px solid black;
+    box-shadow: 0 4px 4px 0 rgb(108 108 108 / 6%);
+    z-index: 100;
 }
 
 .headbar {
     position: relative;
     width: 1280px;
-    height: 70px;
+    height: 100px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.searchcontainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 600px;
-}
 
 .logo {
     all: unset;
     margin: 0px auto;
     background-image: url("../public/icon/logo.png");
-    background-size: contain;
+    background-size: 170px;
     background-repeat: no-repeat;
-    width: 200px;
+    width: 170px;
+    height: 50px;
     cursor: pointer;
+    margin-top: 10px;
 }
-
 
 .category {
-    top: 8px;
-    left: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 250px;
+    margin-left: 20px;
 }
+
 
 .loginbtn {
     width: 70px;
@@ -43,14 +43,17 @@
 }
 
 .search {
-    top: 10px;
-    left: 464px;
     height: 45px;
-    width: 350px;
+    width: 400px;
     display: flex;
-    border: 1px solid black;
-    border-radius: 6px;
-    padding: 6px 2px 5px 5px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: 2px solid;
+    border-image: linear-gradient(to right, #5fa1ff, #44eb57);
+    border-image-slice: 1;
+    padding: 2px 7px 2px 7px;
+    margin: 6px 130px 0 0;
 }
 
 .search input {
@@ -58,18 +61,19 @@
     height: 100%;
     width: 100%;
     margin-right: 2px;
+    outline: none;
 }
 
 .search button {
-    border: 1px solid black;
+    border: 1px solid #888;
     all: unset;
     background-image: url("../public/icon/free-icon-loupe-709592.png");
-    background-size: contain;
+    background-size: 20px;
     background-repeat: no-repeat;
     height: 28px;
     width: 28px;
     cursor: pointer;
-    margin: 3px 4px 0 0;
+    margin: 8px 0 0 0;
 }
 
 .mypage {
@@ -77,17 +81,20 @@
     right: 0px;
     display: flex;
     align-items: center;
+    margin-right: 8px;
+    margin-top: 4px;
 }
 
 .itemBox,
 .mypagebtn {
     all: unset;
-    background-size: contain;
+    background-size: 32px;
     background-repeat: no-repeat;
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     cursor: pointer;
-    padding-left: 10px;
+    padding-left: 20px;
+
 }
 
 .itemBox {
@@ -95,5 +102,84 @@
 }
 
 .mypagebtn {
+    background-image: url("../public/icon/premium-icon-user-1358034.png");
+}
+
+.logingroup {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    display: flex;
+    color: #888;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.logingroup span {
+    margin: 1px 5px 2px 5px;
+}
+
+/* mobile */
+.headbarMoblie {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.logoMobile {
+    all: unset;
+    margin: 0px auto;
+    background-image: url("../public/icon/logo.png");
+    background-size: 320px;
+    background-repeat: no-repeat;
+    width: 320px;
+    height: 75px;
+    cursor: pointer;
+    /* margin-top: 10px; */
+}
+
+.categoryMobile {
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    margin-left: 30px;
+    margin-right: 80px;
+}
+
+.mypageMobile {
+    top: 10px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+.logingroupMobile {
+    display: none;
+}
+
+.itemBoxMoblie,
+.mypagebtnMoblie {
+    all: unset;
+    background-size: 55px;
+    background-repeat: no-repeat;
+    height: 55px;
+    width: 55px;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+.itemBoxMoblie {
+    background-image: url("../public/icon/free-icon-shopping-cart-empty-side-view-34568.png");
+}
+
+.mypagebtnMoblie {
     background-image: url("../public/icon/premium-icon-user-1358034.png");
 }

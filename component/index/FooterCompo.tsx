@@ -35,7 +35,7 @@ const FooterCompo: NextPage = () => {
                     <div>{<Before></Before>}1:1문의 바로가기</div>
                     <div>{<Before></Before>}호스팅 서비스 제공: AWS</div>
                 </div>
-                <div className={styles.logo}>대충 로고칸</div>
+                <div className={styles.logo}></div>
             </div>
         </footer>
     )

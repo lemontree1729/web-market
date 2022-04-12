@@ -2,31 +2,31 @@ import { NextPage } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { qaBoard } from "../../../models/QABoard"
+import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
 import customAxios from "../../../utils/customAxios"
 
 const UpdatePost: NextPage = () => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm<qaBoard>({ mode: "onSubmit" })
+    const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
     const router = useRouter()
-    let targetPost: qaBoard
-    const { id } = router.query
-    const { data, isLoading, isError } = useCustomSWR("/api/qaboard")
+    let targetPost: inquiry
+    const { no } = router.query
+    const { data, isLoading, isError } = useCustomSWR("/api/inquiry")
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div>loading...</div>
     for (let post of data) {
-        if (post.qaid == id) {
+        if (post.no == no) {
             targetPost = post
         }
     }
-    const onSubmit: SubmitHandler<qaBoard> = async data => {
-        if (id === undefined) {
+    const onSubmit: SubmitHandler<inquiry> = async data => {
+        if (no === undefined) {
             return
         }
-        data.qaid = parseInt(id.toString())
+        data.no = parseInt(no.toString())
         alert(JSON.stringify(data, null, 2))
         try {
-            const res = await customAxios.put("/api/qaboard", data)
+            const res = await customAxios.put("/api/inquiry", data)
             if (res.status == 200) {
                 router.push('/mypage/qna')
                 alert('문의가 수정 되었습니다.')

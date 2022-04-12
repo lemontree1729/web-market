@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import customAxios from "../../utils/customAxios"
 import signupStyle from "../../styles/signup/signup.module.css"
 import { NextPage } from "next"
+import Link from "next/link"
 
 
 const SignUp: NextPage = () => {
@@ -15,6 +16,7 @@ const SignUp: NextPage = () => {
   const [PasswordCheck, setPasswordCheck] = useState("")
   const [WrongPassword, setwrongPassword] = useState("")
   const [WrongPasswordCheck, setwrongPasswordCheck] = useState("")
+  const [passwordConfirm, setpasswordConfirm] = useState(false)
   const [Name, setName] = useState("")
   const [WrongName, setwrongName] = useState("")
   const [Gender, setGender] = useState("")
@@ -44,7 +46,7 @@ const SignUp: NextPage = () => {
   async function accountRegister(event: any) {
     event.preventDefault()
     if (idCheckApi === false ||
-      validationPasswordCheck(Password) === false ||
+      passwordConfirm === false ||
       validationName(Name) === false ||
       validationGender(Gender) === false ||
       validationEmail(Email) === false ||
@@ -155,7 +157,7 @@ const SignUp: NextPage = () => {
   const PasswordCheckInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {//패스워드 입력 확인 핸들러
     const passwordValueCheck = event.currentTarget.value
     console.log("passwordCheck :" + validationPasswordCheck(passwordValueCheck))
-    if (validationPasswordCheck(passwordValueCheck)) {
+    if (passwordConfirm) {
       setPasswordCheck(passwordValueCheck)
     }
   }
@@ -174,10 +176,10 @@ const SignUp: NextPage = () => {
   const validationPasswordCheck = (value: string) => {//패스워드 일치 판별
     if (value !== Password) {
       setwrongPasswordCheck("비밀번호가 일치하지 않습니다.")
-      return false
+      setpasswordConfirm(false)
     } else {
       setwrongPasswordCheck("패스워드가 일치합니다.")
-      return true
+      setpasswordConfirm(true)
     }
   }
 
@@ -330,8 +332,9 @@ const SignUp: NextPage = () => {
     <form>
       <div className={signupStyle.container}>
         <div className={signupStyle.content}>
-          <div className={signupStyle.signup}>
-            회원가입</div>
+          <Link href="/" passHref>
+            <div className={signupStyle.logo}></div>
+          </Link>
           <div className={signupStyle.idform}>
             <label className={signupStyle.label}>
               아이디
@@ -353,7 +356,7 @@ const SignUp: NextPage = () => {
               패스워드 확인
               <input className={signupStyle.input} type="password" defaultValue={PasswordCheck} onChange={PasswordCheckInputHandler} placeholder='비밀번호를 다시 입력해주세요' />
             </label>
-            <p className={signupStyle.validation}>{WrongPasswordCheck}</p>
+            <p className={passwordConfirm ? signupStyle.validationConfirm : signupStyle.validation}>{WrongPasswordCheck}</p>
           </div>
           <div className={signupStyle.nameform}>
             <label className={signupStyle.label}>
@@ -401,6 +404,9 @@ const SignUp: NextPage = () => {
               </div> : ""}
           </div>
           <div className={signupStyle.addressform}>
+            <label>
+              주소
+            </label>
             <AddressInput
               setAddressFunction={setAddressFunction}
               setZonecodeFunction={setZonecodeFunction}

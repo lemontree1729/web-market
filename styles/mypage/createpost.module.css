@@ -1,0 +1,96 @@
+.content {
+    width: 600px;
+    overflow: hidden;
+
+}
+
+.content table {
+    width: 100%;
+}
+
+.tilte {
+    width: 1000px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.content table {
+    margin-top: 10px;
+    border-spacing: 0;
+}
+
+.content tr {
+    /* width: 100%; */
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    height: 45px;
+}
+
+.content th {
+    vertical-align: top;
+    width: 170px;
+    text-align: left;
+    font: 14px;
+    padding: 10px 0 0 0;
+}
+
+.content td {
+    vertical-align: center;
+    /* border-top: none;
+    border-left: none;
+    border-right: none; */
+    padding: 2px 0 2px 0;
+}
+
+.content input {
+    width: 100%;
+    height: 32px;
+    padding: 5px;
+    border: 1px solid #dadada;
+    font-size: 13px;
+}
+
+.content select {
+    width: 100%;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid #dadada;
+}
+
+.content textarea {
+    width: 100%;
+    margin: 5px 0 0 0;
+    padding: 5px;
+    border: 1px solid #dadada;
+    height: 200px;
+    resize: vertical;
+    font-size: 13px;
+}
+
+.btn_group {
+    margin-top: 10px;
+}
+
+.btn_group button {
+    float: right;
+
+    min-width: 98px;
+    height: 32px;
+    border: 1px solid black;
+    background-color: white;
+    margin-left: 5px;
+    padding-top: 0;
+
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
+}
+
+.btn_group :nth-child(1) {
+    background-color: white;
+    border: 1px solid rgb(52, 106, 255);
+    color: rgb(52, 106, 255);
+}

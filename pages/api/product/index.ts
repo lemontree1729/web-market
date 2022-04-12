@@ -17,7 +17,7 @@ async function sendByCategory(maxResults: number) {
 const handler = customHandler()
     .get(
         async (req, res) => {
-            let { id, keyword, category1, category2, byCategory, sort, display, pagenum } = req.query
+            let { no, keyword, category1, category2, byCategory, sort, display, pagenum } = req.query
             const maxResults = Math.min(100, parseInt(display ? display.toString() : "10"))
             if (byCategory === "true") {
                 const totalResult = await sendByCategory(maxResults)
@@ -25,7 +25,7 @@ const handler = customHandler()
             } else {
                 const totalQuery: any = {
                     name: keyword && new RegExp(keyword.toString(), "i"),
-                    id: id && parseInt(id?.toString()),
+                    no: no && parseInt(no?.toString()),
                     category1: category1 || undefined,
                     category2: category2 || undefined
                 }
@@ -49,8 +49,8 @@ const handler = customHandler()
     )
     .post(
         async (req, res) => {
-            const { id } = req.query
-            const result = await Product.findOne({ id })
+            const { no } = req.query
+            const result = await Product.findOne({ no })
             if (!result) {
                 const value = await new Product(req.body).save()
                 Ok(res, value)
@@ -61,8 +61,8 @@ const handler = customHandler()
     )
     .put(
         async (req, res) => {
-            const { id } = req.query
-            const result = await Product.findOne({ id })
+            const { no } = req.query
+            const result = await Product.findOne({ no })
             if (result) {
                 const value = await new Product(req.body).save()
                 Ok(res, value)

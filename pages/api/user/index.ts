@@ -47,17 +47,18 @@ const handler = customHandler()
         }
     )
     .patch(
-        validateRequest([body("ids").isArray(), body("role").isIn(["user", "admin"])]),
+        validateRequest([body("no").isArray(), body("role").isIn(["user", "admin"])]),
         async (req, res) => {
-            const { ids, role } = req.body
-            const result = await User.updateMany({ id: { $in: ids } }, { $set: { role } })
+            const { no, role } = req.body
+            console.log("test", no, role)
+            const result = await User.updateMany({ no: { $in: no } }, { $set: { role } })
             Ok(res, result)
         })
     .delete(
-        validateRequest([query("ids").exists()]),
+        validateRequest([query("no").exists()]),
         async (req, res) => {
-            const { ids } = req.query
-            const result = await User.deleteMany({ id: { $in: ids } })
+            const { no } = req.query
+            const result = await User.deleteMany({ no: { $in: no } })
             Ok(res, result)
         })
 export default handler

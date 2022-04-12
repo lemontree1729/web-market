@@ -1,0 +1,39 @@
+.container {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.header {
+    width: 100%;
+}
+
+.body {
+    display: flex;
+}
+
+.content {
+    width: 100%;
+    margin: 50px 0 0 10px;
+
+}
+
+.btn_group button {
+    float: right;
+    min-width: 98px;
+    height: 32px;
+    border: 1px solid black;
+    background-color: white;
+    margin: 10px 0 30px 5px;
+
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
+}
+
+.btn_group :nth-child(1) {
+    background-color: white;
+    margin-left: 5px;
+    color: rgb(52, 106, 255);
+    border: 1px solid rgb(52, 106, 255);
+}

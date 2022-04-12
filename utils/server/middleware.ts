@@ -38,13 +38,13 @@ export function validateRequest(validations: ValidationChain[]) {
 export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
     await validate([cookie("refresh_token").exists()])(req, res)
     //initialize cookie
-    req.cookies.userid = undefined
+    req.cookies.userno = undefined
     req.cookies.role = undefined
     req.cookies.jti = undefined
     const { access_token, refresh_token } = req.cookies
     try {
         const { aud, role, jti } = await verifyJWT(access_token)
-        req.cookies = { ...req.cookies, userid: aud, role, jti }
+        req.cookies = { ...req.cookies, userno: aud, role, jti }
     } catch {
         const { aud, role, jti } = await verifyJWT(refresh_token)
         const result = await LoginToken.findOne({ jti })
@@ -55,7 +55,7 @@ export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
         const jwt = await createJWT(aud, role, newjti, "30m")
         const cookies = [`access_token=${jwt};Max-Age=${30 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`]
         res.setHeader('Set-Cookie', cookies)
-        req.cookies = { ...req.cookies, userid: aud, role, jti: newjti }
+        req.cookies = { ...req.cookies, userno: aud, role, jti: newjti }
     }
 }
 

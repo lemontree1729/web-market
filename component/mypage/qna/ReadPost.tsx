@@ -3,46 +3,50 @@ import { useState } from "react"
 import customAxios from "../../../utils/customAxios"
 import Link from "next/link"
 import { NextPage } from "next"
-import { qaBoard } from "../../../models/QABoard"
+import { useRouter } from "next/router"
+import { extraInquiry } from "./Board"
 
 
-const ReadPost: NextPage<{ data: qaBoard }> = ({ data }) => {
+const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
+    const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
     const [isAnswer, setisAnswer] = useState(false)
-    const answer = data.answer ? "답변완료" : "답변예정"
+    const answer = data.reply.length ? "답변완료" : "답변예정"
 
     function clickContent() {
-        if (data.answer) {
+        if (data.reply.length) {
             setisAnswer(!isAnswer)
         }
         setIsOpen(!isOpen)
     }
     async function deleteApi(event: any) {
         event.preventDefault()
-        try {
-            const res = await customAxios.delete(`/api/qaboard?qaid=${data.qaid}`)
-            if (res.status == 200) {
-                alert('글이 삭제되었습니다.')
-            } else {
-                alert('글이 존재하지 않습니다.')
+        if (window.confirm("삭제하시겠습니까?")) {
+            try {
+                const res = await customAxios.delete(`/api/inquiry?no=${data.no}`)
+                if (res.status == 200) {
+                    alert('글이 삭제되었습니다.')
+                } else {
+                    alert('글이 존재하지 않습니다.')
+                }
+            } catch (err) {
+                console.log(err)
+                alert('삭제가 실패했습니다..')
             }
-        } catch (err) {
-            console.log(err)
-            alert('삭제가 실패했습니다..')
         }
     }
 
     return (
         <>
-            <tr onClick={clickContent} className="">
-                <td>{data.qaid}</td>
+            <tr onClick={clickContent}>
+                <td>{data.no}</td>
                 <td>{data.qacategory}</td>
                 <td>{data.title}</td>
-                <td>{data.userid}</td>
-                <td>{data.date.toString().replace(/-/g, ".")}</td>
+                <td>{data.userno}</td>
+                <td>{data.createdAt.toString().replace(/-/g, ".").substring(0, 10)}</td>
                 <td>{answer}</td>
                 <td>
-                    <Link href={`/mypage/updatepost/${data.qaid}`} passHref>
+                    <Link href={`/mypage/updatepost/${data.no}`} passHref>
                         <button>수정하기</button>
                     </Link>
                     <button onClick={deleteApi}>삭제</button>

@@ -20,12 +20,14 @@ const Mypage: NextPage = () => {
     }
     return (
         <Layout>
-            <div className={mypageStyle.body}>
-                <div className="sidebar">
-                    <SideBar toggle="userinfo" />
-                </div>
-                <div className={mypageStyle.content}>
-                    <UserInfo />
+            <div className={mypageStyle.container}>
+                <div className={mypageStyle.body}>
+                    <div className="sidebar">
+                        <SideBar toggle="userinfo" />
+                    </div>
+                    <div className={mypageStyle.content}>
+                        <UserInfo />
+                    </div>
                 </div>
             </div>
         </Layout>

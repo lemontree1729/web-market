@@ -3,7 +3,6 @@ import Link from "next/link"
 import { NextPage } from "next"
 
 const SideBar: NextPage<{ toggle: string }> = ({ toggle }) => {
-    console.log(toggle)
     return (
         <div className={sidebarStyle.content}>
             <h3>마이페이지</h3>
@@ -16,9 +15,9 @@ const SideBar: NextPage<{ toggle: string }> = ({ toggle }) => {
             <Link href="/mypage/addresschange">
                 <span className={toggle === "addresschange" ? sidebarStyle.spanselect : sidebarStyle.span}>주소 변경</span>
             </Link>
-            <Link href="/mypage/orderhistory">
+            {/* <Link href="/mypage/orderhistory">
                 <span className={toggle === "orderhistory" ? sidebarStyle.spanselect : sidebarStyle.span}>주문 내역</span>
-            </Link>
+            </Link> */}
             <Link href="/mypage/qna">
                 <span className={toggle === "qna" ? sidebarStyle.spanselect : sidebarStyle.span}>QnA</span>
             </Link>

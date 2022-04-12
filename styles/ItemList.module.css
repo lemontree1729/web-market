@@ -1,8 +1,8 @@
 .style {
     width: 100%;
-    height: 600px;
+    height: 640px;
     display: flex;
-    border: 1px solid #777;
+    border-top: 2px solid black;
     background-color: white;
 }
 
@@ -11,9 +11,15 @@
     width: 230px;
     padding: 40px 0 0 20px;
     text-align: left;
-    font-size: 30px;
-    font-weight: 900;
-    border-right: 1px solid #777;
+    font-size: 25px;
+    font-weight: 700;
+    border-right: 1px solid #f2f2f2;
+    color: #33383e;
+}
+
+.content {
+    width: 230px;
+
 }
 
 .item {
@@ -27,22 +33,31 @@
 
 }
 
-.imageUrl {
-    width: 190px;
-    height: 190px;
+.thumb {
+    width: 180px;
+    height: 180px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageUrl {
+    width: 100%;
 }
 
 .info {
-    height: 100px;
-    width: 100%;
+    height: 75px;
+    width: 180px;
     /* border: 1px solid rosybrown; */
 }
 
 .lList {
     width: 210px;
-    margin: 6px 0 0 4px;
+    height: 290px;
+    margin: 15px 0 0 40px;
     cursor: pointer;
+    z-index: 1;
 }
 
 .name {
@@ -50,14 +65,18 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    max-height: 38px;
+    min-height: 40px;
     line-height: 19px;
-    margin: 6px 0 1px 3px;
+    margin: 10px 0 1px 3px;
 }
 
 .price {
     font-size: 17px;
     height: 20px;
-    margin: 6px 0 1px 3px;
+    margin: 15px 0 1px 3px;
     background-color: white;
+}
+
+.lList:hover .imageUrl {
+    transform: scale(1.1);
 }

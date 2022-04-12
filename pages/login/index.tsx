@@ -53,39 +53,43 @@ const Home: NextPage = () => {
     router.push("/")
   }
 
-  return (<div className={loginStyle.container}>
-    <div className={loginStyle.content}>
-      <form>
-        <div className={loginStyle.login_wrap}>
-          <h2 className={loginStyle.login}>로그인</h2>
-          <div className={loginStyle.id_pw_wrap}>
-            <label>
-              {/* ID */}
-              <input type="text" value={id} onChange={IdInputHandler} placeholder="아이디" />
-            </label>
-            <label>
-              {/* PW */}
-              <input type="password" value={password} onChange={PasswordInputHandler} placeholder='비밀번호' />
-            </label>
-          </div>
-          <div className={loginStyle.keep_login}>
-            <label >
-              <span>로그인 유지</span>
-              <input type="checkbox" onChange={persistentInputHandler} />
-            </label>
-          </div>
-          <div className={loginStyle.login_btn}>
-            <button onClick={login}>로그인</button>
-          </div>
-          <div className={loginStyle.signup_btn}>
-            <Link href="/signup" passHref>
-              <span>회원가입</span>
+  return (
+    <div className={loginStyle.container}>
+      <div className={loginStyle.content}>
+        <form>
+          <div className={loginStyle.login_wrap}>
+            <Link href="/" passHref>
+              <div className={loginStyle.logo}></div>
             </Link>
+            <div className={loginStyle.id_pw_wrap}>
+              <label>
+                {/* ID */}
+                <input type="text" value={id} onChange={IdInputHandler} placeholder="아이디" />
+              </label>
+              <label>
+                {/* PW */}
+                <input type="password" value={password} onChange={PasswordInputHandler} placeholder='비밀번호' />
+              </label>
+            </div>
+            <div className={loginStyle.keep_login}>
+              <label >
+                <span>로그인 유지</span>
+                <input type="checkbox" onChange={persistentInputHandler} />
+              </label>
+            </div>
+            <div className={loginStyle.login_btn}>
+              <button onClick={login}>로그인</button>
+            </div>
+            <div className={loginStyle.signup_btn}>
+              <Link href="/signup" passHref>
+                <span>회원가입</span>
+              </Link>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>)
+  )
 }
 
 export default Home

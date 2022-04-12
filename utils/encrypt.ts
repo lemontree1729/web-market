@@ -31,7 +31,6 @@ export function encryptAuthNumber(fingerprint: string) {
 
 export async function createJWT(aud: string, role: string, jti: string, expirationtime: string | number,) {
     const privateKey = await jose.importPKCS8(envExist(process.env.PKCS8, "pkcs8", true), "ES256")
-    console.log(expirationtime)
     const jwt = await new jose.SignJWT({ role })
         .setProtectedHeader({ alg: 'ES256' })
         .setIssuedAt()

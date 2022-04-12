@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import React, { EventHandler, MouseEventHandler, useState } from 'react'
+import checktableStyle from '../../styles/admin/checktable.module.css'
 
 
 const CheckTable: NextPage<{ data: Array<any>, column: any, setCheckedList: Function, index: string }> = ({ data, column, setCheckedList, index }) => {
@@ -22,8 +23,9 @@ const CheckTable: NextPage<{ data: Array<any>, column: any, setCheckedList: Func
     }
     console.log(data)
     return (
-        <div className='table-responsive'>
-            <table className="table align-middle text-center table-striped table-hover table-bordered">
+        <div className={checktableStyle.content}>
+            <h3 className={checktableStyle.title}>유저목록</h3>
+            <table >
                 <thead>
                     <tr>
                         {Object.keys(column).map((col: string) => <th scope="col">{col}</th>)}
@@ -34,9 +36,8 @@ const CheckTable: NextPage<{ data: Array<any>, column: any, setCheckedList: Func
                     {data.map((rows: any) =>
                         <tr>
                             {Object.values(column).map((col: string) => <td>{rows[col]}</td>)}
-                            {/* {Object.values(rows).map((row: any) => <td>{row}</td>)} */}
                             <td>
-                                <input className="form-check-input" type="checkbox" onClick={changeCheckedList} value={rows[index]} />
+                                <input type="checkbox" onClick={changeCheckedList} value={rows[index]} />
                             </td>
                         </tr>)}
                 </tbody>

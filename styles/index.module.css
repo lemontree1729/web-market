@@ -24,11 +24,22 @@
 }
 
 .recommendtitle {
-    width: 1020px;
-    margin-top: 60px;
+    margin-top: 100px;
 }
 
 .recommendtitle h3 {
+    margin: 0;
+    height: 40px;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.recommendtitle h3 :nth-last-child(1) {
+    color: dodgerblue;
     font-size: 30px;
-    font-weight: 900;
+}
+
+.rank {
+    width: 1280px;
+    margin-top: 40px;
 }

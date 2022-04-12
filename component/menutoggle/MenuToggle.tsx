@@ -36,10 +36,7 @@ const MenuToggle: NextPage = () => {
                 <div></div>
             </div>
             <div className={isToggle ? menutoggleStyle.category1 : menutoggleStyle.sideBar}>
-                <div className={menutoggleStyle.category}>
-                    <strong> 카테고리</strong>
-                    <button>x</button>
-                </div>
+
                 <div>
                     {data && data.map((category: category) =>
                         <>

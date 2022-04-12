@@ -24,12 +24,14 @@ const QnA: NextPage = () => {
     }
     return (
         <Layout>
-            <div className={mypageStyle.body}>
-                <div className="sidebar">
-                    <SideBar toggle="qna" />
-                </div>
-                <div className={mypageStyle.content}>
-                    <Qna />
+            <div className={mypageStyle.container}>
+                <div className={mypageStyle.body}>
+                    <div className="sidebar">
+                        <SideBar toggle="qna" />
+                    </div>
+                    <div className={mypageStyle.content}>
+                        <Qna />
+                    </div>
                 </div>
             </div>
         </Layout >

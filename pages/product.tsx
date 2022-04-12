@@ -1,6 +1,6 @@
 import styles from '../styles/product.module.css'
 import { useState } from 'react'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import customAxios from '../utils/customAxios'
 import { useRouter } from 'next/router'
 import useCustomSWR from '../utils/client/useCustumSWR'
@@ -8,11 +8,12 @@ import Layout from '../component/Layout'
 import Link from 'next/link'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const res = await customAxios.get(`/api/product?id=${context.query.id}`)
-    const viewcount = await customAxios.patch("/api/product/viewcount", { id: context.query.id })
-    const data = await res.data
+    const res = await customAxios.get(`/api/product?no=${context.query.no}`)
+    await customAxios.patch("/api/product/viewcount", { no: context.query.no })
+    const { data: { result } } = res
+    // console.log(result.data[0])
     return {
-        props: { ...data.result.data[0] }
+        props: { ...result.data[0] }
     }
 }
 
@@ -30,11 +31,19 @@ function Before2(props: any) {
 }
 
 
-const Product = (props: any) => {
+const Product: NextPage = (props: any) => {
     const router = useRouter()
     const { query } = router
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user?info=true")
+    const params = new URLSearchParams();
+    ["likelist", "cartlist"].forEach(value => params.append("required", value))
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params })
     const [count, setCount] = useState(0)
+    if (isLoading || !props) return <div>로딩중...</div>
+    if (isServerError) {
+        alert("서버 에러가 발생하였습니다")
+        router.push("/")
+    }
+    const { likelist, cartlist } = data
     const onIncrease = () => setCount(count + 1)
     const onDecrease = () => setCount(count - 1)
     const SumPrice = () => count * parseInt(props.price)
@@ -42,20 +51,30 @@ const Product = (props: any) => {
         if (isApiError) {
             alert("로그인이 필요합니다")
             router.push("/login")
-        } else if (data) {
-            const { likelist } = data
-            if (!likelist.includes(props.id)) {
-                likelist.push(props.id)
+        } else {
+            console.log(likelist)
+            if (!likelist.includes(props.no)) {
+                likelist.push(props.no)
             } else {
-                likelist.splice(likelist.indexOf(props.id), 1)
+                likelist.splice(likelist.indexOf(props.no), 1)
             }
-            await customAxios.patch("/api/user", { likelist })
+            await customAxios.patch("/api/user/me", { likelist })
         }
     }
-    if (isLoading) return <div>로딩중...</div>
-    if (isServerError) {
-        alert("서버 에러가 발생하였습니다")
-        router.push("/")
+
+
+    const pressPayment = async () => {
+        if (isApiError) {
+            alert("로그인이 필요합니다")
+            router.push("/login")
+        } else {
+
+            if (!cartlist.includes(props.no)) {
+                cartlist.push(props.no)
+            }
+            await customAxios.patch("/api/user/me", { cartlist })
+            router.push(`/payment`)
+        }
     }
     return (
         <Layout>
@@ -94,8 +113,8 @@ const Product = (props: any) => {
                             </div>
                         </div>
                         <div className={styles.purchaseButton}>
-                            <Link href={`/payment?id=${query.id}`} passHref>
-                                <button className={styles.button}>구매버튼</button>
+                            <Link href={`/payment?no=${query.no}`} passHref>
+                                <button className={styles.button} onClick={pressPayment}>구매버튼</button>
                             </Link>
                             <div>
                                 <button className={styles.etcMenu} onClick={pressLike}>찜하기</button>

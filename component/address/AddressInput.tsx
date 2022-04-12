@@ -26,9 +26,7 @@ const AddressInput: NextPage<{ setAddressFunction: Function, setZonecodeFunction
 
   return (
     <div className={addressStyle.addressform}>
-      <label>
-        주소
-      </label>
+
       <div className={addressStyle.addressinput}>
         <input className={addressStyle.input} type="text" id="zonecode" defaultValue={zonecode} placeholder="우편번호" />
         <button type="button" onClick={opendaumPost} defaultValue="우편번호 찾기">주소검색</button><br />

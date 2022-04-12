@@ -20,12 +20,14 @@ const Passwordchange: NextPage = () => {
     }
     return (
         <Layout>
-            <div className={mypageStyle.body}>
-                <div className="sidebar">
-                    <SideBar toggle="passwordchange" />
-                </div>
-                <div className={mypageStyle.content}>
-                    <PasswordChange />
+            <div className={mypageStyle.container}>
+                <div className={mypageStyle.body}>
+                    <div className="sidebar">
+                        <SideBar toggle="passwordchange" />
+                    </div>
+                    <div className={mypageStyle.content}>
+                        <PasswordChange />
+                    </div>
                 </div>
             </div>
         </Layout>

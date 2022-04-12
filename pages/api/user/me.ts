@@ -8,29 +8,31 @@ import { filterObject, flattenObject } from '../../../utils/server/etc';
 const handler = customHandler()
     .get( // 입력: 없음, 출력: 해당 유저의 모든 정보
         async (req, res) => {
-            let { userid } = req.cookies
+            let { userno } = req.cookies
             let { required } = req.query
-            const result = await User.findOne({ id: userid }).lean()
+            const result = await User.findOne({ no: userno }).lean()
             if (!result) {
                 return Err(res, "misterious error with token")
             } else {
                 let filter: string[]
                 if (!required) {
-                    filter = ["role", "id"]
+                    filter = ["role", "no"]
                 } else if (typeof required === "string") {
-                    filter = [required]
+                    filter = ["role", "no", required]
                 } else {
-                    filter = required
+                    filter = ["role", "no", ...required]
                 }
                 const filteredResult = filterObject(flattenObject(result), filter)
+                console.log(required, filter)
+                console.log(filteredResult)
                 return Ok(res, filteredResult)
             }
         })
     .patch( // 입력: 해당 유저의 수정 정보(fulladdress, password의 경우 oldpassword까지), 출력: 성공 여부
         async (req, res) => {
-            const { userid } = req.cookies
+            const { userno } = req.cookies
             let { fulladdress, password, oldpassword } = req.body
-            const result = await User.findOne({ id: userid })
+            const result = await User.findOne({ no: userno })
             if (!result) {
                 return Err(res, "userid not exist")
             }

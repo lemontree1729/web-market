@@ -103,7 +103,7 @@ const Category: NextPage = () => {
                                 </label>
 
                                 <div className={styles.priceList}>
-                                    {productData && productData.map(product => <CategoryList key={product.id} data={product} />)}
+                                    {productData && productData.map(product => <CategoryList key={product.no} data={product} />)}
                                 </div>
 
                                 {productTotalNum && <Pagination
