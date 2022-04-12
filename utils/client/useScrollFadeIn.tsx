@@ -2,6 +2,7 @@ import { useRef, useEffect, useCallback } from 'react';
 
 const useScrollFadeIn = (direction, duration, delay) => {
     const dom = useRef(undefined);
+    console.log(dom)
     //왜 안돼
     const handleDirection = (name) => {
         switch (name) {
