@@ -1,7 +1,8 @@
 import mongoose, { model, Schema } from 'mongoose';
 
 export interface loginToken {
-    userno: number,
+    _id?: number,
+    user_id: number,
     jti: string,
     ip: string,
     fingerprint: string,
@@ -9,7 +10,8 @@ export interface loginToken {
     expireAt: Date
 }
 const loginTokenSchema = new Schema<loginToken>({
-    userno: { type: Number, required: true },
+    _id: { type: Number },
+    user_id: { type: Number, required: true, ref: "user" },
     jti: { type: String, required: true, unique: true, index: true },
     ip: { type: String, required: true }, // add validate
     fingerprint: { type: String, required: true },

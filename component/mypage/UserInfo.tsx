@@ -1,12 +1,9 @@
-import useCustomSWR from "../../utils/client/useCustumSWR"
 import userinfoStyle from "../../styles/mypage/userinfo.module.css"
 import { NextPage } from "next"
+import { user } from "../../models/User"
 
 
-const UserInfo: NextPage = () => {
-    const { data, isLoading, isError } = useCustomSWR("/api/user/me")
-    if (isError) return <div>failed to load</div>
-    if (isLoading) return <div>loading...</div>
+const UserInfo: NextPage<{ data: user }> = ({ data }) => {
     return (
         <div className={userinfoStyle.content}>
             <h2>회원정보</h2>

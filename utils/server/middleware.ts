@@ -38,7 +38,7 @@ export function validateRequest(validations: ValidationChain[]) {
 export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
     await validate([cookie("refresh_token").exists()])(req, res)
     //initialize cookie
-    req.cookies.userno = undefined
+    req.cookies.user_id = undefined
     req.cookies.role = undefined
     req.cookies.jti = undefined
     const { access_token, refresh_token } = req.cookies
@@ -55,7 +55,7 @@ export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
         const jwt = await createJWT(aud, role, newjti, "30m")
         const cookies = [`access_token=${jwt};Max-Age=${30 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`]
         res.setHeader('Set-Cookie', cookies)
-        req.cookies = { ...req.cookies, userno: aud, role, jti: newjti }
+        req.cookies = { ...req.cookies, user_id: aud, role, jti: newjti }
     }
 }
 
