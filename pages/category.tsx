@@ -6,6 +6,7 @@ import Layout from '../component/Layout'
 import { product } from '../models/Product'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Pagination from '../component/index/Pagination'
 
 const Category: NextPage = () => {
     const router = useRouter()
@@ -13,13 +14,15 @@ const Category: NextPage = () => {
     const initCategory2 = router.query.category2
     const [category1, setCategory1] = useState("")
     const [category2, setCategory2] = useState("")
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         setCategory1(initCategory1?.toString() || "")
         setCategory2(initCategory2?.toString() || "")
     }, [initCategory1, initCategory2])
     const categorySWR = useCustomSWR("/api/product/category", {}, false, true)
-    const productSWR = useCustomSWR(`/api/product?category1=${category1}&category2=${category2}`)
+    const productSWR = useCustomSWR(`/api/product?category1=${category1}&category2=${category2}&display=${limit}&pagenum=${page}`)
     if (categorySWR.isLoading) {
         return <div>로딩중</div>
     }
@@ -50,6 +53,9 @@ const Category: NextPage = () => {
 
     // console.log(categoryData, productData)
     // console.log(productTotalNum)
+
+
+    const offset = (page - 1) * limit;
 
     return (
         <Layout>
@@ -84,10 +90,30 @@ const Category: NextPage = () => {
                         <div className={styles.price}>
                             {/* -------------------------제품리스트---------------------- */}
                             <div className={styles.itemList}>
+                                <label className={styles.label}>
+                                    페이지 당 표시할 게시물 수:&nbsp;
+                                    <select
+                                        value={limit}
+                                        onChange={({ target: { value } }) => setLimit(Number(value))}
+                                    >
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </label>
+
                                 <div className={styles.priceList}>
                                     {productData && productData.map(product => <CategoryList key={product.id} data={product} />)}
                                 </div>
+
+                                {productTotalNum && <Pagination
+                                    total={productTotalNum}
+                                    limit={limit}
+                                    page={page}
+                                    setPage={setPage}
+                                />}
                             </div>
+
                             {/* --------------------------랭킹?--------------------------- */}
                             <div className={styles.Ranking}>
                                 <div className={styles.RankingList}>랭킹</div>

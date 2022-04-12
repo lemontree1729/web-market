@@ -125,10 +125,16 @@
     width: 80%;
 }
 
+.label
+{
+    margin: 0 auto;
+}
+
 .Ranking
 {
     width: 20%;
     margin-left: 20px;
+    margin-top: 21px;
     
 }
 
