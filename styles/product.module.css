@@ -3,49 +3,53 @@
     width: 100%;
     margin: auto;
     padding: 2rem 0;
-    background-color: rgb(245, 241, 241);
 }
 
 .purchaseList
 {
-    width: 60%;   
+    width: 90%;   
     margin: auto;
     height: 700px;
     display: flex;
-    border: 1px solid black;
+    border: 1px solid rgb(156, 156, 156);
+    border-bottom: 0px;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .itemImage
 {
-    margin: 1%;
+    margin-top: 40px;
+    margin-left: 30px;
+    margin-right: 20px;
     width: 49%;
     height: 500px;
-    border: 1px solid black;
 }
 
 .purchasePart
 {
     margin: 1%;
     width: 49%;
+    height: 98%;
     padding: 10px;
-    border: 1px solid black;
+    border-left: 1px solid rgb(156, 156, 156);
 }
 
 .itemName
 {
     margin: 10px;
-    margin-top: 30px;
-    padding: auto;
-    border: 1px solid black;
+    margin-top: 20px;
     font-size: 25px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    vertical-align: top;
+    height: 100px;
 }
 
 .price
 {
     margin: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     padding: auto;
-    border: 1px solid;
     font-size: 30px;
     text-align: end;
 }
@@ -53,7 +57,7 @@
 .start
 {
     margin: 10px;
-    border: 1px solid black;
+
     display: flex;
     margin-bottom: 5px;
 }
@@ -64,14 +68,15 @@
     margin-left: 10px;
     width: 70px;
     height: 70px;
-    border: 1px solid black;
+    border: 1px solid rgb(156, 156, 156);
 }
 
 .p
 {
     margin: 10px;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid rgb(156, 156, 156);
+    border-radius: 10px;
 }
 
 .express
@@ -84,7 +89,8 @@
 {
     margin: 10px;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid rgb(156, 156, 156);
+    border-radius: 10px;
     margin-bottom: 30px;
 }
 
@@ -105,23 +111,17 @@
 .countBut
 {
     margin-right: auto;
-}
-.sumPrice
-{
-    margin-top: 5px;
-    font-size: 20px;
+    display: inline-flex;
+    text-align: center;
 }
 
 .count
 {
-    border: 1px solid black;
-    display: inline-flex;
     margin-top: 5px;
     margin-bottom: 5px;
     width: 30px;
     height: 30px;
-    padding-top: 2px;
-    padding-left: 9px;
+    padding-top: 4px;
 }
 
 
@@ -129,7 +129,6 @@
 .totalPrice
 {
     margin: 10px;
-    border: 1px solid black;
     margin-bottom: 30px;
 }
 
@@ -172,11 +171,12 @@
 
 .itemInfo
 {
-    width: 60%;
-    height: 1500px;
+    width: 90%;
+    height: 2250px;
     margin: auto;
     display: flex;
-    border: 1px solid black;
+    border: 1px solid rgb(156, 156, 156);
+    border-radius: 10px 10px 10px 10px;
 }
 
 .itemTag
@@ -184,19 +184,29 @@
     margin: 10px;
     width: 100%;
     height: 60px;
-    border: 1px solid black;
+    border: 1px solid rgb(156, 156, 156);
     font-size: 20px;  
 }
 
 .tagLayout
-{
+{   
     display: flex;
-    height: 58px;
+    text-align: center;
     background-color: #f3f5f7;
     font-weight: 600;
     color: #333;
-    justify-content: space-evenly;
-    padding-top: 15px;
+    list-style: none;
+    height: 100%;
+}
+
+.li
+{
+    width: 100%;
+}
+
+.strong
+{
+    line-height: 55px;
 }
 
 .before
@@ -207,6 +217,42 @@
     background-color: #d7d7d7;
     vertical-align: top;
     content: '';
-    margin-top: -10px;
-    margin-right: 80px;
+    margin-top: 4px;
+}
+
+.tagList
+{
+    margin: 0 auto;
+}
+
+.tagInfo
+{
+    margin-top: 30px;
+    width: 100%;
+    height: 500px;
+    border-top: 2px solid black;
+}
+
+.tagReview
+{
+    margin-top: 30px;
+    width: 100%;
+    height: 500px;
+    border-top: 2px solid black;
+}
+
+.tagQnA
+{
+    margin-top: 30px;
+    width: 100%;
+    height: 500px;
+    border-top: 2px solid black;
+}
+
+.tagRMA
+{
+    margin-top: 30px;
+    width: 100%;
+    height: 500px;
+    border-top: 2px solid black;
 }
