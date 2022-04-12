@@ -8,7 +8,7 @@ import useScrollFadeIn from '../../utils/client/useScrollFadeIn'
 const Item: NextPage<{ data: product }> = ({ data }) => {
     return (
         <div className={styles.content}>
-            <Link href={`/product?no=${data.no}`} passHref>
+            <Link href={`/product?_id=${data._id}`} passHref>
                 <div className={styles.lList}>
                     <div className={styles.thumb}>
                         <img className={styles.imageUrl} src={data.imageUrl}></img>
@@ -34,7 +34,7 @@ const ItemList: NextPage<{ data: Array<product> }> = ({ data }) => {
             </div>
             <div {...animationItem} className={styles.item}>
                 {/* <div className={styles.item}> */}
-                {data.map(product => <Item key={product.no} data={product}></Item>)}
+                {data.map(product => <Item key={product._id} data={product}></Item>)}
             </div>
         </div>
     )

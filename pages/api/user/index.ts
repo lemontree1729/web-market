@@ -13,8 +13,8 @@ const handler = customHandler()
         async (req, res) => {
             // const { sort, display, byCategory, id: id } = req.query
             // result = await Product.aggregate([{ "$match": { id: parseInt(id as string) } }, { "$sample": { "size": maxResults } }])
-            let { no, id, required } = req.query
-            const result = await User.find({ no, id }).lean()
+            let { _id, id, required } = req.query
+            const result = await User.find({ _id, id }).lean()
             let filter: string[]
             if (!required) {
                 filter = []
@@ -47,18 +47,18 @@ const handler = customHandler()
         }
     )
     .patch(
-        validateRequest([body("no").isArray(), body("role").isIn(["user", "admin"])]),
+        validateRequest([body("_id").isArray(), body("role").isIn(["user", "admin"])]),
         async (req, res) => {
-            const { no, role } = req.body
-            console.log("test", no, role)
-            const result = await User.updateMany({ no: { $in: no } }, { $set: { role } })
+            const { _id, role } = req.body
+            console.log("test", _id, role)
+            const result = await User.updateMany({ _id: { $in: _id } }, { $set: { role } })
             Ok(res, result)
         })
     .delete(
-        validateRequest([query("no").exists()]),
+        validateRequest([query("_id").exists()]),
         async (req, res) => {
-            const { no } = req.query
-            const result = await User.deleteMany({ no: { $in: no } })
+            const { _id } = req.query
+            const result = await User.deleteMany({ _id: { $in: _id } })
             Ok(res, result)
         })
 export default handler

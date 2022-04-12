@@ -38,7 +38,7 @@ export function validateRequest(validations: ValidationChain[]) {
 export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
     await validate([cookie("refresh_token").exists()])(req, res)
     //initialize cookie
-    req.cookies.userno = undefined
+    req.cookies.user_id = undefined
     req.cookies.role = undefined
     req.cookies.jti = undefined
     const { access_token, refresh_token } = req.cookies

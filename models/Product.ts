@@ -2,7 +2,7 @@ import mongoose, { model, Schema } from 'mongoose';
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 export interface product {
-    _id?: Number,
+    _id?: number,
     name: string,
     price: number,
     category1: string,

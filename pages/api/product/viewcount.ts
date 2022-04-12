@@ -7,10 +7,10 @@ import { validateRequest } from "../../../utils/server/middleware";
 const handler = customHandler()
     // how to make restful api with different permission?
     .patch(
-        validateRequest([body(["no"]).exists()]),
+        validateRequest([body(["_id"]).exists()]),
         async (req, res) => {
-            const { no } = req.body
-            await Product.updateOne({ no }, { $inc: { viewcount: 1 } })
+            const { _id } = req.body
+            await Product.updateOne({ _id }, { $inc: { viewcount: 1 } })
             return Ok(res, "success")
         }
     )

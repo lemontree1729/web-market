@@ -8,8 +8,8 @@ import Layout from '../component/Layout'
 import Link from 'next/link'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const res = await customAxios.get(`/api/product?no=${context.query.no}`)
-    await customAxios.patch("/api/product/viewcount", { no: context.query.no })
+    const res = await customAxios.get(`/api/product?_id=${context.query._id}`)
+    await customAxios.patch("/api/product/viewcount", { _id: context.query._id })
     const { data: { result } } = res
     console.log(result.data[0])
     return {
@@ -53,10 +53,10 @@ const Product: NextPage = (props: any) => {
             alert("로그인이 필요합니다")
             router.push("/login")
         } else {
-            if (!likelist.includes(props.no)) {
-                likelist.push(props.no)
+            if (!likelist.includes(props._id)) {
+                likelist.push(props._id)
             } else {
-                likelist.splice(likelist.indexOf(props.no), 1)
+                likelist.splice(likelist.indexOf(props._id), 1)
             }
             await customAxios.patch("/api/user/me", { likelist })
         }
@@ -66,8 +66,8 @@ const Product: NextPage = (props: any) => {
             alert("로그인이 필요합니다")
             router.push("/login")
         } else {
-            if (!cartlist.includes(props.no)) {
-                cartlist.push(props.no)
+            if (!cartlist.includes(props._id)) {
+                cartlist.push(props._id)
                 await customAxios.patch("/api/user/me", { cartlist })
                 alert("장바구니에 추가되었습니다")
             } else {
@@ -83,8 +83,8 @@ const Product: NextPage = (props: any) => {
             router.push("/login")
         } else {
             console.log(cartlist)
-            if (!cartlist.includes(props.no)) {
-                cartlist.push(props.no)
+            if (!cartlist.includes(props._id)) {
+                cartlist.push(props._id)
             }
             await customAxios.patch("/api/user/me", { cartlist })
             router.push(`/payment`)
@@ -127,7 +127,7 @@ const Product: NextPage = (props: any) => {
                             </div>
                         </div>
                         <div className={styles.purchaseButton}>
-                            <Link href={`/payment?no=${query.no}`} passHref>
+                            <Link href={`/payment?_id=${query._id}`} passHref>
                                 <button className={styles.button} onClick={pressPayment}>구매버튼</button>
                             </Link>
                             <div>

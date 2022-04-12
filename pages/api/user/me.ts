@@ -8,27 +8,19 @@ import { filterObject, flattenObject } from '../../../utils/server/etc';
 const handler = customHandler()
     .get( // 입력: 없음, 출력: 해당 유저의 모든 정보
         async (req, res) => {
-            let { userno } = req.cookies
+            let { user_id } = req.cookies
             let { required } = req.query
-            const result = await User.findOne({ no: userno }).lean()
-            // const result = await User.aggregate([{ $match: { no: userno } }, { $lookup: { from: "product",  }])
-            // {$lookup:
-            // {
-            //   from: <collection to join>,
-            //   localField: <field from the input documents>,
-            //   foreignField: <field from the documents of the "from" collection>,
-            //   as: <output array field>
-            // }}
+            const result = await User.findOne({ _id: user_id }).lean()
             if (!result) {
                 return Err(res, "misterious error with token")
             } else {
                 let filter: string[]
                 if (!required) {
-                    filter = ["role", "no"]
+                    filter = ["role", "_id"]
                 } else if (typeof required === "string") {
-                    filter = ["role", "no", required]
+                    filter = ["role", "_id", required]
                 } else {
-                    filter = ["role", "no", ...required]
+                    filter = ["role", "_id", ...required]
                 }
                 const filteredResult = filterObject(flattenObject(result), filter)
                 console.log(required, filter)
@@ -38,9 +30,9 @@ const handler = customHandler()
         })
     .patch( // 입력: 해당 유저의 수정 정보(fulladdress, password의 경우 oldpassword까지), 출력: 성공 여부
         async (req, res) => {
-            const { userno } = req.cookies
+            const { user_id } = req.cookies
             let { fulladdress, password, oldpassword, cartlist, likelist } = req.body
-            const result = await User.findOne({ no: userno })
+            const result = await User.findOne({ _id: user_id })
             if (!result) {
                 return Err(res, "userid not exist")
             }
