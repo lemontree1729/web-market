@@ -4,14 +4,37 @@ import useCustomSWR from '../../utils/client/useCustumSWR'
 import MenuToggle from '../menutoggle/MenuToggle'
 import { NextPage } from 'next'
 import { Default, Moblie } from '../responsive'
+import customAxios from '../../utils/customAxios'
+import { useRouter } from 'next/router'
+import Search from '../Search'
 
 const HeaderCompo: NextPage = () => {
+    const router = useRouter()
+
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
     if (isLoading) return <div>로딩중...</div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
     }
+
+
+
+
     const role = data?.role
+    async function logout() {
+        try {
+            await customAxios.delete("/api/login")
+            if (router.pathname === "/") {
+                router.reload()
+            } else {
+                router.replace("/")
+            }
+        } catch {
+            alert("로그아웃에 실패하였습니다")
+            router.reload()
+        }
+    }
+
     return (
         <>
             <Default>
@@ -24,13 +47,7 @@ const HeaderCompo: NextPage = () => {
                                 <div className={styles.logo}></div>
                             </Link>
                         </div>
-
-                        <div className={styles.searchcontainer}>
-                            <div className={styles.search}>
-                                <input type="text" />
-                                <button></button>
-                            </div>
-                        </div>
+                        <Search></Search>
                         {
                             isApiError
                                 ? <>
@@ -61,9 +78,7 @@ const HeaderCompo: NextPage = () => {
                                                 </div>
                                             </Link>
                                             <span>|</span>
-                                            <Link href="/api/logout" passHref>
-                                                <div className={styles.loginbtn}>로그아웃</div>
-                                            </Link>
+                                            <div className={styles.loginbtn} onClick={logout}>로그아웃</div>
                                         </div>
                                         <div className={styles.mypage}>
                                             <Link href="/mypage" passHref>
@@ -76,9 +91,7 @@ const HeaderCompo: NextPage = () => {
                                     </>
                                     : <>
                                         <div className={styles.logingroup}>
-                                            <Link href="/api/logout" passHref>
-                                                <div className={styles.loginbtn}>로그아웃</div>
-                                            </Link>
+                                            <div className={styles.loginbtn} onClick={logout}>로그아웃</div>
                                         </div>
                                         <div className={styles.mypage}>
                                             <Link href="/mypage" passHref>
@@ -132,9 +145,7 @@ const HeaderCompo: NextPage = () => {
                                                 </div>
                                             </Link>
                                             <span>|</span>
-                                            <Link href="/api/logout" passHref>
-                                                <div className={styles.loginbtn}>로그아웃</div>
-                                            </Link>
+                                            <div className={styles.loginbtn} onClick={logout}>로그아웃</div>
                                         </div>
                                         <div className={styles.mypage}>
                                             <Link href="/mypage" passHref>
@@ -147,9 +158,7 @@ const HeaderCompo: NextPage = () => {
                                     </> :
                                     <>
                                         <div className={styles.logingroupMobile}>
-                                            <Link href="/api/logout" passHref>
-                                                <div className={styles.loginbtn}>로그아웃</div>
-                                            </Link>
+                                            <div className={styles.loginbtn} onClick={logout}>로그아웃</div>
                                         </div>
                                         <div className={styles.mypage}>
                                             <Link href="/mypage" passHref>
