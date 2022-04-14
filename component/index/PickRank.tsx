@@ -14,7 +14,7 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
                     <div className={styles.info}>
                         <div className={styles.name}>{data.name.replaceAll(/<\/*b>/gi, "")}</div>
                         <div className={styles.price}>
-                            <strong>{data.price}</strong>원
+                            <strong>{data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong>원
                         </div>
                     </div>
                 </div>

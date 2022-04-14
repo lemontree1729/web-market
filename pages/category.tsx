@@ -54,27 +54,25 @@ const Category: NextPage = () => {
                     <div className={styles.categoryTag}>
                         <div className={styles.categoryList}>카테고리</div>
                         <div className={styles.categoryFilter}>
-                            {category1Data && category1Data.map(category1 => <div key={category1} onClick={clickCategory1} className={styles.categoryBig}>{category1}</div>)}
+                            {category1Data && category1Data.map(category1 => <span key={category1} onClick={clickCategory1} className={styles.categoryBig}>{category1}</span>)}
                         </div>
                     </div>
                     <div className={styles.smallCategoryTag}>
                         <div className={styles.categoryList}>상세분류</div>
                         <div className={styles.categoryFilter}>
-                            {category2Data && category2Data.map(category2 => <div key={category2} onClick={clickCategory2} className={styles.categorySmall}>{category2}</div>)}
+                            {category2Data && category2Data.map(category2 => <span key={category2} onClick={clickCategory2} className={styles.categorySmall}>{category2}</span>)}
                         </div>
                     </div>
                     <div className={styles.priceRankTag}>
                         <div className={styles.categoryList}>가격순</div>
-                        <div className={styles.categoryFilter}>가격순 필터 칸</div>
+                        <div className={styles.categoryFilter}><span>가격순 필터</span> </div>
                     </div>
-                    <div>
-                        <div className={styles.sort}>
-                            <div className={styles.sortFilter}>조회수 순</div>
-                            <span></span>
-                            <div className={styles.sortFilter}>높은 가격순</div>
-                            <div className={styles.sortFilter}>낮은 가격순</div>
-                        </div>
+                    <div className={styles.sort}>
+                        <span>조회수 순</span>
+                        <span>높은 가격순</span>
+                        <span>낮은 가격순</span>
                     </div>
+
 
 
                     <div className={styles.itemrow}>

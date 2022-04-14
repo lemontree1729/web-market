@@ -20,8 +20,8 @@
     background-image: url("../../public/icon/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
-    width: 170px;
-    height: 50px;
+    width: 180px;
+    height: 60px;
     margin-bottom: 10px;
     cursor: pointer;
 }
@@ -30,10 +30,10 @@
     position: relative;
     margin: 0 auto;
     margin-top: 100px;
-    height: 495px;
-    width: 430px;
+    height: 570px;
+    width: 470px;
     border: 1px solid lightgrey;
-    /* border-radius: 15px;     */
+    border-radius: 15px;
     padding-left: 35px;
     padding-right: 35px;
     display: flex;
@@ -67,15 +67,15 @@
 
 .id_pw_wrap input {
     width: 100%;
-    height: 50px;
+    height: 55px;
     margin-top: 10px;
     padding: 12px;
     background-color: white;
     box-sizing: border-box;
-    /* border-radius: 6px; */
     border-color: gray;
     border: 1px solid #dadada;
     box-shadow: 0 0 0 30px #fff inset !important;
+    font-size: 18px;
 }
 
 .keep_login {
@@ -96,8 +96,8 @@
 }
 
 .keep_login input {
-    width: 14px;
-    height: 14px;
+    width: 15px;
+    height: 15px;
     border: 1px solid #aaa;
     margin-left: 5px;
     cursor: pointer;
@@ -112,12 +112,11 @@
 
 .login_btn button {
     width: 100%;
-    height: 50px;
+    height: 55px;
     background-color: rgb(52, 106, 255);
     border: none;
     color: white;
     font-size: large;
-    /* border-radius: 6px; */
     font: bold;
 
 }
