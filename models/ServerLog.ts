@@ -1,6 +1,7 @@
 import mongoose, { model, Schema } from 'mongoose';
 
 export interface serverLog {
+    _id?: mongoose.Types.ObjectId,
     path?: string
     referer?: string,
     jti?: string,
@@ -19,5 +20,6 @@ const serverLogScheme = new Schema<serverLog>({
     fingerprint: { type: String, default: null },
     createdAt: { type: Date, default: new Date(), expires: "30d" }
 })
+
 const ServerLog = mongoose.models['serverLog'] ? model<serverLog>('serverLog') : model<serverLog>('serverLog', serverLogScheme, 'serverLog')
 export default ServerLog

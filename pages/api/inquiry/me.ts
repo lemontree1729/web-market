@@ -20,7 +20,7 @@ const handler = customHandler()
             body("title").exists(),
             body("content").exists()]),
         async (req, res) => {
-            const user_id = parseInt(req.cookies.user_id)
+            const user_id = new mongoose.Types.ObjectId(req.cookies.user_id)
             const { qacategory, title, content } = req.body
             const saveValue: inquiry = { user_id, qacategory, title, content, createdAt: new Date() }
             const result = await new Inquiry(saveValue).save()

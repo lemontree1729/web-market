@@ -25,7 +25,7 @@ const handler = customHandler()
             } else {
                 const totalQuery: any = {
                     name: keyword && new RegExp(keyword.toString(), "i"),
-                    _id: _id && parseInt(_id?.toString()),
+                    _id: _id && _id.toString(),
                     category1: category1 || undefined,
                     category2: category2 || undefined
                 }
