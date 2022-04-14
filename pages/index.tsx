@@ -6,6 +6,7 @@ import ItemList from '../component/index/ItemList'
 import styles from '../styles/index.module.css'
 import PickedRank from '../component/index/PickRank'
 import PickRank from '../component/index/PickRank'
+import Loading from '../component/loading'
 
 
 
@@ -34,7 +35,7 @@ function pickRandom(data: Array<any>, n: number) {
 
 const Home: NextPage = () => {
   const { data, isLoading, isServerError } = useCustomSWR("/api/product?display=72&byCategory=true")
-  if (isLoading) return <div>로딩중...</div>
+  if (isLoading) return <div><Loading /></div>
   if (isServerError) {
     alert("서버 에러가 발생하였습니다")
   }

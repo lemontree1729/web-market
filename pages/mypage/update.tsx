@@ -5,12 +5,13 @@ import Layout from "../../component/Layout"
 import SideBar from "../../component/mypage/Sidebar"
 import mypageStyle from "../../styles/mypage/mypage.module.css"
 import CreatePost from "../../component/mypage/qna/CreatePost"
+import Loading from "../../component/loading"
 
 
 const Createpost: NextPage = () => {
     const router = useRouter()
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
-    if (isLoading) return <div>로딩중...</div>
+    if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
         router.push("/")

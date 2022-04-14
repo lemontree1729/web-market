@@ -2,7 +2,6 @@ import { useRef, useEffect, useCallback } from 'react';
 
 const useScrollFadeIn = (direction, duration, delay) => {
     const dom = useRef(undefined);
-    //왜 안돼
     const handleDirection = (name) => {
         switch (name) {
             case 'up':
@@ -38,7 +37,7 @@ const useScrollFadeIn = (direction, duration, delay) => {
         const { current } = dom;
 
         if (current) {
-            observer = new IntersectionObserver(handleScroll, { threshold: 0.2 });
+            observer = new IntersectionObserver(handleScroll, { threshold: 0.05 });
             observer.observe(current);
         }
 

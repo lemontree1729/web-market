@@ -5,11 +5,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import adminStyle from '../../styles/admin/admin.module.css'
 import Sidebar from '../../component/admin/Sidebar'
 import { useRouter } from 'next/router'
+import Loading from '../../component/loading'
 
 const Productlist: NextPage = () => {
     const router = useRouter()
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
-    if (isLoading) return <div>로딩중...</div>
+    if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
         router.push("/")

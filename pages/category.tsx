@@ -6,6 +6,7 @@ import Layout from '../component/Layout'
 import { product } from '../models/Product'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Loading from '../component/loading'
 
 const Category: NextPage = () => {
     const router = useRouter()
@@ -21,7 +22,7 @@ const Category: NextPage = () => {
     const categorySWR = useCustomSWR("/api/product/category", {}, false, true)
     const productSWR = useCustomSWR(`/api/product?category1=${category1}&category2=${category2}`)
     if (categorySWR.isLoading) {
-        return <div>로딩중</div>
+        return <div><Loading /></div>
     }
     // console.log(categorySWR, productSWR)
 

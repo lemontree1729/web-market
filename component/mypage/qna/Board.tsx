@@ -1,6 +1,7 @@
 import { NextPage } from "next"
 import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
+import Loading from "../../loading"
 import ReadPost from "./ReadPost"
 
 export interface extraInquiry extends inquiry {
@@ -11,7 +12,7 @@ const Board: NextPage = () => {
     let postlist: Array<extraInquiry> = []
     const { data, isLoading, isError } = useCustomSWR("/api/inquiry/me")
     if (isError) return <div>failed to load</div>
-    if (isLoading) return <div>loading...</div>
+    if (isLoading) return <div><Loading /></div>
     for (let post of data) {
         postlist.unshift(post)
     }

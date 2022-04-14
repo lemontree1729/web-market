@@ -7,6 +7,7 @@ import loginStyle from '../../styles/login/login.module.css'
 import useCustomSWR from '../../utils/client/useCustumSWR'
 import customAxios from '../../utils/customAxios'
 import { loginQuery } from '../api/login'
+import Loading from '../../component/loading'
 
 const Home: NextPage = () => {
   const [id, setId] = useState("")
@@ -43,7 +44,7 @@ const Home: NextPage = () => {
     }
   }
   const { data, isLoading, isServerError } = useCustomSWR("/api/user/me")
-  if (isLoading) return <div>로딩중...</div>
+  if (isLoading) return <div><Loading /></div>
   if (isServerError) {
     alert("서버 에러가 발생하였습니다")
     router.push("/")

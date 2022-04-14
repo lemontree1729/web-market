@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { NextPage } from "next";
 import Link from "next/link";
 import useCustomSWR from "../../utils/client/useCustumSWR";
+import Loading from "../loading";
 
 const Addresschange: NextPage = () => {
     const [Zonecode, setZonecode] = useState(''); // 우편번호
@@ -19,7 +20,7 @@ const Addresschange: NextPage = () => {
 
     const { data, isLoading, isError } = useCustomSWR("/api/user/me")
     if (isError) return <div>failed to load</div>
-    if (isLoading) return <div>loading...</div>
+    if (isLoading) return <div><Loading /></div>
 
     async function addressPost() {
         try {
