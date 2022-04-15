@@ -8,7 +8,7 @@ import Layout from '../../component/Layout'
 import 'bootstrap/dist/css/bootstrap.css'
 import adminStyle from '../../styles/admin/admin.module.css'
 import Sidebar from '../../component/admin/Sidebar'
-import Loading from '../../component/loading'
+import Loading from '../../component/Loading'
 
 
 const Userlist: NextPage = () => {

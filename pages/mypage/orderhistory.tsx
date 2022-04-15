@@ -5,7 +5,8 @@ import OrderHistory from "../../component/mypage/OrderHistory";
 import useCustomSWR from "../../utils/client/useCustumSWR";
 import Layout from "../../component/Layout";
 import { NextPage } from 'next';
-import Loading from '../../component/loading';
+import Loading from '../../component/Loading';
+
 
 const Orderhistory: NextPage = () => {
     const router = useRouter();

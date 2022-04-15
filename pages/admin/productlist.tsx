@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import adminStyle from '../../styles/admin/admin.module.css'
 import Sidebar from '../../component/admin/Sidebar'
 import { useRouter } from 'next/router'
-import Loading from '../../component/loading'
+import Loading from '../../component/Loading'
+
 
 const Productlist: NextPage = () => {
     const router = useRouter()

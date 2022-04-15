@@ -5,7 +5,8 @@ import PasswordChange from "../../component/mypage/PasswordChange";
 import useCustomSWR from "../../utils/client/useCustumSWR";
 import Layout from '../../component/Layout';
 import { NextPage } from 'next';
-import Loading from '../../component/loading';
+import Loading from '../../component/Loading';
+
 
 const Passwordchange: NextPage = () => {
     const router = useRouter();

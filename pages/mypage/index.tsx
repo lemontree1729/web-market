@@ -5,7 +5,8 @@ import SideBar from '../../component/mypage/Sidebar';
 import UserInfo from '../../component/mypage/UserInfo';
 import Layout from '../../component/Layout';
 import { NextPage } from 'next';
-import Loading from '../../component/loading';
+import Loading from '../../component/Loading';
+
 
 const Mypage: NextPage = () => {
     const router = useRouter()

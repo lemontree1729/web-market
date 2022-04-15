@@ -6,7 +6,8 @@ import ItemList from '../component/index/ItemList'
 import styles from '../styles/index.module.css'
 import PickedRank from '../component/index/PickRank'
 import PickRank from '../component/index/PickRank'
-import Loading from '../component/loading'
+import Loading from '../component/Loading'
+
 
 
 

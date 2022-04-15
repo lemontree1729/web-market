@@ -7,7 +7,8 @@ import loginStyle from '../../styles/login/login.module.css'
 import useCustomSWR from '../../utils/client/useCustumSWR'
 import customAxios from '../../utils/customAxios'
 import { loginQuery } from '../api/login'
-import Loading from '../../component/loading'
+import Loading from '../../component/Loading'
+
 
 const Home: NextPage = () => {
   const [id, setId] = useState("")

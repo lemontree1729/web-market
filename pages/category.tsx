@@ -6,7 +6,8 @@ import Layout from '../component/Layout'
 import { product } from '../models/Product'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Loading from '../component/loading'
+import Loading from '../component/Loading'
+
 
 const Category: NextPage = () => {
     const router = useRouter()

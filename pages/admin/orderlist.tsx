@@ -2,7 +2,8 @@ import { NextPage } from "next"
 import { useRouter } from "next/router"
 import useCustomSWR from "../../utils/client/useCustumSWR"
 import 'bootstrap/dist/css/bootstrap.css'
-import Loading from "../../component/loading"
+import Loading from "../../component/Loading"
+
 
 const Orderlist: NextPage = () => {
     const router = useRouter()

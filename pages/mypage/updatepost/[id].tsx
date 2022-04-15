@@ -5,7 +5,8 @@ import UpdatePost from "../../../component/mypage/qna/UpdatePost"
 import Layout from "../../../component/Layout"
 import SideBar from "../../../component/mypage/Sidebar"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
-import Loading from "../../../component/loading"
+import Loading from "../../../component/Loading"
+
 
 
 

@@ -6,7 +6,8 @@ import Layout from "../../component/Layout"
 import SideBar from "../../component/mypage/Sidebar"
 import mypageStyle from "../../styles/mypage/mypage.module.css"
 import Qna from "../../component/mypage/qna/Qna"
-import Loading from "../../component/loading"
+import Loading from "../../component/Loading"
+
 
 
 

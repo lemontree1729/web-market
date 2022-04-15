@@ -7,7 +7,8 @@ import { Default, Moblie } from '../responsive'
 import customAxios from '../../utils/customAxios'
 import { useRouter } from 'next/router'
 import Search from '../Search'
-import Loading from '../loading'
+import Loading from '../Loading'
+
 
 const HeaderCompo: NextPage = () => {
     const router = useRouter()
