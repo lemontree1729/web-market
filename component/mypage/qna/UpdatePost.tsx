@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
 import customAxios from "../../../utils/customAxios"
+import Loading from "../../loading"
 
 const UpdatePost: NextPage = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
@@ -13,7 +14,7 @@ const UpdatePost: NextPage = () => {
     const { _id } = router.query
     const { data, isLoading, isError } = useCustomSWR("/api/inquiry")
     if (isError) return <div>failed to load</div>
-    if (isLoading) return <div>loading...</div>
+    if (isLoading) return <div><Loading /></div>
     for (let post of data) {
         if (post._id == _id) {
             targetPost = post

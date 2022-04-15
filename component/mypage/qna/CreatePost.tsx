@@ -23,8 +23,8 @@ export default function CreatePost() {
             alert('접수에 실패했습니다.')
         }
     }
-    console.log(watch())
-    console.log(register)
+    // console.log(watch())
+    // console.log(register)
     return (
         <form onSubmit={handleSubmit(onSubmit)} >
             <div className={createpostStyle.container}>

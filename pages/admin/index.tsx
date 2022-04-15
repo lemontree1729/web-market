@@ -8,6 +8,7 @@ import Layout from '../../component/Layout'
 import 'bootstrap/dist/css/bootstrap.css'
 import adminStyle from '../../styles/admin/admin.module.css'
 import Sidebar from '../../component/admin/Sidebar'
+import Loading from '../../component/Loading'
 
 
 const Userlist: NextPage = () => {
@@ -18,7 +19,7 @@ const Userlist: NextPage = () => {
     const requiredList = Object.values(column)
     requiredList.forEach(value => required.append("required", value))
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user", { params: required })
-    if (isLoading) return <div>로딩중...</div>
+    if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
         router.push("/")

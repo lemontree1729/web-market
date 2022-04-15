@@ -5,6 +5,7 @@
     padding: 11px 0 0 2px;
     background-color: white;
     border-radius: 40px;
+    cursor: pointer;
 }
 
 .hamburger div {

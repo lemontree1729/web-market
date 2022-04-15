@@ -4,7 +4,10 @@ import Layout from '../component/Layout'
 import Carousel from '../component/carousel/Carousel'
 import ItemList from '../component/index/ItemList'
 import styles from '../styles/index.module.css'
-import PickedRank from '../component/index/PickedRank'
+import PickedRank from '../component/index/PickRank'
+import PickRank from '../component/index/PickRank'
+import Loading from '../component/Loading'
+
 
 
 
@@ -33,7 +36,7 @@ function pickRandom(data: Array<any>, n: number) {
 
 const Home: NextPage = () => {
   const { data, isLoading, isServerError } = useCustomSWR("/api/product?display=72&byCategory=true")
-  if (isLoading) return <div>로딩중...</div>
+  if (isLoading) return <div><Loading /></div>
   if (isServerError) {
     alert("서버 에러가 발생하였습니다")
   }
@@ -48,7 +51,7 @@ const Home: NextPage = () => {
         <Carousel></Carousel>
         <div className={styles.mainList}>
           <div className={styles.rank}>
-            {randomData && <PickedRank key={randomData[0].id} data={randomData}></PickedRank>}
+            {randomData && <PickRank key={randomData[0].id} data={randomData}></PickRank>}
           </div>
           <div className={styles.recommendtitle}>
             <h3><span>카테고리별</span> <span>추천 상품!</span></h3>

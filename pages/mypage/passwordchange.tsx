@@ -5,11 +5,13 @@ import PasswordChange from "../../component/mypage/PasswordChange";
 import useCustomSWR from "../../utils/client/useCustumSWR";
 import Layout from '../../component/Layout';
 import { NextPage } from 'next';
+import Loading from '../../component/Loading';
+
 
 const Passwordchange: NextPage = () => {
     const router = useRouter();
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user?info=false")
-    if (isLoading) return <div>로딩중...</div>
+    if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
         router.push("/")

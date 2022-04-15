@@ -16,7 +16,7 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
                     <div className={styles.info}>
                         <div className={styles.name}>{data.name.replaceAll(/<\/*b>/gi, "")}</div>
                         <div className={styles.price}>
-                            <strong>{data.price}</strong>원
+                            <strong>{data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong>원
                         </div>
                     </div>
                 </div>
@@ -28,13 +28,13 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
 const ItemList: NextPage<{ data: Array<product> }> = ({ data }) => {
     const animationItem = useScrollFadeIn('up', 1, 0)
     return (
-        <div className={styles.style}>
+        <div {...animationItem} className={styles.style}>
             <div>
                 <div className={styles.category}>{data[0].category1}</div>
             </div>
-            <div {...animationItem} className={styles.item}>
+            <div className={styles.item}>
                 {/* <div className={styles.item}> */}
-                {data.map(product => <Item key={product._id} data={product}></Item>)}
+                {data.map(product => <Item key={product._id.toString()} data={product}></Item>)}
             </div>
         </div>
     )

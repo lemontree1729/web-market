@@ -1,46 +1,118 @@
-.container
-{
+.content {
+    position: relative;
     display: flex;
+    justify-content: space-around;
     width: 100%;
+    min-height: 200px;
+    padding: 15px 0 15px 0;
+    border-top: 1px solid #dadada;
+}
+
+.tumbs {
+    /* border: 1px solid #dadada; */
+    width: 220px;
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.image {
+    max-width: 100%;
+}
+
+.itemInfo {
+    width: 740px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.itemInfo span {
+    line-height: 22px;
+    color: #333;
+    letter-spacing: -1px;
     margin-bottom: 10px;
+
+    cursor: pointer;
 }
 
-.image
-{
-   border: 1px solid black;
-   border-right-color: white;
-   width: 20%; 
-   height: 200px;
+.product_name {
+    font-size: 19px;
+    font-weight: 700;
 }
 
-.itemInfo
-{
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    width: 60%;
-    height: 200px;
-    background-color: white;
+.btn_group {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
 }
 
-.infoStyle
-{
+.like_button,
+.itembox_button {
+    all: unset;
+    cursor: pointer;
+}
+
+.btn_group button:first-child:before {
+    content: "";
+    background-image: url("../public/icon/premium-icon-heart-2589197.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    cursor: pointer;
+
+
+}
+
+.btn_group button:last-child:before {
+    content: "";
+    background-image: url("../public/icon/free-icon-shopping-cart-empty-side-view-34568.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.infoStyle {
     padding: 5px;
 }
 
-.sideInfo
-{
-    border: 1px solid black;
-    width: 20%;
-    height: 200px;
-    background-color: white;
+.sideInfo {
+    border-left: 1px solid #dadada;
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 10px 15px;
+
 }
 
-.makerStyle
-{
-    padding: 5px;
+.sideInfo strong {
+    font-size: 24px;
 }
 
-.postStyle
-{
-    padding: 5px;
+.sideInfo span {
+    margin-top: 10px;
+}
+
+.sideInfo span:last-child {
+    position: absolute;
+    bottom: 25px;
+}
+
+.tumbs:hover .image {
+    transform: scale(1.1);
+
+}
+
+.product_name:hover {
+    color: black;
+    text-decoration: underline;
 }

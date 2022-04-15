@@ -1,146 +1,80 @@
-
-
-.container 
-{
+.container {
     width: 100%;
     margin: auto;
-    padding: 2rem 0;
-    background-color: rgb(245, 241, 241);
-}
-
-.totalContainer
-{
-    width: 70%;
-    margin: auto;
-}
-
-.category
-{
-    border: 1px solid black;
-    height: 500px;
-    background-color: white;
-}
-
-.categoryTag
-{
-    display: flex;
-    height: 20%;
-}
-
-.categoryList
-{
-    line-height: 30px;
-    width: 10%;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-}
-
-.categoryFilter
-{
-    display: flex;
-    flex-wrap: wrap;
-    width: 90%;
-    border-bottom: 1px solid black;
-}
-
-.categoryBig
-{
-    width: 200px;
-    padding: 5px;
-    padding-top: 5px;
-}
-
-.smallCategoryTag
-{
-    display: flex;
-    height: 70%;
-}
-
-.smallCategory
-{
-    line-height: 60px;
-    width: 10%;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-}
-
-.smallCategoryFilter
-{
-    width: 90%;
-    border-bottom: 1px solid black;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.categorySmall
-{
-    width: 200px;
-    padding: 10px;
-    padding-top: 20px;
-}
-
-.priceRankTag
-{
-    display: flex;
-    height: 10%;
-}
-
-.priceRank
-{
-    line-height: 35px;
-    width: 10%;
-    border-right: 1px solid black;
-}
-
-.priceRankFilter
-{
-    width: 90%;
-    width: 200px;
-    padding: 5px;
-}
-
-.sort
-{   
     margin-top: 20px;
-    width: 100%;
-    display: flex;
-    border: 1px solid black;
-    margin-bottom: 10px;
-    background-color: rgb(223, 223, 223);
+
 }
 
-.sortFilter
-{
-    width: 130px;
+.category {
+    border-top: 3px solid black;
+    min-height: 450px;
+}
+
+.categoryTag {
+    display: flex;
+    min-height: 55px;
+}
+
+.smallCategoryTag {
+    display: flex;
+    min-height: 150px;
+}
+
+.priceRankTag {
+    display: flex;
+    min-height: 70px;
+}
+
+.priceRank {
+    line-height: 35px;
+    width: 140px;
+    border-right: 1px solid black;
+}
+
+.categoryList {
+    padding: 10px 0 10px 15px;
+    line-height: 30px;
+    width: 170px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 19px;
+}
+
+.categoryFilter {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border-bottom: 1px solid black;
     padding: 10px;
 }
 
-.price
-{
+.categoryFilter span {
+    font-size: 17px;
+    padding: 5px 20px 0 5px;
+    color: #666;
+
+    cursor: pointer;
+}
+
+.categoryFilter span:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+
+.sort {
+    width: 100%;
     display: flex;
+    color: #666;
+    margin: 20px 0 20px 10px;
+    cursor: pointer;
 }
 
-.itemList
-{
-    width: 80%;
+.sort span::after {
+    content: "|";
+    margin: 0 10px 0 10px;
 }
 
-.label
-{
-    margin: 0 auto;
-}
-
-.Ranking
-{
-    width: 20%;
-    margin-left: 20px;
-    margin-top: 21px;
-    
-}
-
-.RankingList
-{
-    border: 1px solid black;
-    height: 700px;
-    background-color: white;
+.sort span:last-child:after {
+    content: "";
 }

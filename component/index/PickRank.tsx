@@ -14,7 +14,7 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
                     <div className={styles.info}>
                         <div className={styles.name}>{data.name.replaceAll(/<\/*b>/gi, "")}</div>
                         <div className={styles.price}>
-                            <strong>{data.price}</strong>원
+                            <strong>{data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong>원
                         </div>
                     </div>
                 </div>
@@ -23,17 +23,17 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
     )
 }
 
-const PickedRank: NextPage<{ data: Array<product> }> = ({ data }) => {
+const PickRank: NextPage<{ data: Array<product> }> = ({ data }) => {
     return (
         <div className={styles.style}>
             <div>
                 <div className={styles.category}>BEST 5</div>
             </div>
             <div className={styles.item}>
-                {data.map(product => <Item key={product._id} data={product}></Item>)}
+                {data.map(product => <Item key={product._id.toString()} data={product}></Item>)}
             </div>
         </div>
     )
 }
 
-export default PickedRank
+export default PickRank

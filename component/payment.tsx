@@ -1,5 +1,5 @@
 import styles from '../styles/payment.module.css'
-import Layout from '../component/Layout'
+import Layout from './Layout'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import useCustomSWR from '../utils/client/useCustumSWR'
