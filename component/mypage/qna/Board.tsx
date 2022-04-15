@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
-import Loading from "../../loading"
+import Loading from "../../Loading"
 import ReadPost from "./ReadPost"
 
 export interface extraInquiry extends inquiry {

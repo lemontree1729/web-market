@@ -12,7 +12,6 @@ export default function Search() {
     }
     const serachItem = async () => {
         try {
-            
             router.push(`/category?keyword=${search}`)
         } catch {
 

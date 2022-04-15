@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { NextPage } from "next";
 import Link from "next/link";
 import useCustomSWR from "../../utils/client/useCustumSWR";
-import Loading from "../loading";
+import Loading from "../Loading";
 
 const Addresschange: NextPage = () => {
     const [Zonecode, setZonecode] = useState(''); // 우편번호

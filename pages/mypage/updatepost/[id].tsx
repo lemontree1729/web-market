@@ -12,7 +12,7 @@ import Loading from "../../../component/Loading"
 
 const Createpost: NextPage = () => {
     const router = useRouter()
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", {}, true)
     if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")

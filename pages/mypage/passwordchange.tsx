@@ -10,7 +10,7 @@ import Loading from '../../component/Loading';
 
 const Passwordchange: NextPage = () => {
     const router = useRouter();
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user?info=false")
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", {}, true)
     if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")

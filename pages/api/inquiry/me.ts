@@ -9,8 +9,8 @@ import { validateRequest } from "../../../utils/server/middleware";
 const handler = customHandler()
     .get( //기능: 유저 qna info 불러오기, 입력: 없음, 출력:유저의 qna info
         async (req, res) => {
-            const { user_id } = req.cookies
-            const result = await Inquiry.find({ user_id })
+            const user_id = parseInt(req.cookies.user_id)
+            const result = await Inquiry.find({ user_id }).populate("user_id")
             return Ok(res, result)
         }
     )
@@ -20,7 +20,7 @@ const handler = customHandler()
             body("title").exists(),
             body("content").exists()]),
         async (req, res) => {
-            const user_id = new mongoose.Types.ObjectId(req.cookies.user_id)
+            const user_id = parseInt(req.cookies.user_id)
             const { qacategory, title, content } = req.body
             const saveValue: inquiry = { user_id, qacategory, title, content, createdAt: new Date() }
             const result = await new Inquiry(saveValue).save()
@@ -34,22 +34,22 @@ const handler = customHandler()
             body("title").exists(),
             body("content").exists()]),
         async (req, res) => {
-            const { user_id } = req.cookies
+            const user_id = parseInt(req.cookies.user_id)
             const { _id, qacategory, title, content } = req.body
             const target: inquiry | null = await Inquiry.findOne({ user_id, _id })
             if (!target) {
                 return Err(res, target)
             }
-            const result = await Inquiry.updateOne({ user_id, _id }, { $set: { qacategory, title, content, date: new Date() } })
+            const result = await Inquiry.updateOne({ user_id, _id }, { $set: { qacategory, title, content, createdAt: new Date() } })
             return Ok(res, result)
         }
     )
     .delete( //기능: 유저 qna 삭제, 입력:_id, 출력:삭제 결과
         async (req, res) => {
-            const { _id } = req.query
+            const _id = parseInt(req.query._id.toString())
             const target: inquiry | null = await Inquiry.findOne({ _id })
             if (!target) {
-                return Err(res, "qaboard not found")
+                return Err(res, "inquiry not found")
             }
             await validate([cookie("user_id").equals(target.user_id.toString())])(req, res)
             const result = await Inquiry.deleteOne({ _id })

@@ -30,7 +30,7 @@ const PickRank: NextPage<{ data: Array<product> }> = ({ data }) => {
                 <div className={styles.category}>BEST 5</div>
             </div>
             <div className={styles.item}>
-                {data.map(product => <Item key={product._id.toString()} data={product}></Item>)}
+                {data.map(product => <Item key={product._id} data={product}></Item>)}
             </div>
         </div>
     )

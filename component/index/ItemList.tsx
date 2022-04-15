@@ -34,7 +34,7 @@ const ItemList: NextPage<{ data: Array<product> }> = ({ data }) => {
             </div>
             <div className={styles.item}>
                 {/* <div className={styles.item}> */}
-                {data.map(product => <Item key={product._id.toString()} data={product}></Item>)}
+                {data.map(product => <Item key={product._id} data={product}></Item>)}
             </div>
         </div>
     )

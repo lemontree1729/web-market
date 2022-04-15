@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { NextPage } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -5,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
 import customAxios from "../../../utils/customAxios"
-import Loading from "../../loading"
+import Loading from "../../Loading"
 
 const UpdatePost: NextPage = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })

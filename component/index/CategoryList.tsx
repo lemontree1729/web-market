@@ -7,13 +7,13 @@ const CategoryList: NextPage<{ data: product }> = ({ data }) => {
     return (
         <div>
             <div className={CategoryListStyle.content}>
-                <Link href={`/product?no=${data.no}`} passHref>
+                <Link href={`/product?_id=${data._id}`} passHref>
                     <div className={CategoryListStyle.tumbs}>
                         <img className={CategoryListStyle.image} src={data.imageUrl}></img>
                     </div>
                 </Link>
                 <div className={CategoryListStyle.itemInfo}>
-                    <Link href={`/product?no=${data.no}`} passHref>
+                    <Link href={`/product?_id=${data._id}`} passHref>
                         <span className={CategoryListStyle.product_name}>{data.name}</span>
                     </Link>
                     <span>{data.category1} | {data.category2}</span>

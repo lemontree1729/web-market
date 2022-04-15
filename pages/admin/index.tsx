@@ -32,7 +32,7 @@ const Userlist: NextPage = () => {
         const confirmResult = confirm("정말 권한을 부여하시겠습니까?")
         if (confirmResult) {
             try {
-                const res = await customAxios.patch("/api/user", { no: checkedUserList, role: "admin" })
+                const res = await customAxios.patch("/api/user", { _id: checkedUserList, role: "admin" })
                 if (res.status === 200) {
                     alert("권한 부여에 성공하였습니다.")
                 } else {
@@ -50,7 +50,7 @@ const Userlist: NextPage = () => {
         const confirmResult = confirm("정말 권한을 해제하시겠습니까?")
         if (confirmResult) {
             try {
-                const res = await customAxios.patch("/api/user", { no: checkedUserList, role: "user" })
+                const res = await customAxios.patch("/api/user", { _id: checkedUserList, role: "user" })
                 if (res.status === 200) {
                     alert("권한 해제에 성공하였습니다.")
                 } else {
@@ -70,7 +70,7 @@ const Userlist: NextPage = () => {
         if (confirmResult) {
             try {
                 const params = new URLSearchParams();
-                checkedUserList.forEach(value => params.append("no", value))
+                checkedUserList.forEach(value => params.append("_id", value))
                 const res = await customAxios.delete("/api/user", { params })
                 if (res.status === 200) {
                     alert("유저 삭제에 성공하였습니다.")
@@ -93,7 +93,7 @@ const Userlist: NextPage = () => {
                         <Sidebar toggle="userlist"></Sidebar>
                     </div>
                     <div className={adminStyle.content}>
-                        <CheckTable column={column} setCheckedList={setCheckedUserList} index={"no"} data={data}></CheckTable>
+                        <CheckTable column={column} setCheckedList={setCheckedUserList} index={"_id"} data={data}></CheckTable>
                         <div className={adminStyle.btn_group}>
                             <button type="button" onClick={grantPermission}>권한부여</button>
                             <button type="button" onClick={revokePermission}>권한해제</button>

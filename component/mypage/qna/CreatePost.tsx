@@ -11,7 +11,7 @@ export default function CreatePost() {
     const onSubmit: SubmitHandler<inquiry> = async data => {
         alert(JSON.stringify(data, null, 2))
         try {
-            const res = await customAxios.post("/api/inquiry", data)
+            const res = await customAxios.post("/api/inquiry/me", data)
             if (res.status == 200) {
                 router.push('/mypage/qna')
                 alert('문의가 접수 되었습니다.')
