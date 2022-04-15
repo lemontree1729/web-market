@@ -1,22 +1,17 @@
 import mongoose, { model, Schema } from 'mongoose';
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 export interface order {
-    no?: number,
-    productno: number,
-    userno: number,
+    _id?: mongoose.Types.ObjectId,
+    product_id: mongoose.Types.ObjectId,
+    user_id: mongoose.Types.ObjectId,
     status: string,
-    createdAt: Date
+    createdAt?: Date
 }
 const orderSchema = new Schema<order>({
-    no: { type: Number, unique: true },
-    productno: { type: Number, required: true },
-    userno: { type: Number, required: true },
+    product_id: { type: Schema.Types.ObjectId, required: true, ref: "product" },
+    user_id: { type: Schema.Types.ObjectId, required: true, ref: "user" },
     status: { type: String, required: true },
     createdAt: { type: Date, default: new Date() }
 })
-if (!mongoose.models['order']) {
-    orderSchema.plugin(AutoIncrement, { id: "orderno", inc_field: "no" })
-}
 const Order = mongoose.models['order'] ? model<order>('order') : model<order>('order', orderSchema, 'order')
 export default Order

@@ -36,13 +36,13 @@ const handler = customHandler()
             const expirationtime = consistDate.toString() + "d"
             let expireAt = new Date()
             expireAt.setDate(expireAt.getDate() + consistDate)
-            const userno = (await User.findOne({ id })).no
-            if (!userno) {
+            const user_id = (await User.findOne({ id }))._id
+            if (!user_id) {
                 return Err(res, "id not found")
             }
-            const loginToken: loginToken = { userno, jti: refresh_jti, fingerprint, ip, expireAt }
-            const access_token = await createJWT(userno.toString(), role, access_jti, "30m")
-            const refresh_token = await createJWT(userno.toString(), role, refresh_jti, expirationtime)
+            const loginToken: loginToken = { user_id, jti: refresh_jti, fingerprint, ip, expireAt }
+            const access_token = await createJWT(user_id.toString(), role, access_jti, "30m")
+            const refresh_token = await createJWT(user_id.toString(), role, refresh_jti, expirationtime)
             const cookies = [`access_token=${access_token};Max-Age=${30 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`,
             `refresh_token=${refresh_token};Max-Age=${consistDate * 24 * 60 * 60};Path=/;HttpOnly;Secure;SameSite=Strict`]
             res.setHeader('Set-Cookie', cookies)

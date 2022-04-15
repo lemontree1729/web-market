@@ -1,11 +1,11 @@
 import { NextPage } from "next"
-import { order } from "../../models/Order"
+import { user } from "../../models/User"
 
 
 
 
-const Orderhistory: NextPage<{ data: order[] }> = ({ data }) => {
-    const orders = data
+const CartList: NextPage<{ data: user }> = ({ data }) => {
+    const { cartlist } = data
     return (
         <div className="content">
             <div className="inquiryPeriod">
@@ -26,4 +26,4 @@ const Orderhistory: NextPage<{ data: order[] }> = ({ data }) => {
     )
 }
 
-export default Orderhistory
+export default CartList

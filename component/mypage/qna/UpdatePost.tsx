@@ -11,20 +11,20 @@ const UpdatePost: NextPage = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
     const router = useRouter()
     let targetPost: inquiry
-    const { no } = router.query
+    const { _id } = router.query
     const { data, isLoading, isError } = useCustomSWR("/api/inquiry")
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div><Loading /></div>
     for (let post of data) {
-        if (post.no == no) {
+        if (post._id == _id) {
             targetPost = post
         }
     }
     const onSubmit: SubmitHandler<inquiry> = async data => {
-        if (no === undefined) {
+        if (_id === undefined) {
             return
         }
-        data.no = parseInt(no.toString())
+        data._id = parseInt(_id.toString())
         alert(JSON.stringify(data, null, 2))
         try {
             const res = await customAxios.put("/api/inquiry", data)

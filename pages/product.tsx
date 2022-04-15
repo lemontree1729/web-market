@@ -1,5 +1,5 @@
 import styles from '../styles/product.module.css'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import customAxios from '../utils/customAxios'
 import { useRouter } from 'next/router'
@@ -8,10 +8,10 @@ import Layout from '../component/Layout'
 import Link from 'next/link'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const res = await customAxios.get(`/api/product?no=${context.query.no}`)
-    await customAxios.patch("/api/product/viewcount", { no: context.query.no })
+    const res = await customAxios.get(`/api/product?_id=${context.query._id}`)
+    await customAxios.patch("/api/product/viewcount", { _id: context.query._id })
     const { data: { result } } = res
-    // console.log(result.data[0])
+    console.log(result.data[0])
     return {
         props: { ...result.data[0] }
     }
@@ -31,19 +31,26 @@ function Before2(props: any) {
 }
 
 
+
 const Product: NextPage = (props: any) => {
     const router = useRouter()
     const { query } = router
     const params = new URLSearchParams();
     ["likelist", "cartlist"].forEach(value => params.append("required", value))
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params })
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params }, true)
     const [count, setCount] = useState(0)
+    const [index, setIndex] = useState('')
+    const myRef1 = useRef(null)
+    const myRef2 = useRef(null)
+    const myRef3 = useRef(null)
+    const myRef4 = useRef(null)
     if (isLoading || !props) return <div>로딩중...</div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
         router.push("/")
     }
-    const { likelist, cartlist } = data
+    console.log(data)
+    const { likelist, cartlist } = data || {}
     const onIncrease = () => setCount(count + 1)
     const onDecrease = () => setCount(count - 1)
     const SumPrice = () => count * parseInt(props.price)
@@ -52,29 +59,60 @@ const Product: NextPage = (props: any) => {
             alert("로그인이 필요합니다")
             router.push("/login")
         } else {
-            console.log(likelist)
-            if (!likelist.includes(props.no)) {
-                likelist.push(props.no)
+            if (!likelist.includes(props._id)) {
+                likelist.push(props._id)
             } else {
-                likelist.splice(likelist.indexOf(props.no), 1)
+                likelist.splice(likelist.indexOf(props._id), 1)
             }
             await customAxios.patch("/api/user/me", { likelist })
         }
     }
-
+    const pressCart = async () => {
+        if (isApiError) {
+            alert("로그인이 필요합니다")
+            router.push("/login")
+        } else {
+            if (!cartlist.includes(props._id)) {
+                cartlist.push(props._id)
+                await customAxios.patch("/api/user/me", { cartlist })
+                alert("장바구니에 추가되었습니다")
+            } else {
+                alert("이미 장바구니에 추가되어있습니다")
+                router.push(`/mypage/cartlist`)
+            }
+        }
+    }
 
     const pressPayment = async () => {
         if (isApiError) {
             alert("로그인이 필요합니다")
             router.push("/login")
         } else {
-
-            if (!cartlist.includes(props.no)) {
-                cartlist.push(props.no)
+            console.log(cartlist)
+            if (!cartlist.includes(props._id)) {
+                cartlist.push(props._id)
             }
             await customAxios.patch("/api/user/me", { cartlist })
             router.push(`/payment`)
         }
+    }
+
+    const tagSelect = (e) => {
+        switch (e.target.tabIndex) {
+            case 0:
+                myRef1.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+            case 1:
+                myRef2.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+            case 2:
+                myRef3.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+            case 3:
+                myRef4.current.scrollIntoView({ "behavior": "smooth" })
+                break;
+        }
+
     }
     return (
         <Layout>
@@ -113,12 +151,12 @@ const Product: NextPage = (props: any) => {
                             </div>
                         </div>
                         <div className={styles.purchaseButton}>
-                            <Link href={`/payment?no=${query.no}`} passHref>
+                            <Link href={`/payment?_id=${query._id}`} passHref>
                                 <button className={styles.button} onClick={pressPayment}>구매버튼</button>
                             </Link>
                             <div>
                                 <button className={styles.etcMenu} onClick={pressLike}>찜하기</button>
-                                <button className={styles.etcMenu}>장바구니</button>
+                                <button className={styles.etcMenu} onClick={pressCart}>장바구니</button>
                             </div>
                         </div>
                     </div>
@@ -128,16 +166,43 @@ const Product: NextPage = (props: any) => {
 
                 <div className={styles.itemInfo}>
                     <div className={styles.itemTag}>
-                        <div className={styles.tagLayout}>
-                            <div>상세정보</div>
-                            <div>{<Before></Before>}상품후기</div>
-                            <div>{<Before></Before>}상푼문의</div>
-                            <div>{<Before></Before>}반품/교환정보</div>
+                        <div className={styles.tagLayout} role='tablist'>
+                            <li onClick={tagSelect} role='tab' tabIndex={0} id='tagInfo' className={styles.li}>
+                                <strong className={styles.strong}>상세정보</strong>
+                            </li>
+                            {<Before></Before>}
+                            <li onClick={tagSelect} role='tab' tabIndex={1} id='tagReview' className={styles.li} >
+                                <strong className={styles.strong}>상품후기</strong>
+                            </li>
+                            {<Before></Before>}
+                            <li onClick={tagSelect} role='tab' tabIndex={2} id='tagReview' className={styles.li} >
+                                <strong className={styles.strong}>상푼문의</strong>
+                            </li>{<Before></Before>}
+                            <li onClick={tagSelect} role='tab' tabIndex={3} id='tagReview' className={styles.li} >
+                                <strong className={styles.strong}>반품/교환정보</strong>
+                            </li>
+
+
                         </div>
+                        <div className={styles.tagList}>
+                            <div className={styles.tagInfo} tabIndex={0} ref={myRef1}>
+                                상세정보 컨텐츠
+                            </div>
+                            <div className={styles.tagReview} tabIndex={1} ref={myRef2}>
+                                상품후기 컨텐츠
+                            </div>
+                            <div className={styles.tagQnA} tabIndex={2} ref={myRef3}>
+                                상품문의 컨텐츠
+                            </div>
+                            <div className={styles.tagRMA} tabIndex={3} ref={myRef4}>
+                                반품문의 컨텐츠
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </Layout>
+        </Layout >
     )
 }
 export default Product

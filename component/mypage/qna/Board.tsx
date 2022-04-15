@@ -37,7 +37,7 @@ const Board: NextPage = () => {
                             </thead>
                             <tbody>
                                 {postlist && postlist.map(post =>
-                                    <ReadPost key={post.no} data={post} />)}
+                                    <ReadPost key={post._id} data={post} />)}
                             </tbody>
                         </table>
                     </div>

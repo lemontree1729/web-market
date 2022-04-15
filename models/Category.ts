@@ -1,6 +1,7 @@
 import mongoose, { model, Schema } from 'mongoose';
 
 export interface category {
+    _id?: mongoose.Types.ObjectId,
     category1: string,
     category2: Array<string>
 }

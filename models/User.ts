@@ -1,6 +1,4 @@
 import mongoose, { model, Schema } from 'mongoose';
-const AutoIncrement = require('mongoose-sequence')(mongoose);
-
 
 export interface fulladdress {
     zonecode: string,
@@ -9,7 +7,7 @@ export interface fulladdress {
 }
 
 export interface user {
-    no?: number,
+    _id?: mongoose.Types.ObjectId,
     id: string,
     password: string,
     role?: string,
@@ -19,12 +17,11 @@ export interface user {
     phonenumber: string,
     fulladdress: fulladdress,
     registerAt?: Date,
-    likelist?: Array<number>
-    cartlist?: Array<number>
+    likelist?: mongoose.Types.ObjectId[]
+    cartlist?: mongoose.Types.ObjectId[]
 }
 
 const userSchema = new Schema<user>({
-    no: { type: Number, unique: true },
     id: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // add validate
     role: { type: String, default: "user" },
@@ -38,11 +35,9 @@ const userSchema = new Schema<user>({
         addressdetail: { type: String, required: true }
     },
     registerAt: { type: Date, default: new Date() },
-    likelist: { type: [Number], default: [] },
-    cartlist: { type: [Number], default: [] }
+    likelist: { type: [Schema.Types.ObjectId], default: [], ref: "product" },
+    cartlist: { type: [Schema.Types.ObjectId], default: [], ref: "product" },
 })
-if (!mongoose.models['user']) {
-    userSchema.plugin(AutoIncrement, { id: "userno", inc_field: "no" })
-}
+
 const User = mongoose.models['user'] ? model<user>('user') : model<user>('user', userSchema, 'user')
 export default User

@@ -1,6 +1,6 @@
-import User, { user } from '../../../models/User';
-import { encryptAuthNumber, encryptPassword } from '../../../utils/encrypt';
-import { equals, Err, Ok } from '../../../utils/server/commonError';
+import User from '../../../models/User';
+import { encryptPassword } from '../../../utils/encrypt';
+import { Err, Ok } from '../../../utils/server/commonError';
 import { customHandler } from '../../../utils/server/commonHandler';
 import { filterObject, flattenObject } from '../../../utils/server/etc';
 
@@ -8,31 +8,29 @@ import { filterObject, flattenObject } from '../../../utils/server/etc';
 const handler = customHandler()
     .get( // 입력: 없음, 출력: 해당 유저의 모든 정보
         async (req, res) => {
-            let { userno } = req.cookies
+            let { user_id } = req.cookies
             let { required } = req.query
-            const result = await User.findOne({ no: userno }).lean()
+            const result = await User.findOne({ _id: user_id }).populate(["likelist", "cartlist"]).lean()
             if (!result) {
                 return Err(res, "misterious error with token")
             } else {
                 let filter: string[]
                 if (!required) {
-                    filter = ["role", "no"]
+                    filter = ["role", "_id"]
                 } else if (typeof required === "string") {
-                    filter = ["role", "no", required]
+                    filter = ["role", "_id", required]
                 } else {
-                    filter = ["role", "no", ...required]
+                    filter = ["role", "_id", ...required]
                 }
                 const filteredResult = filterObject(flattenObject(result), filter)
-                console.log(required, filter)
-                console.log(filteredResult)
                 return Ok(res, filteredResult)
             }
         })
     .patch( // 입력: 해당 유저의 수정 정보(fulladdress, password의 경우 oldpassword까지), 출력: 성공 여부
         async (req, res) => {
-            const { userno } = req.cookies
-            let { fulladdress, password, oldpassword } = req.body
-            const result = await User.findOne({ no: userno })
+            const { user_id } = req.cookies
+            let { fulladdress, password, oldpassword, cartlist, likelist } = req.body
+            const result = await User.findOne({ _id: user_id })
             if (!result) {
                 return Err(res, "userid not exist")
             }
@@ -42,8 +40,11 @@ const handler = customHandler()
                 }
             }
             password = password && encryptPassword(password)
-            result.fulladdress = fulladdress
-            result.password = password
-            return Ok(res, await result.save())
+            result.fulladdress = fulladdress || result.fulladdress
+            result.password = password || result.password
+            result.cartlist = cartlist || result.cartlist
+            result.likelist = likelist || result.likelist
+            await result.save()
+            return Ok(res, "success")
         })
 export default handler

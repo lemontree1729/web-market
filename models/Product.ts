@@ -1,8 +1,7 @@
 import mongoose, { model, Schema } from 'mongoose';
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 export interface product {
-    no?: number,
+    _id?: mongoose.Types.ObjectId,
     name: string,
     price: number,
     category1: string,
@@ -18,7 +17,6 @@ export interface product {
     createdAt?: Date
 }
 const productSchema = new Schema<product>({
-    no: { type: Number, unique: true },
     name: { type: String, required: true, trim: true },
     price: { type: Number, required: true },
     category1: { type: String, required: true },
@@ -33,8 +31,6 @@ const productSchema = new Schema<product>({
     viewcount: { type: Number, default: 0 },
     createdAt: { type: Date, default: new Date() }
 })
-if (!mongoose.models['product']) {
-    productSchema.plugin(AutoIncrement, { id: "productno", inc_field: "no" })
-}
+
 const Product = mongoose.models['product'] ? model<product>('product') : model<product>('product', productSchema, 'product')
 export default Product

@@ -2,13 +2,13 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import { product } from '../../models/Product'
 import styles from '../../styles/ItemList.module.css'
-import useScrollFadeIn from '../UseScrollFadeIn'
+import useScrollFadeIn from '../../utils/client/useScrollFadeIn'
 
 
 const Item: NextPage<{ data: product }> = ({ data }) => {
     return (
         <div className={styles.content}>
-            <Link href={`/product?no=${data.no}`} passHref>
+            <Link href={`/product?_id=${data._id}`} passHref>
                 <div className={styles.lList}>
                     <div className={styles.thumb}>
                         <img className={styles.imageUrl} src={data.imageUrl}></img>
@@ -33,7 +33,8 @@ const ItemList: NextPage<{ data: Array<product> }> = ({ data }) => {
                 <div className={styles.category}>{data[0].category1}</div>
             </div>
             <div className={styles.item}>
-                {data.map(product => <Item key={product.no} data={product}></Item>)}
+                {/* <div className={styles.item}> */}
+                {data.map(product => <Item key={product._id.toString()} data={product}></Item>)}
             </div>
         </div>
     )

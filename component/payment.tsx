@@ -16,7 +16,9 @@ function doPayment() {
 
 const Payment: NextPage = () => {
     const router = useRouter()
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
+    const params = new URLSearchParams();
+    ["cartlist"].forEach(value => params.append("required", value))
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params }, true)
     if (isLoading) return <div>로딩중...</div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")
@@ -26,6 +28,9 @@ const Payment: NextPage = () => {
         alert("로그인이 필요합니다")
         router.push("/login")
     }
+    console.log(data)
+    const { cartlist } = data
+    console.log(cartlist)
     return (
         <Layout>
             <div className={styles.container}>
