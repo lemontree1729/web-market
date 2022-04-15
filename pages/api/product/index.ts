@@ -1,6 +1,9 @@
+import AWS from "aws-sdk";
+import mongoose from "mongoose";
 import Product, { product } from "../../../models/Product";
 import { Err, Ok } from "../../../utils/server/commonError";
 import { customHandler } from "../../../utils/server/commonHandler";
+import { envExist } from "../../../utils/validateEnv";
 
 
 async function sendByCategory(maxResults: number) {
@@ -12,6 +15,33 @@ async function sendByCategory(maxResults: number) {
         totalResult.push(...result)
     }
     return totalResult
+}
+
+async function getUrlFromAWS(imageDataUrl: string) {
+    AWS.config.update({
+        accessKeyId: envExist(process.env.AWS_ACCESS_KEY_ID, "aws access key id", true),
+        secretAccessKey: envExist(process.env.AWS_SECRET_ACCESS_KEY, "aws access key id", true),
+        region: 'ap-northeast-2'
+    });
+    const s3bucket = new AWS.S3()
+    const imagePart = imageDataUrl.split(",")
+    const imageData = imagePart[1]
+    const imageType = imagePart[0].split(":")[1].split(";")[0]
+    const possibleTypes = ["image/png", "image/gif", "image/jpeg"]
+    if (!possibleTypes.includes(imageType)) {
+        throw new Error("not a valid extension")
+    }
+    const buffer = Buffer.from(imageData, "base64")
+    const filename = new mongoose.Types.ObjectId().toString()
+    const params = {
+        Bucket: "web-market",
+        Key: filename,
+        Body: buffer,
+        ACL: 'public-read',
+        ContentType: imageType
+    }
+    const resultUrl = (await s3bucket.upload(params).promise()).Location
+    return resultUrl
 }
 
 const handler = customHandler()
@@ -49,14 +79,12 @@ const handler = customHandler()
     )
     .post(
         async (req, res) => {
-            const { _id } = req.query
-            const result = await Product.findOne({ _id })
-            if (!result) {
-                const value = await new Product(req.body).save()
-                Ok(res, value)
-            } else {
-                Err(res, result)
-            }
+            const { name, price, category1, category2, category3, category4, imageDataUrl, description, mallName, maker, brand } = req.body
+            const imageUrl = await getUrlFromAWS(imageDataUrl)
+            console.log(imageUrl)
+            const productData: product = { name, price, category1, category2, category3, category4, imageUrl, description, mallName, maker, brand }
+            await new Product(productData).save()
+            return Ok(res, "success")
         }
     )
     .put(

@@ -26,7 +26,6 @@ const handler = customHandler()
                     filter = ["role", "_id", ...required]
                 }
                 const filteredResult = filterObject(flattenObject(result), filter)
-                console.log(required, flattenObject(result))
                 return Ok(res, filteredResult)
             }
         })
