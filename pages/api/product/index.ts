@@ -19,8 +19,8 @@ async function sendByCategory(maxResults: number) {
 
 async function getUrlFromAWS(imageDataUrl: string) {
     AWS.config.update({
-        accessKeyId: envExist(process.env.AWS_ACCESS_KEY_ID, "aws access key id", true),
-        secretAccessKey: envExist(process.env.AWS_SECRET_ACCESS_KEY, "aws access key id", true),
+        accessKeyId: envExist(process.env.MY_AWS_ACCESS_KEY_ID, "aws access key id", true),
+        secretAccessKey: envExist(process.env.MY_AWS_SECRET_ACCESS_KEY, "aws access key id", true),
         region: 'ap-northeast-2'
     });
     const s3bucket = new AWS.S3()
