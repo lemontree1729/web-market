@@ -4,7 +4,6 @@ import { useState, useRef } from "react"
 import addressStyle from "../../styles/address/address.module.css"
 import { useRouter } from "next/router";
 import { NextPage } from "next";
-import Link from "next/link";
 import useCustomSWR from "../../utils/client/useCustumSWR";
 import Loading from "../Loading";
 
@@ -18,7 +17,9 @@ const Addresschange: NextPage = () => {
     const zonecodeValue = useRef(null)
     const router = useRouter()
 
-    const { data, isLoading, isError } = useCustomSWR("/api/user/me")
+    const params = new URLSearchParams();
+    ["fulladdress.zonecode", "fulladdress.address", "fulladdress.addressdetail"].forEach(value => params.append("required", value))
+    const { data, isLoading, isError } = useCustomSWR("/api/user/me?", { params })
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div><Loading /></div>
 
@@ -78,9 +79,9 @@ const Addresschange: NextPage = () => {
                         <th>상세주소</th>
                     </tr>
                     <tr>
-                        <td>{data.fulladdress.zonecode}</td>
-                        <td>{data.fulladdress.address}</td>
-                        <td>{data.fulladdress.addressdetail}</td>
+                        <td>{data["fulladdress.zonecode"]}</td>
+                        <td>{data["fulladdress.address"]}</td>
+                        <td>{data["fulladdress.addressdetail"]}</td>
                         <td>
                             <button className={addressStyle.modify_btn} onClick={() => setIsOpen(!isOpen)}>수정하기</button>
                         </td>

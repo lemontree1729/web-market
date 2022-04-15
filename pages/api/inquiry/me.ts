@@ -1,6 +1,6 @@
 import { body, cookie, query } from "express-validator";
-import mongoose from "mongoose";
 import Inquiry, { inquiry } from "../../../models/Inquiry";
+import User from "../../../models/User";
 import { Err, Ok } from "../../../utils/server/commonError";
 import { customHandler, validate } from "../../../utils/server/commonHandler";
 import { validateRequest } from "../../../utils/server/middleware";
@@ -10,7 +10,9 @@ const handler = customHandler()
     .get( //기능: 유저 qna info 불러오기, 입력: 없음, 출력:유저의 qna info
         async (req, res) => {
             const user_id = parseInt(req.cookies.user_id)
-            const result = await Inquiry.find({ user_id }).populate("user_id")
+            console.log(user_id, req.cookies.user_id)
+            const result = await Inquiry.find({ user_id })
+                .populate({ path: "user_id", model: User })
             return Ok(res, result)
         }
     )

@@ -44,7 +44,7 @@ export async function serverAuth(req: NextApiRequest, res: NextApiResponse) {
     const { access_token, refresh_token } = req.cookies
     try {
         const { aud, role, jti } = await verifyJWT(access_token)
-        req.cookies = { ...req.cookies, userno: aud, role, jti }
+        req.cookies = { ...req.cookies, user_id: aud, role, jti }
     } catch {
         const { aud, role, jti } = await verifyJWT(refresh_token)
         const result = await LoginToken.findOne({ jti })

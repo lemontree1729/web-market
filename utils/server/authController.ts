@@ -17,11 +17,11 @@ const ADMINCONDITION: Array<authCondition> = [
     // { path: "/api/admin/userlist" },
     { path: "/api/user$", detail: [{ method: "GET", validate: [query("required").exists()] }, "PATCH", "DELETE"] },
     { path: "/api/product$", detail: ["POST", "PUT", "DELETE"] },
-    { path: "/api/qaboard$" }
+    { path: "/api/inquiry$" }
 ]
 const USERCONDITION: Array<authCondition> = [
     { path: "/api/user/me$" },
-    { path: "/api/qaboard/me$" }
+    { path: "/api/inquiry/me$" }
 
 ]
 
