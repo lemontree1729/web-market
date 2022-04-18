@@ -11,6 +11,7 @@ export interface extraInquiry extends inquiry {
 const Board: NextPage = () => {
     let postlist: Array<extraInquiry> = []
     const { data, isLoading, isError } = useCustomSWR("/api/inquiry/me")
+
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div><Loading /></div>
     for (let post of data) {
@@ -27,7 +28,6 @@ const Board: NextPage = () => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>번호</th>
                                     <th>구분</th>
                                     <th>제목</th>
                                     <th>작성자</th>

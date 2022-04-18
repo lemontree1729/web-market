@@ -5,16 +5,17 @@ import Link from "next/link"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { extraInquiry } from "./Board"
+import qnaStyle from "../../../styles/mypage/qna.module.css"
 
 
 const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
     const [isAnswer, setisAnswer] = useState(false)
-    const answer = data.reply.length ? "답변완료" : "답변예정"
-
+    const answer = "답변예정"
+    // data.reply.length ? "답변완료" : 
     function clickContent() {
-        if (data.reply.length) {
+        if (answer) {
             setisAnswer(!isAnswer)
         }
         setIsOpen(!isOpen)
@@ -39,13 +40,11 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
     return (
         <>
             <tr onClick={clickContent}>
-                <td>{data._id}</td>
-                <td>{data.qacategory}</td>
-                <td>{data.title}</td>
-                <td>{data.user_id}</td>
-                <td>{data.createdAt.toString().replace(/-/g, ".").substring(0, 10)}</td>
-                <td>{answer}</td>
-                <td>
+                <td className={qnaStyle.headline}>{data.qacategory}</td>
+                <td className={qnaStyle.headline}>{data.title}</td>
+                <td className={qnaStyle.headline}>{data.createdAt.toString().replace(/-/g, ".").substring(0, 10)}</td>
+                <td className={qnaStyle.headline}>{answer}</td>
+                <td className={qnaStyle.headline}>
                     <Link href={`/mypage/updatepost/${data._id}`} passHref>
                         <button>수정하기</button>
                     </Link>
@@ -54,8 +53,7 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
             </tr>
             {
                 isOpen ? (
-                    <tr>
-                        <td></td>
+                    <tr onClick={clickContent}>
                         <td></td>
                         <td>{data.content}</td>
                         <td></td>
@@ -66,11 +64,11 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
             }
             {
                 isAnswer ? (
-                    <tr>
-                        <td></td>
+                    <tr onClick={clickContent}>
+
                         <td>답변</td>
                         <td>답변내용</td>
-                        <td></td>
+                        <td>답변일자</td>
                         <td></td>
                         <td></td>
                     </tr>
