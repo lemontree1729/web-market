@@ -11,19 +11,19 @@ const UserInfo: NextPage<{ data: user }> = ({ data }) => {
                 <tbody>
                     <tr>
                         <th >아이디</th>
-                        <td>{data.id}</td>
+                        <td>{data && data.id}</td>
                     </tr>
                     <tr>
                         <th >이름</th>
-                        <td>{data.name}</td>
+                        <td>{data && data.name}</td>
                     </tr>
                     <tr>
                         <th >이메일</th>
-                        <td>{data.email}</td>
+                        <td>{data && data.email}</td>
                     </tr>
                     <tr>
                         <th >휴대전화</th>
-                        <td>{data.phonenumber}</td>
+                        <td>{data && data.phonenumber}</td>
                     </tr>
 
                 </tbody>

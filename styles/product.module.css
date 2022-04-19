@@ -1,69 +1,54 @@
-.container 
-{
+.container {
     width: 100%;
     margin: auto;
-    padding: 2rem 0;
 }
 
-.purchaseList
-{
-    width: 90%;   
-    margin: auto;
-    height: 700px;
+.purchaseList {
     display: flex;
-    border: 1px solid rgb(156, 156, 156);
-    border-bottom: 0px;
-    border-radius: 10px 10px 10px 10px;
 }
 
-.itemImage
-{
-    margin-top: 40px;
-    margin-left: 30px;
-    margin-right: 20px;
-    width: 49%;
-    height: 500px;
+.turmb {
+    width: 610px;
+    margin: 25px;
 }
 
-.purchasePart
-{
-    margin: 1%;
-    width: 49%;
-    height: 98%;
-    padding: 10px;
+.itemImage {
+    width: 100%;
+}
+
+.purchasePart {
+    width: 625px;
+    padding-left: 20px;
     border-left: 1px solid rgb(156, 156, 156);
 }
 
-.itemName
-{
+.itemName {
     margin: 10px;
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 24px;
     word-break: keep-all;
     word-wrap: break-word;
     vertical-align: top;
     height: 100px;
+    font-weight: 700;
 }
 
-.price
-{
+.price {
     margin: 10px;
-    margin-bottom: 40px;
     padding: auto;
-    font-size: 30px;
+    font-size: 40px;
     text-align: end;
+    font-weight: 500;
 }
 
-.start
-{
+.delivery {
     margin: 10px;
-
     display: flex;
+
     margin-bottom: 5px;
 }
 
-.icon
-{
+.icon {
     margin: auto;
     margin-left: 10px;
     width: 70px;
@@ -71,52 +56,58 @@
     border: 1px solid rgb(156, 156, 156);
 }
 
-.p
-{
+.p {
+    width: 100%;
     margin: 10px;
     padding: 10px;
     border: 1px solid rgb(156, 156, 156);
     border-radius: 10px;
 }
 
-.express
-{
+.express {
     margin: 10px;
     margin-bottom: 30px;
 }
 
-.countList
-{
+.countList {
     margin: 10px;
     padding: 10px;
-    border: 1px solid rgb(156, 156, 156);
-    border-radius: 10px;
-    margin-bottom: 30px;
 }
 
-.countName
-{
+.countName {
     margin: 5px;
     font-size: 20px;
     font-weight: 500;
 }
 
-.total
-{
+.total {
     margin: 5px;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
-.countBut
-{
+.countBut {
     margin-right: auto;
     display: inline-flex;
     text-align: center;
+
 }
 
-.count
-{
+.countBut button {
+    background-color: white;
+    cursor: pointer;
+}
+
+.countBut button:first-child:before {
+    content: "-";
+}
+
+.countBut button:last-child:before {
+    content: "+";
+}
+
+.count {
     margin-top: 5px;
     margin-bottom: 5px;
     width: 30px;
@@ -124,22 +115,17 @@
     padding-top: 4px;
 }
 
-
-
-.totalPrice
-{
+.totalPrice {
     margin: 10px;
     margin-bottom: 30px;
 }
 
-.totalPrice2
-{
+.totalPrice2 {
     display: flex;
     justify-content: flex-end;
 }
 
-.before2
-{
+.before2 {
     display: inline-block;
     width: 1px;
     height: 11px;
@@ -149,47 +135,51 @@
     margin-right: 20px;
 }
 
-.purchaseButton
-{
-    margin: 10px;
+.btn_group {
+    display: flex;
+    background-color: white;
 }
 
-.button
-{
-    width: 100%;
+.btn_group button {
+    background-color: white;
+    min-width: 50px;
     height: 50px;
-    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-.etcMenu
-{
-    margin-top: 5px;
-    width: 50%;
-    background-color: white;
-    height: 30px;
+.likebox {
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../public/icon/premium-icon-heart-2589197.png");
 }
 
-.itemInfo
-{
-    width: 90%;
+.itembox {
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../public/icon/free-icon-shopping-cart-empty-side-view-34568.png");
+}
+
+.purchaseButton {
+    width: 440px;
+}
+
+
+.itemInfo {
+    width: 100%;
     height: 2250px;
     margin: auto;
     display: flex;
-    border: 1px solid rgb(156, 156, 156);
-    border-radius: 10px 10px 10px 10px;
 }
 
-.itemTag
-{
+.itemTag {
     margin: 10px;
     width: 100%;
     height: 60px;
-    border: 1px solid rgb(156, 156, 156);
-    font-size: 20px;  
+    font-size: 20px;
 }
 
-.tagLayout
-{   
+.tagLayout {
     display: flex;
     text-align: center;
     background-color: #f3f5f7;
@@ -199,18 +189,31 @@
     height: 100%;
 }
 
-.li
-{
-    width: 100%;
+.tagList {
+    margin: 0 auto;
 }
 
-.strong
-{
+.tagInfo {
+    margin-top: 30px;
+    width: 100%;
+    height: 500px;
+    border-top: 2px solid black;
+
+}
+
+.li {
+
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
+}
+
+.li strong {
+
     line-height: 55px;
 }
 
-.before
-{
+.before {
     display: inline-block;
     width: 1px;
     height: 50px;
@@ -218,41 +221,4 @@
     vertical-align: top;
     content: '';
     margin-top: 4px;
-}
-
-.tagList
-{
-    margin: 0 auto;
-}
-
-.tagInfo
-{
-    margin-top: 30px;
-    width: 100%;
-    height: 500px;
-    border-top: 2px solid black;
-}
-
-.tagReview
-{
-    margin-top: 30px;
-    width: 100%;
-    height: 500px;
-    border-top: 2px solid black;
-}
-
-.tagQnA
-{
-    margin-top: 30px;
-    width: 100%;
-    height: 500px;
-    border-top: 2px solid black;
-}
-
-.tagRMA
-{
-    margin-top: 30px;
-    width: 100%;
-    height: 500px;
-    border-top: 2px solid black;
 }
