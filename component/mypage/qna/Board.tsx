@@ -30,9 +30,9 @@ const Board: NextPage = () => {
                                 <tr>
                                     <th>구분</th>
                                     <th>제목</th>
-                                    <th>작성자</th>
                                     <th>등록일자</th>
                                     <th>답변여부</th>
+                                    <th>기타</th>
                                 </tr>
                             </thead>
                             <tbody>

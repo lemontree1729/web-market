@@ -12,7 +12,7 @@ const handler = customHandler()
             const user_id = parseInt(req.cookies.user_id)
             console.log(user_id, req.cookies.user_id)
             const result = await Inquiry.find({ user_id })
-                .populate({ path: "user_id", model: User })
+            // .populate({ path: "user_id", model: User })
             return Ok(res, result)
         }
     )

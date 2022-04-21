@@ -13,7 +13,7 @@ const UpdatePost: NextPage = () => {
     const router = useRouter()
     let targetPost: inquiry
     const { _id } = router.query
-    const { data, isLoading, isError } = useCustomSWR("/api/inquiry")
+    const { data, isLoading, isError } = useCustomSWR("/api/inquiry/me")
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div><Loading /></div>
     for (let post of data) {
@@ -28,7 +28,7 @@ const UpdatePost: NextPage = () => {
         data._id = parseInt(_id.toString())
         alert(JSON.stringify(data, null, 2))
         try {
-            const res = await customAxios.put("/api/inquiry", data)
+            const res = await customAxios.put("/api/inquiry/me", data)
             if (res.status == 200) {
                 router.push('/mypage/qna')
                 alert('문의가 수정 되었습니다.')

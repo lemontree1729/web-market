@@ -24,7 +24,7 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
         event.preventDefault()
         if (window.confirm("삭제하시겠습니까?")) {
             try {
-                const res = await customAxios.delete(`/api/inquiry?_id=${data._id}`)
+                const res = await customAxios.delete(`/api/inquiry/me?_id=${data._id}`)
                 if (res.status == 200) {
                     alert('글이 삭제되었습니다.')
                 } else {
