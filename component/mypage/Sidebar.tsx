@@ -15,9 +15,9 @@ const SideBar: NextPage<{ toggle: string }> = ({ toggle }) => {
             <Link href="/mypage/addresschange">
                 <span className={toggle === "addresschange" ? sidebarStyle.spanselect : sidebarStyle.span}>주소 변경</span>
             </Link>
-            <Link href="/mypage/orderhistory">
+            {/* <Link href="/mypage/orderhistory">
                 <span className={toggle === "orderhistory" ? sidebarStyle.spanselect : sidebarStyle.span}>주문 내역</span>
-            </Link>
+            </Link> */}
             <Link href="/mypage/cartlist">
                 <span className={toggle === "cartlist" ? sidebarStyle.spanselect : sidebarStyle.span}>장바구니</span>
             </Link>

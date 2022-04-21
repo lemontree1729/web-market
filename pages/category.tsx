@@ -77,7 +77,8 @@ const Category: NextPage = () => {
                     <div className={styles.priceRankTag}>
                         <div className={styles.categoryList}>가격순</div>
                         <div className={styles.categoryFilter}>
-                            가격순 필터
+                            <span>                                가격순 필터</span>
+
                         </div>
                     </div>
                 </div>
