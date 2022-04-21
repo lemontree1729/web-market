@@ -15,12 +15,14 @@
 .main {
     height: auto;
     min-height: 100%;
+    display: inline;
 }
 
 
 .footer {
-    margin-top: 50px;
     position: relative;
-    top: 100%;
+    bottom: 0;
+    /* z-index: -1; */
+
 
 }

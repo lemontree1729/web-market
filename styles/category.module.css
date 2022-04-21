@@ -7,7 +7,6 @@
 
 .category {
     border-top: 3px solid black;
-    min-height: 450px;
 }
 
 .categoryTag {
@@ -32,8 +31,8 @@
 }
 
 .categoryList {
-    padding: 10px 0 10px 15px;
-    line-height: 30px;
+    padding: 0px 0 10px 15px;
+    line-height: 50px;
     width: 170px;
     border-right: 1px solid black;
     border-bottom: 1px solid black;

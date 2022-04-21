@@ -54,7 +54,6 @@ const Addresschange: NextPage = () => {
         addressValue.current = value
         setAddress(value)
         setvalidationaddress(true)
-        console.log(Validationaddress + "add")
     }
 
     const setZonecodeFunction = (value: any) => {

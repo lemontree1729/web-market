@@ -6,7 +6,11 @@ import { useRouter } from 'next/router'
 import useCustomSWR from '../utils/client/useCustumSWR'
 import Layout from '../component/Layout'
 import Link from 'next/link'
-
+import img1 from "/public/img/상품상세정보.jpg"
+import img2 from "/public/img/상품후기.jpg"
+import img3 from "/public/img/상품문의.jpg"
+import img4 from "/public/img/반품교환정보.jpg"
+import Image from 'next/image'
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const res = await customAxios.get(`/api/product?_id=${context.query._id}`)
     await customAxios.patch("/api/product/viewcount", { _id: context.query._id })
@@ -112,94 +116,101 @@ const Product: NextPage = (props: any) => {
                 myRef4.current.scrollIntoView({ "behavior": "smooth" })
                 break;
         }
-
     }
     return (
         <Layout>
             <div className={styles.container}>
                 <div className={styles.purchaseList}>
-                    <img className={styles.itemImage} src={props.imageUrl}></img>
+                    <div className={styles.turmb}>
+                        <img className={styles.itemImage} src={props.imageUrl}></img>
+                    </div>
                     <div className={styles.purchasePart}>
                         <div>
                             <div className={styles.itemName}>{props.name}</div>
-                            <div className={styles.price}>{props.price}원</div>
+                            <div className={styles.price}>{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</div>
                         </div>
-                        <div className={styles.countList}>
-                            <div className={styles.countName}>수량</div>
+
+                        <div className={styles.delivery}>
+                            <p><strong>오늘출발 상품</strong></p>
+                            <p>오늘 13:00시까지 결제 시, 오늘 바로 발송됩니다.</p>
+                        </div>
+                        <div className={styles.express}>
+                            배송비
+                            <span>무료배송</span>
+                        </div>
+
+                        <div className={styles.totalPrice}>
+                            <strong>총 상품금액</strong>
+                            {/* <div className={styles.countName}>수량</div> */}
                             <div className={styles.total}>
                                 <div className={styles.countBut}>
-                                    <button disabled={count === 0 ? true : false} onClick={onDecrease} className={styles.count}>-</button>
+                                    <button disabled={count === 0 ? true : false} onClick={onDecrease} className={styles.count}></button>
                                     <div className={styles.count}>{count}</div>
-                                    <button onClick={onIncrease} className={styles.count}>+</button>
+                                    <button onClick={onIncrease} className={styles.count}></button>
+                                </div>
+                                <div className={styles.orderPrice}>
+                                    합계 <span>{SumPrice().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</span>
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.start}>
-                            <div className={styles.icon}>택배아이콘</div>
-                            <div className={styles.p}>
-                                <div>오늘출발 상품</div>
-                                <div>오늘 13:00시까지 결제 시 오늘 바로 발송됩니다.</div>
-                            </div>
-                        </div>
-                        <div className={styles.express}>택배배송비:3500원</div>
-
-                        <div className={styles.totalPrice}>
-                            <div>총 상품금액</div>
-                            <div className={styles.totalPrice2}>
-                                <div>총수량 {count}개</div>
-                                <div>{<Before2></Before2>}총 금액 {SumPrice()}원</div>
-                            </div>
-                        </div>
-                        <div className={styles.purchaseButton}>
+                        <div className={styles.btn_group}>
                             <Link href={`/payment?_id=${query._id}`} passHref>
-                                <button className={styles.button} onClick={pressPayment}>구매버튼</button>
+                                <button className={styles.purchaseButton} onClick={pressPayment}>구매하기</button>
                             </Link>
-                            <div>
-                                <button className={styles.etcMenu} onClick={pressLike}>찜하기</button>
-                                <button className={styles.etcMenu} onClick={pressCart}>장바구니</button>
-                            </div>
+                            {/* 찜하기 */}
+                            <button className={styles.likebox} onClick={pressLike}></button>
+                            {/* 장바구니 */}
+                            <button className={styles.itembox} onClick={pressCart}></button>
                         </div>
                     </div>
                 </div>
 
                 {/* ------------------------------상품설명----------------------------------- */}
 
-                <div className={styles.itemInfo}>
-                    <div className={styles.itemTag}>
-                        <div className={styles.tagLayout} role='tablist'>
-                            <li onClick={tagSelect} role='tab' tabIndex={0} id='tagInfo' className={styles.li}>
-                                <strong className={styles.strong}>상세정보</strong>
+                <div className={styles.itemTag}>
+                    <div className={styles.tagLayout} role='tablist'>
+                        <ul>
+                            <li>
+                                <div className={styles.tag}  >
+                                    <span onClick={tagSelect} role='tab' tabIndex={0} id='tagInfo'>상세정보</span>
+                                </div>
                             </li>
-                            {<Before></Before>}
-                            <li onClick={tagSelect} role='tab' tabIndex={1} id='tagReview' className={styles.li} >
-                                <strong className={styles.strong}>상품후기</strong>
+                            <li>
+                                <div className={styles.tag}>
+                                    <span onClick={tagSelect} role='tab' tabIndex={1} id='tagReview' >상품후기</span>
+                                </div>
                             </li>
-                            {<Before></Before>}
-                            <li onClick={tagSelect} role='tab' tabIndex={2} id='tagReview' className={styles.li} >
-                                <strong className={styles.strong}>상푼문의</strong>
-                            </li>{<Before></Before>}
-                            <li onClick={tagSelect} role='tab' tabIndex={3} id='tagReview' className={styles.li} >
-                                <strong className={styles.strong}>반품/교환정보</strong>
+                            <li>
+                                <div className={styles.tag}>
+                                    <span onClick={tagSelect} role='tab' tabIndex={2} id='tagReview'>상푼문의</span>
+                                </div>
                             </li>
-
-
-                        </div>
-                        <div className={styles.tagList}>
-                            <div className={styles.tagInfo} tabIndex={0} ref={myRef1}>
-                                상세정보 컨텐츠
-                            </div>
-                            <div className={styles.tagReview} tabIndex={1} ref={myRef2}>
-                                상품후기 컨텐츠
-                            </div>
-                            <div className={styles.tagQnA} tabIndex={2} ref={myRef3}>
-                                상품문의 컨텐츠
-                            </div>
-                            <div className={styles.tagRMA} tabIndex={3} ref={myRef4}>
-                                반품문의 컨텐츠
-                            </div>
-                        </div>
-
+                            <li  >
+                                <div className={styles.tag}>
+                                    <span onClick={tagSelect} role='tab' tabIndex={3} id='tagReview' >반품/교환정보</span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
+                    <div className={styles.tagList}>
+                        <div className={styles.tagInfo} tabIndex={0} ref={myRef1}>
+                            <Image
+                                src={img1}></Image>
+                        </div>
+                        <div className={styles.tagInfo} tabIndex={1} ref={myRef2}>
+                            <Image
+                                src={img2}></Image>
+                        </div>
+                        <div className={styles.tagInfo} tabIndex={2} ref={myRef3}>
+                            <Image
+                                src={img3}></Image>
+                        </div>
+                        <div className={styles.tagInfo} tabIndex={3} ref={myRef4}>
+                            <Image
+                                src={img4}></Image>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </Layout >

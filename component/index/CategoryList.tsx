@@ -24,7 +24,7 @@ const CategoryList: NextPage<{ data: product }> = ({ data }) => {
                 </div>
                 <div className={CategoryListStyle.sideInfo}>
                     <div><strong>{data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</strong>원</div>
-                    <span>배송비 3,000원</span>
+                    <span>무료배송</span>
                     <span>{data.maker}</span>
                 </div>
             </div>
