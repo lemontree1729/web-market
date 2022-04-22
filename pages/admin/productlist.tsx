@@ -12,6 +12,12 @@ import customAxios from '../../utils/customAxios'
 
 const Productlist: NextPage = () => {
     const router = useRouter()
+    const [inputs, setinputs] = useState({
+        name: "",
+        price: "",
+        category1: "",
+        category2: "",
+    })
     const [imageDataUrl, setImageDataUrl] = useState(null)
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
     if (isLoading) return <div><Loading /></div>
@@ -27,7 +33,14 @@ const Productlist: NextPage = () => {
         alert("권한이 없습니다")
         router.push("/")
     }
-
+    const { name, price, category1, category2 } = inputs
+    const onChange = (e: any) => {
+        const { name, value } = e.target
+        const nextInputs = {
+            ...inputs, [name]: value,
+        }
+        setinputs(nextInputs)
+    }
 
     const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
         const target = e.target.files[0]
@@ -69,7 +82,7 @@ const Productlist: NextPage = () => {
             <div className={adminStyle.container}>
                 <div className={adminStyle.body}>
                     <div>
-                        <Sidebar toggle="userlist"></Sidebar>
+                        <Sidebar toggle="productlist"></Sidebar>
                     </div>
                     <div className={adminStyle.content}>
                         <div className="input-group">
@@ -78,10 +91,10 @@ const Productlist: NextPage = () => {
                         미리보기
                         {imageDataUrl && <img src={imageDataUrl} />}
                         <div>
-                            <input defaultValue="상품 이름"></input>
-                            <input defaultValue="상품 가격"></input>
-                            <input defaultValue="카테고리1"></input>
-                            <input defaultValue="카테고리2"></input>
+                            <input name="name" value={name} onChange={onChange} placeholder='상품 이름'></input>
+                            <input type="number" name="price" value={price} onChange={onChange} placeholder='상품 가격'></input>
+                            <input name="category1" value={category1} onChange={onChange} placeholder='카테고리1'></input>
+                            <input name="category2" value={category2} onChange={onChange} placeholder='카테고리2'></input>
                         </div>
                         <button className="btn btn-outline-secondary" onClick={createProduct}>상품 등록</button>
                     </div>
