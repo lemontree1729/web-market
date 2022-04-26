@@ -1,4 +1,5 @@
-# web-market
+# 🛒web-market
+
 [web-market](https://web-market-lsh.vercel.app/)
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/></a>
@@ -8,6 +9,11 @@
 <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
 
 > web-market프로젝트는 NextJs 와 TypeScript 를 기반으로 제작한 웹쇼핑몰 사이트입니다.
+
+### 팀원
+👨‍🦱[홍륜건](https://github.com/aypooo)
+🧑[송영진](https://github.com/lemontree1729)
+👦[이경민](https://github.com/akeias)
 
 ### 버전 정보
 - React: 17.0.0
