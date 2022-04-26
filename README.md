@@ -10,11 +10,23 @@
 
 > web-market프로젝트는 NextJs 와 TypeScript 를 기반으로 제작한 웹쇼핑몰 사이트입니다.
 
-### 팀원
-👨‍🦱[홍륜건](https://github.com/aypooo)
-🧑[송영진](https://github.com/lemontree1729)
-👦[이경민](https://github.com/akeias)
+### 팀원 및 역할
 
+- 🧑[송영진](https://github.com/lemontree1729) :
+  **백엔트** (DataBase,api)
+
+- 👨‍🦱[홍륜건](https://github.com/aypooo) :
+  **프론트엔드** (로그인,회원가입,마이페이지, css)
+
+- 👦[이경민](https://github.com/akeias) : 
+  **프론트엔드** (메인페이지,상품카테고리,상품페이지)
+  
+### 기획 및 목표
+
+- 쇼핑몰의 기본적인 구조를 구현하고 배포까지 해보는 것이 목표였다.
+- nextjs를 사용하여 ssr을 구현하고자 하였다.
+  
+  
 ### 버전 정보
 - React: 17.0.0
 - next: 12.1.1
