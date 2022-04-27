@@ -9,7 +9,7 @@ export default function CreatePost() {
     const router = useRouter()
     const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
     const onSubmit: SubmitHandler<inquiry> = async data => {
-        alert(JSON.stringify(data, null, 2))
+        // alert(JSON.stringify(data, null, 2))
         try {
             const res = await customAxios.post("/api/inquiry/me", data)
             if (res.status == 200) {

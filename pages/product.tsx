@@ -171,22 +171,22 @@ const Product: NextPage = (props: any) => {
                     <div className={styles.tagLayout} role='tablist'>
                         <ul>
                             <li>
-                                <div className={styles.tag}  >
+                                <div onClick={tagSelect} role='tab' tabIndex={0} id='tagInfo' className={styles.tag}  >
                                     <span onClick={tagSelect} role='tab' tabIndex={0} id='tagInfo'>상세정보</span>
                                 </div>
                             </li>
                             <li>
-                                <div className={styles.tag}>
+                                <div onClick={tagSelect} role='tab' tabIndex={1} id='tagReview' className={styles.tag}>
                                     <span onClick={tagSelect} role='tab' tabIndex={1} id='tagReview' >상품후기</span>
                                 </div>
                             </li>
                             <li>
-                                <div className={styles.tag}>
+                                <div onClick={tagSelect} role='tab' tabIndex={2} id='tagReview' className={styles.tag}>
                                     <span onClick={tagSelect} role='tab' tabIndex={2} id='tagReview'>상푼문의</span>
                                 </div>
                             </li>
                             <li  >
-                                <div className={styles.tag}>
+                                <div onClick={tagSelect} role='tab' tabIndex={3} id='tagReview' className={styles.tag}>
                                     <span onClick={tagSelect} role='tab' tabIndex={3} id='tagReview' >반품/교환정보</span>
                                 </div>
                             </li>
