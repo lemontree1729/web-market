@@ -1,14 +1,14 @@
 import type { NextPage } from 'next'
 import useCustomSWR from '../../utils/client/useCustumSWR'
 import Layout from '../../component/Layout'
-import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/css/bootstrap.css'
 import adminStyle from '../../styles/admin/admin.module.css'
 import Sidebar from '../../component/admin/Sidebar'
 import { useRouter } from 'next/router'
 import Loading from '../../component/Loading'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
 import customAxios from '../../utils/customAxios'
-
+import productListStyle from '../../styles/admin/productlist.module.css'
 
 const Productlist: NextPage = () => {
     const router = useRouter()
@@ -19,6 +19,7 @@ const Productlist: NextPage = () => {
         category2: "",
     })
     const [imageDataUrl, setImageDataUrl] = useState(null)
+    const categorySWR = useCustomSWR("/api/product/category", {}, false, true)
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
     if (isLoading) return <div><Loading /></div>
     if (isServerError) {
@@ -33,6 +34,11 @@ const Productlist: NextPage = () => {
         alert("권한이 없습니다")
         router.push("/")
     }
+    if (categorySWR.isLoading) {
+        return <div><Loading /></div>
+    }
+
+
     const { name, price, category1, category2 } = inputs
     const onChange = (e: any) => {
         const { name, value } = e.target
@@ -41,7 +47,7 @@ const Productlist: NextPage = () => {
         }
         setinputs(nextInputs)
     }
-
+    console.log(inputs)
     const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
         const target = e.target.files[0]
         const possibleTypes = ["image/png", "image/gif", "image/jpeg"]
@@ -57,6 +63,15 @@ const Productlist: NextPage = () => {
             alert("png, gif, jpeg 확장자의 이미지만 불러오기가 가능합니다")
         }
     }
+    const categoryData = categorySWR.data
+    const category1Data: Array<string> = []
+    categoryData.forEach((category: any) => category1Data.push(category.category1));
+    let category2Data: Array<string> = []
+    category1 && categoryData.forEach((category: any) => {
+        if (category.category1 === category1) {
+            category2Data = category.category2
+        }
+    })
     /*  
     유저 필수 입력값: name, price, category1, category2
     유저 선택 입력값(필수로 수정 가능): category3, category4, description, mallName, maker, brand
@@ -79,28 +94,64 @@ const Productlist: NextPage = () => {
 
     return (
         <Layout>
-            <div className={adminStyle.container}>
-                <div className={adminStyle.body}>
-                    <div>
-                        <Sidebar toggle="productlist"></Sidebar>
-                    </div>
-                    <div className={adminStyle.content}>
-                        <div className="input-group">
-                            <input type="file" className="form-control" accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
-                        </div>
-                        미리보기
-                        {imageDataUrl && <img src={imageDataUrl} />}
-                        <div>
-                            <input name="name" value={name} onChange={onChange} placeholder='상품 이름'></input>
-                            <input type="number" name="price" value={price} onChange={onChange} placeholder='상품 가격'></input>
-                            <input name="category1" value={category1} onChange={onChange} placeholder='카테고리1'></input>
-                            <input name="category2" value={category2} onChange={onChange} placeholder='카테고리2'></input>
-                        </div>
-                        <button className="btn btn-outline-secondary" onClick={createProduct}>상품 등록</button>
+            <div className={adminStyle.body}>
+                <div>
+                    <Sidebar toggle="productlist"></Sidebar>
+                </div>
+                <div className={productListStyle.content}>
+                    <h3 className={productListStyle.title}> 상품목록</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>카테고리</th>
+                                <td>
+                                    <div className={productListStyle.selectarea}>
+                                        <select className={productListStyle.Inputtag} name="category1" value={category1} onChange={onChange}>
+                                            <option value="">카테고리1</option>
+                                            {category1Data && category1Data.map(category1 => <option value={category1} key={category1}>{category1}</option>)}
+                                        </select>
+                                        <select className={productListStyle.Inputtag} name="category2" value={category2} onChange={onChange}>
+                                            <option value="">카테고리2</option>
+                                            {category2Data && category2Data.map(category2 => <option value={category2} key={category2}>{category2}</option>)}
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상품이름</th>
+                                <td>
+
+                                    <input className={productListStyle.Inputtag} name="name" value={name} onChange={onChange} placeholder='상품 이름'></input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상품가격</th>
+                                <td>
+                                    <input className={productListStyle.Inputtag} type="number" name="price" value={price} onChange={onChange} placeholder='상품 가격'></input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>사진등록</th>
+
+                                <td>
+                                    <div className={productListStyle.filebox}>
+                                        <div className={productListStyle.imgbox}>{imageDataUrl && <img src={imageDataUrl} />}</div>
+                                        <label >
+                                            <input className={productListStyle.file_input} type="file" accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
+                                        </label>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className={productListStyle.btn_group}>
+                        <button onClick={createProduct}>상품 등록</button>
                     </div>
                 </div>
-            </div>
-        </Layout>
+            </div >
+        </Layout >
     )
 }
 
