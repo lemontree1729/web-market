@@ -18,7 +18,10 @@ const Productlist: NextPage = () => {
         category1: "",
         category2: "",
     })
-    const [imageDataUrl, setImageDataUrl] = useState(null)
+    const [imageDataUrl, setImageDataUrl] = useState({
+        file: [],
+        previewURL: null,
+    })
     const categorySWR = useCustomSWR("/api/product/category", {}, false, true)
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
     if (isLoading) return <div><Loading /></div>
@@ -48,14 +51,20 @@ const Productlist: NextPage = () => {
         setinputs(nextInputs)
     }
     console.log(inputs)
+
     const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
         const target = e.target.files[0]
+        const filesInArr = Array.from(e.target.files);
         const possibleTypes = ["image/png", "image/gif", "image/jpeg"]
         if (possibleTypes.includes(target.type)) {
             const reader = new FileReader()
+            // console.log(filesInArr)
             reader.onloadend = () => {
-                console.log(reader.result)
-                setImageDataUrl(reader.result)
+                // console.log(reader.result)
+                setImageDataUrl({
+                    file: filesInArr,
+                    previewURL: reader.result
+                })
             }
             reader.readAsDataURL(target)
         } else {
@@ -63,6 +72,26 @@ const Productlist: NextPage = () => {
             alert("png, gif, jpeg 확장자의 이미지만 불러오기가 가능합니다")
         }
     }
+
+
+    // const imgArray: Array<string> = []
+    // const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
+    //     const target = e.target.files[0]
+    //     const possibleTypes = ["image/png", "image/gif", "image/jpeg"]
+    //     if (possibleTypes.includes(target.type)) {
+    //         const reader = new FileReader()
+
+    //         reader.onloadend = () => {
+    //             console.log(reader.result)
+    //             // imgArray.push(reader.result)
+    //             setImageDataUrl(reader.result)
+    //         }
+    //         reader.readAsDataURL(target)
+    //     } else {
+    //         e.target.value = ""
+    //         alert("png, gif, jpeg 확장자의 이미지만 불러오기가 가능합니다")
+    //     }
+    // }
     const categoryData = categorySWR.data
     const category1Data: Array<string> = []
     categoryData.forEach((category: any) => category1Data.push(category.category1));
@@ -120,7 +149,6 @@ const Productlist: NextPage = () => {
                             <tr>
                                 <th>상품이름</th>
                                 <td>
-
                                     <input className={productListStyle.Inputtag} name="name" value={name} onChange={onChange} placeholder='상품 이름'></input>
                                 </td>
                             </tr>
@@ -132,16 +160,14 @@ const Productlist: NextPage = () => {
                             </tr>
                             <tr>
                                 <th>사진등록</th>
-
                                 <td>
                                     <div className={productListStyle.filebox}>
-                                        <div className={productListStyle.imgbox}>{imageDataUrl && <img src={imageDataUrl} />}</div>
+                                        {/* <div className={productListStyle.imgbox}>{imageDataUrl && <img src={imageDataUrl} />}</div> */}
+                                        {imageDataUrl?.file.map((eachfile) => { })}
                                         <label >
-                                            <input className={productListStyle.file_input} type="file" accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
+                                            <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
                                         </label>
                                     </div>
-
-
                                 </td>
                             </tr>
                         </tbody>
