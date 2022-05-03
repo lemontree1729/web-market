@@ -174,15 +174,25 @@ const Productlist: NextPage = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <th>사진등록</th>
+                                <th>썸네일</th>
                                 <td>
                                     <div className={productListStyle.filebox}>
-                                        {/* <div className={productListStyle.imgbox}>{imageDataUrl && <img src={imageDataUrl} />}</div> */}
-
-                                        <div className={productListStyle.imgbox}>
-                                            {imageDataUrl && imageDataUrl?.map((file) => <img src={file} />)}
-                                        </div>
-
+                                        <ul>
+                                            {imageDataUrl && imageDataUrl?.map((file) => <li><img src={file} /></li>)}
+                                        </ul>
+                                        <label >
+                                            <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>제품사진</th>
+                                <td>
+                                    <div className={productListStyle.filebox}>
+                                        <ul>
+                                            {imageDataUrl && imageDataUrl?.map((file) => <li><img src={file} /></li>)}
+                                        </ul>
                                         <label >
                                             <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
                                         </label>

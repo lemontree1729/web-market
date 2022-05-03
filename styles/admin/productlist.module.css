@@ -28,18 +28,18 @@
 }
 
 .Inputtag {
-    width: 500px;
+    width: 625px;
     height: 32px;
 }
 
 .selectarea {
     display: flex;
-    width: 500px;
+    width: 625px;
     /* margin: 5px 0 5px 0; */
 }
 
 .btn_group {
-    width: 500px;
+    width: 800px;
     /* margin: 5px 0 5px 0; */
 }
 
@@ -62,6 +62,7 @@
 
 .filebox {
     display: flex;
+    width: 100%;
 }
 
 .filebox label {
@@ -91,12 +92,23 @@
     content: "파일등록";
 }
 
-.imgbox {
+.filebox ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: top;
+}
+
+.filebox li {
+    position: relative;
+    float: left;
     width: 100px;
     height: 100px;
     margin-right: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
 }
 
-.imgbox img {
+.filebox li img {
     width: 100%;
 }
