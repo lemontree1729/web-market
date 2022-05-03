@@ -18,7 +18,8 @@ const Productlist: NextPage = () => {
         category1: "",
         category2: "",
     })
-    const [imageDataUrl, setImageDataUrl] = useState([])
+    const [thumbnailDataUrl, setThumbnailDataUrl] = useState([])
+    const [imageDataUrl, setimageDataUrl] = useState([])
     const categorySWR = useCustomSWR("/api/product/category", {}, false, true)
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me")
     if (isLoading) return <div><Loading /></div>
@@ -47,66 +48,54 @@ const Productlist: NextPage = () => {
         }
         setinputs(nextInputs)
     }
-    // console.log(inputs)
 
-    const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
-        // const target = e.target.files[0]
-        // console.log(target)
+    const savethumbDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
         if (e.target.files) {
             const filesInArr = Array.from(e.target.files);
             const filesURL = []
             console.log(filesInArr)
-            // const possibleTypes = ["image/png", "image/gif", "image/jpeg"]
-            // if (possibleTypes.includes(target.type)) {
-            // console.log(reader)
+            let file;
+            let filesLength = filesInArr.length > 5 ? 5 : filesInArr.length
+            if (thumbnailDataUrl.length + filesLength > 5) {
+                alert("사진갯수는 5장을 초과할 수 없습니다.")
+            } else {
+                for (let i = 0; i < filesLength; i++) {
+                    file = filesInArr[i];
+                    let reader = new FileReader();
+                    reader.onload = () => {
+                        console.log(reader.result);
+                        filesURL[i] = reader.result;
+                        setThumbnailDataUrl(prevImages => prevImages.concat(reader.result));
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    }
+    const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
+        if (e.target.files) {
+            const filesInArr = Array.from(e.target.files);
+            const filesURL = []
+            console.log(filesInArr)
             let file;
             let filesLength = filesInArr.length > 5 ? 5 : filesInArr.length
             if (imageDataUrl.length + filesLength > 5) {
                 alert("사진갯수는 5장을 초과할 수 없습니다.")
             } else {
-                //사진업로드 갯수 제한하기
                 for (let i = 0; i < filesLength; i++) {
                     file = filesInArr[i];
                     let reader = new FileReader();
-                    // console.log(reader, 1)
                     reader.onload = () => {
                         console.log(reader.result);
                         filesURL[i] = reader.result;
-                        setImageDataUrl(prevImages => prevImages.concat(reader.result));
-                        // console.log(reader, 2)
+                        setimageDataUrl(prevImages => prevImages.concat(reader.result));
                     };
                     reader.readAsDataURL(file);
-                    // console.log(reader, 3)
                 }
             }
-
         }
     }
-    console.log(imageDataUrl.length)
-    // } else {
-    //     e.target.value = ""
-    //     alert("png, gif, jpeg 확장자의 이미지만 불러오기가 가능합니다")
-    // }
 
-
-
-    // const imgArray: Array<string> = []
-    // const saveImageDataUrl: ChangeEventHandler<HTMLInputElement> = e => {
-    //     const target = e.target.files[0]
-    //     const possibleTypes = ["image/png", "image/gif", "image/jpeg"]
-    //     if (possibleTypes.includes(target.type)) {
-    //         const reader = new FileReader()
-
-    //         reader.onloadend = () => {
-    //             console.log(reader.result)
-    //             setImageDataUrl(reader.result)
-    //         }
-    //         reader.readAsDataURL(target)
-    //     } else {
-    //         e.target.value = ""
-    //         alert("png, gif, jpeg 확장자의 이미지만 불러오기가 가능합니다")
-    //     }
-    // }
     const categoryData = categorySWR.data
     const category1Data: Array<string> = []
     categoryData.forEach((category: any) => category1Data.push(category.category1));
@@ -178,10 +167,10 @@ const Productlist: NextPage = () => {
                                 <td>
                                     <div className={productListStyle.filebox}>
                                         <ul>
-                                            {imageDataUrl && imageDataUrl?.map((file) => <li><img src={file} /></li>)}
+                                            {thumbnailDataUrl && thumbnailDataUrl?.map((file) => <li><img src={file} /></li>)}
                                         </ul>
                                         <label >
-                                            <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
+                                            <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={savethumbDataUrl} />
                                         </label>
                                     </div>
                                 </td>
