@@ -1,39 +1,18 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { Err } from "./commonError"
-import { cookie, ValidationChain, validationResult } from "express-validator"
-import nextConnect, { NextHandler } from "next-connect"
-import { checkDB, saveLog, serverAuth, validateRequest } from "./middleware"
+import { PageNotFoundErr, UncaughtErr } from "./commonError"
+import { ValidationChain, validationResult } from "express-validator"
+import nextConnect from "next-connect"
+import { checkDB } from "./middleware"
 import authController from "./authController"
 
-function errorToJson(err: Error): any {
-    let { cause, name, message, stack } = err
-    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
-        try {
-            const stackList = stack?.split("\n    ")
-            if (cause !== undefined) {
-                return { cause: errorToJson(cause), stack: stackList, message, name }
-            } else {
-                return { stack: stackList, message, name }
-            }
-        } catch {
-            return { stack, message, name }
-        }
-    } else {
-        return { message, name }
-    }
-}
 
 export function customHandler() {
     return nextConnect({
         onError: (err: Error, req: NextApiRequest, res: NextApiResponse, next: any) => {
-            if (err instanceof Error) {
-                Err(res, errorToJson(err))
-            } else {
-                Err(res, err)
-            }
+            UncaughtErr(res, "uncaught api error occured", err)
         },
         onNoMatch: (req: NextApiRequest, res: NextApiResponse) => {
-            Err(res, "page not found")
+            PageNotFoundErr(res, "api page does not exist")
         },
     }).use(checkDB).use(authController)
 }
