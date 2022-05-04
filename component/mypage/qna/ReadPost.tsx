@@ -13,7 +13,7 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isAnswer, setisAnswer] = useState(false)
     const answer = "답변예정"
-    // data.reply.length ? "답변완료" : 
+    // data.reply.length ? "답변완료" :
     function clickContent() {
         if (answer) {
             setisAnswer(!isAnswer)
@@ -62,7 +62,7 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
                     </tr>
                 ) : <></>
             }
-            {
+            {/* {
                 isAnswer ? (
                     <tr onClick={clickContent}>
 
@@ -73,7 +73,7 @@ const ReadPost: NextPage<{ data: extraInquiry }> = ({ data }) => {
                         <td></td>
                     </tr>
                 ) : <></>
-            }
+            } */}
         </>
     )
 }

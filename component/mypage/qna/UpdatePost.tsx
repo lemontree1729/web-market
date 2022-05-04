@@ -7,7 +7,7 @@ import { inquiry } from "../../../models/Inquiry"
 import useCustomSWR from "../../../utils/client/useCustumSWR"
 import customAxios from "../../../utils/customAxios"
 import Loading from "../../Loading"
-
+import createpostStyle from "../../../styles/mypage/createpost.module.css"
 const UpdatePost: NextPage = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm<inquiry>({ mode: "onSubmit" })
     const router = useRouter()
@@ -46,26 +46,27 @@ const UpdatePost: NextPage = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} >
-            <div className="container">
-                <div className="content">
+            <div className={createpostStyle.container}>
+                <div className={createpostStyle.content}>
+                    <div className={createpostStyle.tilte}>문의 작성</div>
                     <table>
                         <tbody>
                             <tr>
-                                <th>문의유형</th>
+                                <th scope='col'>문의유형</th>
                                 <td>
-                                    <div className="select">
-                                        <select defaultValue={targetPost.qacategory}  {...register("qacategory", { required: true })}>
-                                            <option value="">문의유형 선택</option>
-                                            <option value="교환">교환</option>
-                                            <option value="환불">환불</option>
-                                            <option value="배송">배송</option>
-                                            <option value="상품문의">상품문의</option>
-                                            <option value="주문취소">주문취소</option>
-                                            <option value="주문/결제">주문/결제</option>
-                                            <option value="이벤트">이벤트</option>
-                                        </select>
-                                        {errors.qacategory && alert("문의 유형을 선택해주세요")}
-                                    </div>
+
+                                    <select defaultValue={targetPost.qacategory}  {...register("qacategory", { required: true })}>
+                                        <option value="">문의유형 선택</option>
+                                        <option value="교환">교환</option>
+                                        <option value="환불">환불</option>
+                                        <option value="배송">배송</option>
+                                        <option value="상품문의">상품문의</option>
+                                        <option value="주문취소">주문취소</option>
+                                        <option value="주문/결제">주문/결제</option>
+                                        <option value="이벤트">이벤트</option>
+                                    </select>
+                                    {errors.qacategory && alert("문의 유형을 선택해주세요")}
+
                                 </td>
                             </tr>
                             {/* <tr>
@@ -77,14 +78,14 @@ const UpdatePost: NextPage = () => {
                                 </td>
                             </tr> */}
                             <tr>
-                                <th>제목</th>
+                                <th scope='col'>제목</th>
                                 <td>
                                     <input defaultValue={targetPost.title} {...register("title", { required: true })} placeholder="제목을 입력해주세요." />
                                     {errors.title && alert("제목을 입력해주세요")}
                                 </td>
                             </tr>
                             <tr>
-                                <th>문의내용</th>
+                                <th scope='col'>문의내용</th>
                                 <td>
                                     <textarea defaultValue={targetPost.content} {...register("content", { required: true })} cols={50} rows={10} placeholder="내용을 입력해주세요." />
                                     {errors.content && alert("내용을 입력해주세요.")}
@@ -93,11 +94,12 @@ const UpdatePost: NextPage = () => {
                             </tr>
                         </tbody>
                     </table>
-                    <div>
+                    <div className={createpostStyle.btn_group}>
+                        <button type="submit">수정하기</button>
                         <Link href="/qna" passHref>
                             <button >뒤로가기</button>
                         </Link>
-                        <button type="submit">수정하기</button>
+
                     </div>
                 </div>
             </div>

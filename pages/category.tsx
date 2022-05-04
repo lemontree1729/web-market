@@ -52,10 +52,6 @@ const Category: NextPage = () => {
     })
     category2Data.sort()
 
-    // console.log(categoryData, productData)
-    // console.log(productTotalNum)
-
-
     const offset = (page - 1) * limit;
 
     return (

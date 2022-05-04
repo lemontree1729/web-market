@@ -1,0 +1,114 @@
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content tr {
+    height: 45px;
+}
+
+.content th {
+    width: 170px;
+    text-align: left;
+    padding: 10px 0 0 0;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: 3px solid black;
+    padding-bottom: 15px;
+    margin: 0;
+}
+
+.inputarea {
+    width: 500px;
+    margin: 5px 0 5px 0;
+}
+
+.Inputtag {
+    width: 625px;
+    height: 32px;
+}
+
+.selectarea {
+    display: flex;
+    width: 625px;
+    /* margin: 5px 0 5px 0; */
+}
+
+.btn_group {
+    width: 800px;
+    /* margin: 5px 0 5px 0; */
+}
+
+.btn_group button {
+    float: right;
+
+    min-width: 98px;
+    height: 32px;
+    border: 1px solid rgb(52, 106, 255);
+    color: rgb(52, 106, 255);
+    background-color: white;
+    margin-left: 5px;
+    padding-top: 0;
+
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
+}
+
+.filebox {
+    display: flex;
+    width: 100%;
+}
+
+.filebox label {
+    display: inline-block;
+    min-width: 100px;
+    height: 100px;
+    border: 1px solid #dadada;
+    background-color: white;
+    font-weight: 700;
+    padding: 38px 0 0 43px;
+    cursor: pointer;
+}
+
+.filebox label::before {
+    content: "+";
+}
+
+.file_input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    content: "파일등록";
+}
+
+.filebox ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: top;
+}
+
+.filebox li {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.filebox li img {
+    width: 100%;
+}
