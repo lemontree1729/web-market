@@ -114,7 +114,7 @@ const Productlist: NextPage = () => {
     */
     const createProduct: MouseEventHandler<HTMLButtonElement> = async e => {
         try {
-            const result = await customAxios.post("/api/product", { inputs, thumbnailDataUrl, imageDataUrl })
+            const result = await customAxios.post("/api/product", { ...inputs, thumbnailDataUrl, imageDataUrl })
             if (result.status === 200) {
                 alert("업로드 성공")
             } else {

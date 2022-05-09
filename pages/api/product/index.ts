@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 import mongoose from "mongoose";
 import Product, { product } from "../../../models/Product";
-import { Err, Ok } from "../../../utils/server/commonError";
+import { Err, Ok, ValueNotFoundErr } from "../../../utils/server/commonError";
 import { customHandler } from "../../../utils/server/commonHandler";
 import { envExist } from "../../../utils/validateEnv";
 
@@ -79,10 +79,11 @@ const handler = customHandler()
     )
     .post(
         async (req, res) => {
-            const { name, price, category1, category2, category3, category4, imageDataUrl, description, mallName, maker, brand } = req.body
-            const imageUrl = await getUrlFromAWS(imageDataUrl)
-            console.log(imageUrl)
-            const productData: product = { name, price, category1, category2, category3, category4, imageUrl, description, mallName, maker, brand }
+            const { name, price, category1, category2, category3, category4, imageDataUrl, thumbnailDataUrl, description, mallName, maker, brand } = req.body
+            const imageUrl = await Promise.all(imageDataUrl.map(getUrlFromAWS))
+            const thumbnailUrl = await Promise.all(thumbnailDataUrl.map(getUrlFromAWS))
+            console.log(imageUrl, thumbnailUrl)
+            const productData: product = { name, price, category1, category2, category3, category4, imageUrl, thumbnailUrl, description, mallName, maker, brand }
             await new Product(productData).save()
             return Ok(res, "success")
         }
@@ -95,7 +96,7 @@ const handler = customHandler()
                 const value = await new Product(req.body).save()
                 Ok(res, value)
             } else {
-                Err(res, result)
+                ValueNotFoundErr(res, "product_id not found")
             }
         }
     )
@@ -104,6 +105,14 @@ const handler = customHandler()
             Ok(res, "success")
         }
     )
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb' // Set desired value here
+        }
+    }
+}
 
 
 export default handler;
