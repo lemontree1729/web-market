@@ -47,6 +47,18 @@ export function AuthFailedErr(res: NextApiResponse, message: string, cause?: Err
     return commonErr(res, error)
 }
 
+export function ServerErr(res: NextApiResponse, message: string, cause?: Error) {
+    const error = new Error(message, { cause })
+    error.name = "SERVER_ERROR"
+    return commonErr(res, error)
+}
+
+export function ValueNotFoundErr(res: NextApiResponse, message: string, cause?: Error) {
+    const error = new Error(message, { cause })
+    error.name = "VALUE_NOT_FOUND_ERROR"
+    return commonErr(res, error)
+}
+
 export function PageNotFoundErr(res: NextApiResponse, message: string, cause?: Error) {
     const error = new Error(message, { cause })
     error.name = "PAGE_NOT_FOUND_ERROR"
