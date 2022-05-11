@@ -1,5 +1,5 @@
 import User from "../../../models/User"
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 import { customHandler } from '../../../utils/server/commonHandler';
 import { Err, Ok } from "../../../utils/server/commonError";
 import { createJWT, encryptPassword, uuid4, verifyJWT } from "../../../utils/encrypt";
@@ -57,10 +57,16 @@ const handler = customHandler()
             res.setHeader('Set-Cookie', cookies)
             const { refresh_token } = req.cookies
             if (refresh_token) {
-                const { jti } = await verifyJWT(refresh_token)
-                await LoginToken.deleteOne({ jti })
+                try {
+                    const { jti } = await verifyJWT(refresh_token)
+                    await LoginToken.deleteOne({ jti })
+                    Ok(res, "logout successful")
+                } catch (error) {
+                    Err(res, "logout failed", error)
+                }
+            } else {
+                Ok(res, "not logged in yet")
             }
-            Ok(res, "logout success")
         }
     )
 
