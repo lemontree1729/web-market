@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch --detectOpenHandles"
+    "test": "jest --watch"
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.3.3",

@@ -82,7 +82,6 @@ const handler = customHandler()
             const { name, price, category1, category2, category3, category4, imageDataUrl, thumbnailDataUrl, description, mallName, maker, brand } = req.body
             const imageUrl = await Promise.all(imageDataUrl.map(getUrlFromAWS))
             const thumbnailUrl = await Promise.all(thumbnailDataUrl.map(getUrlFromAWS))
-            console.log(imageUrl, thumbnailUrl)
             const productData: product = { name, price, category1, category2, category3, category4, imageUrl, thumbnailUrl, description, mallName, maker, brand }
             await new Product(productData).save()
             return Ok(res, "success")
@@ -90,9 +89,10 @@ const handler = customHandler()
     )
     .put(
         async (req, res) => {
-            const { _id } = req.query
+            const { _id } = req.body
             const result = await Product.findOne({ _id })
             if (result) {
+                delete req.body._id
                 const value = await new Product(req.body).save()
                 Ok(res, value)
             } else {
