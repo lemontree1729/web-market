@@ -1,8 +1,10 @@
 import AWS from "aws-sdk";
+import { body } from "express-validator";
 import mongoose from "mongoose";
 import Product, { product } from "../../../models/Product";
 import { Err, Ok, ValueNotFoundErr } from "../../../utils/server/commonError";
 import { customHandler } from "../../../utils/server/commonHandler";
+import { validateRequest } from "../../../utils/server/middleware";
 import { envExist } from "../../../utils/validateEnv";
 
 
@@ -44,6 +46,26 @@ async function getUrlFromAWS(imageDataUrl: string) {
     return resultUrl
 }
 
+async function deleteUrlFromAWS(imageUrl: string) {
+    AWS.config.update({
+        accessKeyId: envExist(process.env.MY_AWS_ACCESS_KEY_ID, "aws access key id", true),
+        secretAccessKey: envExist(process.env.MY_AWS_SECRET_ACCESS_KEY, "aws access key id", true),
+        region: 'ap-northeast-2'
+    });
+    const s3bucket = new AWS.S3()
+    const urlPrefix = "https://web-market.s3.ap-northeast-2.amazonaws.com/"
+    if (!imageUrl.includes(urlPrefix)) {
+        throw new Error("not a valid url")
+    }
+    const filename = imageUrl.split(urlPrefix)[1]
+    const params = {
+        Bucket: "web-market",
+        Key: filename
+    }
+    const result = (await s3bucket.deleteObject(params).promise())
+    return result
+}
+
 const handler = customHandler()
     .get(
         async (req, res) => {
@@ -78,23 +100,30 @@ const handler = customHandler()
         }
     )
     .post(
+        validateRequest([body(["name", "price", "category1", "category2", "imageDataUrl", "thumbnailDataUrl"]).exists()]),
         async (req, res) => {
             const { name, price, category1, category2, category3, category4, imageDataUrl, thumbnailDataUrl, description, mallName, maker, brand } = req.body
             const imageUrl = await Promise.all(imageDataUrl.map(getUrlFromAWS))
             const thumbnailUrl = await Promise.all(thumbnailDataUrl.map(getUrlFromAWS))
             const productData: product = { name, price, category1, category2, category3, category4, imageUrl, thumbnailUrl, description, mallName, maker, brand }
-            await new Product(productData).save()
-            return Ok(res, "success")
+            const product_id = (await new Product(productData).save())._id
+            return Ok(res, product_id)
         }
     )
     .put(
+        validateRequest([body("_id").exists()]),
         async (req, res) => {
             const { _id } = req.body
             const result = await Product.findOne({ _id })
             if (result) {
-                delete req.body._id
-                const value = await new Product(req.body).save()
-                Ok(res, value)
+                const { name, price, category1, category2, category3, category4, imageDataUrl, thumbnailDataUrl, description, mallName, maker, brand } = req.body
+                try {
+                    await Product.updateOne({ _id }, { $set: { name, price, category1, category2, category3, category4, imageDataUrl, thumbnailDataUrl, description, mallName, maker, brand } })
+                }
+                catch (error) {
+                    Err(res, "not a valid body parameter", error)
+                }
+                Ok(res, "success")
             } else {
                 ValueNotFoundErr(res, "product_id not found")
             }
@@ -102,7 +131,20 @@ const handler = customHandler()
     )
     .delete(
         async (req, res) => {
-            Ok(res, "success")
+            const { _id } = req.query
+            const result = await Product.findOne({ _id })
+            if (result) {
+                const { imageUrl, thumbnailUrl } = result;
+                [imageUrl, thumbnailUrl].map(value => value.map(async url => {
+                    if (url.includes("https://web-market.s3.ap-northeast-2.amazonaws.com/")) {
+                        await deleteUrlFromAWS(url)
+                    }
+                }))
+                await Product.deleteOne({ _id })
+                Ok(res, "success")
+            } else {
+                ValueNotFoundErr(res, "product_id not found")
+            }
         }
     )
 
