@@ -22,7 +22,7 @@ describe('/api/user', () => {
         await deleteRefreshToken(loginServer, user_refresh_token)
         await deleteRefreshToken(loginServer, admin_refresh_token)
         loginServer.close()
-    })
+    });
 
     beforeEach(() => {
         userServer = createTestServer(userHandler);
@@ -31,55 +31,52 @@ describe('/api/user', () => {
     afterEach(() => {
         userServer.close()
     });
-    describe("get user data without admin role", () => {
-        test("searching already exist id", async () => {
-            const res = await supertest(userServer)
-                .get('/api/user')
-                .query({ id: env.USER_ID })
-                .expect(200)
-                .expect('Content-Type', /json/)
-            expect(res.body.result).toEqual([{}])
-        })
+    describe("[GET]", () => {
+        describe("with id query", () => {
+            test("already exist id", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user')
+                    .query({ id: env.USER_ID })
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toEqual([{}])
+            })
 
-        test("searching not exist id", async () => {
-            const res = await supertest(userServer)
-                .get('/api/user')
-                .query({ id: "a" })
-                .expect(200)
-                .expect('Content-Type', /json/)
-            expect(res.body.result).toEqual([])
-        })
-
-        test("searching with required query", async () => {
-            const res = await supertest(userServer)
-                .get('/api/user')
-                .query({ _id: 1, required: ["gender"] })
-                .expect(400)
-                .expect('Content-Type', /json/)
-            // expect(res.body.error).toEqual("123")
-        })
-    });
-
-    describe("get user data with admin role", () => {
-        test("searching with required query", async () => {
-            const res = await supertest(userServer)
-                .get('/api/user')
-                .set('Cookie', [`refresh_token=${admin_refresh_token}`])
-                .query({ _id: 1, required: ["gender"] })
-                .expect(200)
-                .expect('Content-Type', /json/)
-            expect(res.body.result).toEqual([{ gender: "male" }])
-        })
-    })
-
-    describe("get user data with user role", () => {
-        test("searching with required query2", async () => {
-            const res = await supertest(userServer)
-                .get('/api/user')
-                .set('Cookie', [`refresh_token=${user_refresh_token}`])
-                .query({ _id: 1, required: ["gender"] })
-                .expect(400)
-                .expect('Content-Type', /json/)
+            test("not exist id", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user')
+                    .query({ id: "a" })
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toEqual([])
+            })
+        });
+        describe("with required query", () => {
+            test("with admin role", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user')
+                    .set('Cookie', [`refresh_token=${admin_refresh_token}`])
+                    .query({ _id: 1, required: ["gender"] })
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toEqual([{ gender: "male" }])
+            })
+            test("with user role", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user')
+                    .set('Cookie', [`refresh_token=${user_refresh_token}`])
+                    .query({ _id: 1, required: ["gender"] })
+                    .expect(400)
+                    .expect('Content-Type', /json/)
+            })
+            test("without login", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user')
+                    .query({ _id: 1, required: ["gender"] })
+                    .expect(400)
+                    .expect('Content-Type', /json/)
+                // expect(res.body.error).toEqual("123")
+            })
         })
     })
 })
