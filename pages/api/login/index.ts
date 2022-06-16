@@ -16,9 +16,7 @@ export interface loginQuery {
 const handler = customHandler()
     .post(
         validateRequest([
-            body("id").exists(),
-            body("password").exists(),
-            body("fingerprint").exists(), // fingerprint required
+            body(["id", "password", "fingerprint"]).exists(),// fingerprint required
             body("persistent").isBoolean()
         ]),
         async (req, res) => {
