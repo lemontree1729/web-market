@@ -5,9 +5,10 @@ import { apiResolver } from 'next/dist/server/api-utils/node';
 import supertest from 'supertest';
 import url from 'url';
 
-export function createTestServer(handler: NextConnect<NextApiRequest, NextApiResponse<any>>) {
+export function createTestServer(handler: NextConnect<NextApiRequest, NextApiResponse<any>>, config?: any) {
     const requestHandler = (request: http.IncomingMessage, response: http.ServerResponse) => {
         const query = url.parse(request.url, true).query
+        handler["config"] = config
         apiResolver(request, response, query, handler, undefined, true);
     }
     return http.createServer(requestHandler);
