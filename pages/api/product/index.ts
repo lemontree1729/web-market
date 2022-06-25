@@ -10,7 +10,7 @@ import { envExist } from "../../../utils/validateEnv";
 
 async function sendByCategory(maxResults: number) {
     const categoryQuery = [{ "$group": { "_id": "category1", "categories": { "$addToSet": "$category1" } } }]
-    const categories: String[] = (await Product.aggregate(categoryQuery).exec())[0]["categories"]
+    const categories: string[] = (await Product.aggregate(categoryQuery).exec())[0]["categories"]
     const totalResult: product[] = []
     for (let category of categories) {
         const result = await Product.aggregate([{ "$match": { "category1": category } }, { "$sample": { "size": Math.floor(maxResults / categories.length) } }])
@@ -110,7 +110,7 @@ const handler = customHandler()
             return Ok(res, product_id)
         }
     )
-    .put(
+    .patch(
         validateRequest([body("_id").exists()]),
         async (req, res) => {
             const { _id } = req.body
