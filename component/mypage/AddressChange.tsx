@@ -16,10 +16,7 @@ const Addresschange: NextPage = () => {
     const addressValue = useRef(null)
     const zonecodeValue = useRef(null)
     const router = useRouter()
-
-    const params = new URLSearchParams();
-    ["fulladdress.zonecode", "fulladdress.address", "fulladdress.addressdetail"].forEach(value => params.append("required", value))
-    const { data, isLoading, isError } = useCustomSWR("/api/user/me?", { params })
+    const { data, isLoading, isError } = useCustomSWR("/api/user/me?required=fulladdress", {}, true)
     if (isError) return <div>failed to load</div>
     if (isLoading) return <div><Loading /></div>
 
@@ -38,16 +35,15 @@ const Addresschange: NextPage = () => {
                 router.push("/mypage")
             } else
                 alert("주소변경에 실패했습니다.")
-
         } catch (err) {
         }
     }
+
     const validatrionAddress = (value: string) => {
         if (value !== "") {
             return true
         } else
             return false
-
     }
 
     const setAddressFunction = (value: any) => {
@@ -60,13 +56,14 @@ const Addresschange: NextPage = () => {
         zonecodeValue.current = value
         setZonecode(value)
     }
+
     const addressDetailInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const addressDetailValue = event.currentTarget.value
         if (validatrionAddress(addressDetailValue)) {
             setAddressDetail(addressDetailValue)
-
         }
     }
+
     return (
         <div className={addressStyle.content}>
             <div className={addressStyle.title}>주소변경</div>
@@ -78,9 +75,9 @@ const Addresschange: NextPage = () => {
                         <th>상세주소</th>
                     </tr>
                     <tr>
-                        <td>{data["fulladdress.zonecode"]}</td>
-                        <td>{data["fulladdress.address"]}</td>
-                        <td>{data["fulladdress.addressdetail"]}</td>
+                        <td>{data.fulladdress.zonecode}</td>
+                        <td>{data.fulladdress.address}</td>
+                        <td>{data.fulladdress.addressdetail}</td>
                         <td>
                             <button className={addressStyle.modify_btn} onClick={() => setIsOpen(!isOpen)}>수정하기</button>
                         </td>
@@ -107,7 +104,6 @@ const Addresschange: NextPage = () => {
                 </div >
                 : ""
             }
-
         </div >
     )
 }

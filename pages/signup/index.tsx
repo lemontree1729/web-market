@@ -42,7 +42,6 @@ const SignUp: NextPage = () => {
   const checkBlank = /\s/
 
 
-
   async function accountRegister(event: any) {
     event.preventDefault()
     if (idCheckApi === false ||
@@ -52,7 +51,6 @@ const SignUp: NextPage = () => {
       validationEmail(Email) === false ||
       ValidationAuthNumber === false ||
       validatrionAddress(AddressDetail) === false) {
-
       alert('다시 입력해주세요.')
     } else {
       const data = {
@@ -83,6 +81,7 @@ const SignUp: NextPage = () => {
       }
     }
   }
+
   async function idCheckFunction(event: any) {
     event.preventDefault()
     if (validationId(Id)) {
@@ -109,6 +108,7 @@ const SignUp: NextPage = () => {
       alert("아이디를 다시 입력해주세요")
     }
   }
+
   async function sendNumberApi() { //인증번호 API
     try {
       const request = await customAxios.post('/api/user/naverAuth', { "phonenumber": PhoneNumber })
@@ -120,7 +120,6 @@ const SignUp: NextPage = () => {
     } catch (err) {
       alert("인증번호를 전송에 실패했습니다.")
       console.log(err)
-
     }
   }
 
@@ -203,6 +202,7 @@ const SignUp: NextPage = () => {
       return true
     }
   }
+
   //성별
   const GenderInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {//성별 입력 핸들러
     const genderValue = event.target.value
@@ -238,8 +238,8 @@ const SignUp: NextPage = () => {
       setwrongEmail("")
       return true
     }
-
   }
+
   //전화번호
   const PhoneNumberInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {//폰번호 입력 핸들러
     const phoneNumberValue = event.currentTarget.value
@@ -258,15 +258,14 @@ const SignUp: NextPage = () => {
       setwrongPhoneNumber("")
       return true
     }
-
   }
+
   //번호인증
   const openCetificationValue = useRef(false)
   const openCetification = (boolean: boolean) => {//인증창 열기
     openCetificationValue.current = boolean
     setIsOpen(boolean)
   }
-
   const certificationPhoneNumber = (event: any) => {//인증번호 api 보내기
     event.preventDefault()
     if (!validationPhoneNumber(PhoneNumber)) {
@@ -279,7 +278,6 @@ const SignUp: NextPage = () => {
   const AuthnumberInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {//인증번호 입력
     setAuthnumber(event.currentTarget.value)
     console.log(event.currentTarget.value)
-
   }
   const validationAuthnumber = (event: any) => {//인증번호 확인
     event.preventDefault()
@@ -291,6 +289,7 @@ const SignUp: NextPage = () => {
       setValidationAuthNumber(true)
     }
   }
+
   //주소
   const addressValue = useRef(null)
   const setAddressFunction = (value: any) => {
@@ -307,9 +306,7 @@ const SignUp: NextPage = () => {
     if (validatrionAddress(value)) {
       setZonecode(value)
     }
-
   }
-
   const addressDetailInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const addressDetailValue = event.currentTarget.value
     if (validatrionAddress(addressDetailValue)) {
@@ -324,11 +321,9 @@ const SignUp: NextPage = () => {
       return true
     } else
       return false
-
   }
 
   return (
-
     <form>
       <div className={signupStyle.container}>
         <div className={signupStyle.content}>
@@ -419,7 +414,6 @@ const SignUp: NextPage = () => {
         </div>
       </div>
     </form >
-
   )
 }
 

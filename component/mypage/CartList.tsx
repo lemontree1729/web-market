@@ -2,8 +2,6 @@ import { NextPage } from "next"
 import { user } from "../../models/User"
 
 
-
-
 const CartList: NextPage<{ data: user }> = ({ data }) => {
     const { cartlist } = data
     return (

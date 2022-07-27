@@ -10,9 +10,7 @@ import Loading from '../../component/Loading';
 
 const Mypage: NextPage = () => {
     const router = useRouter()
-    const params = new URLSearchParams();
-    ["id", "name", "email", "phonenumber"].forEach(value => params.append("required", value))
-    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", { params }, true)
+    const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me?required=id&required=name&required=email&required=phonenumber", {}, true)
     if (isLoading) return <div><Loading /></div>
     if (isServerError) {
         alert("서버 에러가 발생하였습니다")

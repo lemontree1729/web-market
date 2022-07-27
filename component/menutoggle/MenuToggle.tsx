@@ -38,13 +38,13 @@ const MenuToggle: NextPage = () => {
             <div className={isToggle ? menutoggleStyle.category1 : menutoggleStyle.sideBar}>
 
                 <div>
-                    {data && data.map((category: category) =>
+                    {data && data.map((category: category, i: number) =>
                         <>
-                            <Category1 key={category.category1} data={category.category1} />
+                            <Category1 key={i} data={category.category1} />
                             <div className={menutoggleStyle.category2}>
-                                {category.category2 && category.category2.map(category2 => {
+                                {category.category2 && category.category2.map((category2, i) => {
                                     const categoryData = { category1: category.category1, category2 }
-                                    return <Category2 key={category2} data={categoryData} />
+                                    return <Category2 key={i} data={categoryData} />
                                 })}
                             </div>
                         </>)}

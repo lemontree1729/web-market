@@ -8,9 +8,6 @@ import CreatePost from "../../component/mypage/qna/CreatePost"
 import Loading from "../../component/Loading"
 
 
-
-
-
 const Createpost: NextPage = () => {
     const router = useRouter()
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", {}, true)

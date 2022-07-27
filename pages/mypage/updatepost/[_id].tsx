@@ -8,8 +8,6 @@ import useCustomSWR from "../../../utils/client/useCustumSWR"
 import Loading from "../../../component/Loading"
 
 
-
-
 const Createpost: NextPage = () => {
     const router = useRouter()
     const { data, isLoading, isApiError, isServerError } = useCustomSWR("/api/user/me", {}, true)

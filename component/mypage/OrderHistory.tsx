@@ -2,8 +2,6 @@ import { NextPage } from "next"
 import { order } from "../../models/Order"
 
 
-
-
 const Orderhistory: NextPage<{ data: order[] }> = ({ data }) => {
     const orders = data
     return (

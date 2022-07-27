@@ -18,15 +18,17 @@ const handler = customHandler()
             if (!result) {
                 return Err(res, "misterious error with token")
             } else {
-                let filter: string[]
-                if (!required) {
-                    filter = ["role", "_id"]
-                } else if (typeof required === "string") {
-                    filter = ["role", "_id", required]
-                } else {
-                    filter = ["role", "_id", ...required]
+                let filteredResult = { role: result.role, _id: result._id }
+                if (required === undefined) {
+                    required = []
+                } else if (typeof required == "string") {
+                    required = [required]
                 }
-                const filteredResult = filterObject(flattenObject(result), filter)
+                for (let i of required) {
+                    if (result[i] !== undefined) {
+                        filteredResult[i] = result[i]
+                    }
+                }
                 return Ok(res, filteredResult)
             }
         })

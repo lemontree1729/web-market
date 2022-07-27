@@ -32,13 +32,59 @@ describe('/api/user/me', () => {
         userServer.close()
     });
 
-    test("get user data of target user with user role", async () => {
-        const res = await supertest(userServer)
-            .get('/api/user/me')
-            .set('Cookie', [`refresh_token=${admin_refresh_token}`])
-            .expect(200)
-            .expect('Content-Type', /json/)
-        expect(res.body.result).toEqual({ _id: 1, role: "admin" })
-        // expect(res.body.result).toEqual({ _id: 1, id: "qwe123" })
+    describe("[GET](get my user data)", () => {
+        describe("without query", () => {
+            test("admin role", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user/me')
+                    .set('Cookie', [`refresh_token=${admin_refresh_token}`])
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toEqual({ _id: 1, role: "admin" })
+                // expect(res.body.result).toEqual({ _id: 1, id: "qwe123" })
+            })
+            test("user role", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user/me')
+                    .set('Cookie', [`refresh_token=${user_refresh_token}`])
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toEqual({ _id: 2, role: "user" })
+            })
+            test("without login", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user/me')
+                    .expect(400)
+                    .expect('Content-Type', /json/)
+            })
+        })
+        describe("with required query", () => {
+            test("required=gender", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user/me')
+                    .query({ required: "gender" })
+                    .set('Cookie', [`refresh_token=${user_refresh_token}`])
+                    // .expect(400)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toEqual({ _id: 2, role: "user", gender: "female" })
+            })
+            test("required=[phonenumber, likelist, cartlist]", async () => {
+                const res = await supertest(userServer)
+                    .get('/api/user/me')
+                    .query({ required: ["phonenumber", "likelist", "cartlist"] })
+                    .set('Cookie', [`refresh_token=${user_refresh_token}`])
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                expect(res.body.result).toBeDefined()
+                const { phonenumber, likelist, cartlist } = res.body.result
+                expect(phonenumber).toEqual("01022222222")
+                expect(likelist[0]._id).toEqual(1)
+                expect(cartlist).toEqual([])
+            })
+        })
     })
+
+    // describe("[PATCH](edit user data)", ()=> {
+    //     test("")
+    // })
 })

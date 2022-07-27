@@ -66,10 +66,10 @@ describe('/api/product', () => {
         })
     })
 
-    describe("[PUT](edit product data)", () => {
+    describe("[PATCH](edit product data)", () => {
         test("with right body", async () => {
             await supertest(productServer)
-                .put('/api/product')
+                .patch('/api/product')
                 .set('Cookie', [`refresh_token=${admin_refresh_token}`])
                 .send({ _id: product_id, price: 5000 })
                 .expect(200)
